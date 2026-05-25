@@ -118,12 +118,72 @@ The two paths are distinct — no cross-contamination:
 
 ## Traceability
 
-| Requirement Group | Phase |
-|---|---|
-| DB-05 (Firebase removal), tsconfig, lockfile | Phase 1 — Foundation |
-| DB-01, DB-02, COUNTER-01–04 | Phase 2 — Schema & Supabase Wiring |
-| SEC-01–04, DB-03, SIGNUP-01–05 | Phase 3 — Signup Edge Function |
-| EMAIL-03, EMAIL-A1–A2, EMAIL-B1 | Phase 4 — Email Infrastructure |
-| SEC-05, EMAIL-B2–B3, EMAIL-04, LETTER-06–07, DB-04 | Phase 5 — Verify Flow |
-| DEPLOY-01–05, SOCIAL-01–03, CONTENT-01–06 | Phase 6 — Deploy & Polish |
-| EMAIL-02 | Deferred (v2) |
+Each v1 requirement maps to exactly one phase. Coverage: 51/51 v1 requirements mapped (EMAIL-02 deferred to v2 by design).
+
+| Requirement | Phase | Status |
+|---|---|---|
+| SIGNUP-01 | Phase 2 — Signup Flow | Pending |
+| SIGNUP-02 | Phase 2 — Signup Flow | Pending |
+| SIGNUP-03 | Phase 2 — Signup Flow | Pending |
+| SIGNUP-04 | Phase 2 — Signup Flow | Pending |
+| SIGNUP-05 | Phase 2 — Signup Flow | Pending |
+| SEC-01 | Phase 2 — Signup Flow | Pending |
+| SEC-02 | Phase 2 — Signup Flow | Pending |
+| SEC-03 | Phase 2 — Signup Flow | Pending |
+| SEC-04 | Phase 2 — Signup Flow | Pending |
+| SEC-05 | Phase 4 — Letter + Verify Flow | Pending |
+| EMAIL-A1 | Phase 2 — Signup Flow | Pending |
+| EMAIL-A2 | Phase 3 — Email Infrastructure | Pending |
+| EMAIL-B1 | Phase 3 — Email Infrastructure | Pending |
+| EMAIL-B2 | Phase 4 — Letter + Verify Flow | Pending |
+| EMAIL-B3 | Phase 4 — Letter + Verify Flow | Pending |
+| EMAIL-01 | Phase 4 — Letter + Verify Flow | Already built in main app (no new work) |
+| EMAIL-02 | Deferred (v2) | Deferred |
+| EMAIL-03 | Phase 3 — Email Infrastructure | Pending |
+| EMAIL-04 | Phase 3 — Email Infrastructure | Pending |
+| LETTER-01 | Phase 4 — Letter + Verify Flow | Pending |
+| LETTER-02 | Phase 4 — Letter + Verify Flow | Pending |
+| LETTER-03 | Phase 4 — Letter + Verify Flow | Pending |
+| LETTER-04 | Phase 4 — Letter + Verify Flow | Pending |
+| LETTER-05 | Phase 4 — Letter + Verify Flow | Pending |
+| LETTER-06 | Phase 4 — Letter + Verify Flow | Pending |
+| LETTER-07 | Phase 4 — Letter + Verify Flow | Pending |
+| COUNTER-01 | Phase 1 — Foundation | Pending |
+| COUNTER-02 | Phase 1 — Foundation | Pending |
+| COUNTER-03 | Phase 1 — Foundation | Pending |
+| COUNTER-04 | Phase 1 — Foundation | Pending |
+| DB-01 | Phase 1 — Foundation | Pending |
+| DB-02 | Phase 1 — Foundation | Pending |
+| DB-03 | Phase 2 — Signup Flow | Pending |
+| DB-04 | Phase 4 — Letter + Verify Flow | Pending |
+| DB-05 | Phase 1 — Foundation | Pending |
+| DB-06 | Phase 2 — Signup Flow | Pending |
+| DB-07 | Phase 2 — Signup Flow | Pending |
+| SOCIAL-01 | Phase 5 — Deploy & Polish | Pending |
+| SOCIAL-02 | Phase 5 — Deploy & Polish | Pending |
+| SOCIAL-03 | Phase 5 — Deploy & Polish | Pending |
+| DEPLOY-01 | Phase 5 — Deploy & Polish | Pending |
+| DEPLOY-02 | Phase 5 — Deploy & Polish | Pending |
+| DEPLOY-03 | Phase 5 — Deploy & Polish | Pending |
+| DEPLOY-04 | Phase 3 — Email Infrastructure | Pending |
+| DEPLOY-05 | Phase 5 — Deploy & Polish | Pending |
+| CONTENT-01 | Phase 5 — Deploy & Polish (verified again in Phase 6) | Pending |
+| CONTENT-02 | Phase 5 — Deploy & Polish (verified again in Phase 6) | Pending |
+| CONTENT-03 | Phase 5 — Deploy & Polish | Pending |
+| CONTENT-04 | Phase 5 — Deploy & Polish (verified again in Phase 6) | Pending |
+| CONTENT-05 | Phase 5 — Deploy & Polish (verified again in Phase 6) | Pending |
+| CONTENT-06 | Phase 5 — Deploy & Polish (verified again in Phase 6) | Pending |
+
+### Phase Coverage Summary
+
+| Phase | Requirement Groups | Count |
+|---|---|---|
+| Phase 1 — Foundation | DB-05, DB-01, DB-02, COUNTER-01–04 | 7 |
+| Phase 2 — Signup Flow | SIGNUP-01–05, SEC-01–04, DB-03, DB-06, DB-07, EMAIL-A1 | 13 |
+| Phase 3 — Email Infrastructure | EMAIL-03, EMAIL-A2, EMAIL-B1, EMAIL-04, DEPLOY-04 | 5 |
+| Phase 4 — Letter + Verify Flow | LETTER-01–07, SEC-05, EMAIL-B2, EMAIL-B3, EMAIL-01, DB-04 | 12 |
+| Phase 5 — Deploy & Polish | SOCIAL-01–03, DEPLOY-01–03, DEPLOY-05, CONTENT-01–06 | 13 |
+| Phase 6 — Pre-launch QA | (revalidates CONTENT-01, 02, 04, 05, 06 — no net-new requirements) | 0 net-new |
+| Deferred (v2) | EMAIL-02 | 1 |
+
+**Coverage:** 50 v1 requirements assigned to one phase each + 1 deferred = 51 total. Phase 6 is an integration/QA pass that revalidates Phase 5 acceptance work end-to-end on production — no new requirements assigned, by design for MVP mode (each prior phase already includes its own success criteria).
