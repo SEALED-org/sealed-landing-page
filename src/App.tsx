@@ -4,13 +4,14 @@ import { ArrowRight, Instagram, Twitter, ChevronRight, PenLine, Lock, Inbox, Use
 import FirstLetter from './components/FirstLetter';
 import FAQ from './components/FAQ';
 import ShareButtons from './components/ShareButtons';
-import { subscribeToWaitlistCount, joinWaitlist } from './firebase';
+import { getSignupCount, joinWaitlistLocal } from './lib/supabase';
+import Counter from './components/Counter';
 
 export default function App() {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showSticky, setShowSticky] = useState(false);
-  const [waitlistCount, setWaitlistCount] = useState(102);
+  const [waitlistCount, setWaitlistCount] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,8 +22,12 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const unsubscribe = subscribeToWaitlistCount(setWaitlistCount);
-    return () => unsubscribe();
+    getSignupCount()
+      .then(setWaitlistCount)
+      .catch((error) => {
+        console.error('Counter fetch failed:', error);
+        setWaitlistCount(115); // D-11 fallback to seeded floor
+      });
   }, []);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -32,8 +37,9 @@ export default function App() {
     if (email && !isSubmitting) {
       setIsSubmitting(true);
       try {
-        await joinWaitlist(email);
+        await joinWaitlistLocal(email);
         setIsSubscribed(true);
+        setWaitlistCount((c) => (c ?? 115) + 1);
       } catch (error) {
         console.error('Subscription failed:', error);
       } finally {
@@ -111,7 +117,7 @@ export default function App() {
                 </div>
                 <div className="w-px h-3 bg-black/20" />
                 <span>
-                  Join {waitlistCount.toLocaleString()} others on the list
+                  Join <Counter target={waitlistCount ?? 115} /> others on the list
                 </span>
               </div>
             </div>
@@ -123,10 +129,10 @@ export default function App() {
             >
               <div className="inline-flex items-center gap-3 px-6 py-1.5 bg-black text-white rounded-full">
                 <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                <span className="font-bold font-mono uppercase tracking-widest text-[10px]">You're #{waitlistCount} on the list</span>
+                <span className="font-bold font-mono uppercase tracking-widest text-[10px]">You're #{waitlistCount ?? 115} on the list</span>
               </div>
 
-              <ShareButtons waitlistCount={waitlistCount} />
+              <ShareButtons waitlistCount={waitlistCount ?? 115} />
 
               <div className="pt-4">
                 <button
@@ -194,13 +200,14 @@ export default function App() {
           onEmailSubmit={async (newEmail) => {
             setEmail(newEmail);
             try {
-              await joinWaitlist(newEmail);
+              await joinWaitlistLocal(newEmail);
               setIsSubscribed(true);
+              setWaitlistCount((c) => (c ?? 115) + 1);
             } catch (error) {
               console.error('Waitlist join failed:', error);
             }
           }} 
-          waitlistCount={waitlistCount}
+          waitlistCount={waitlistCount ?? 115}
         />
       </div>
 
