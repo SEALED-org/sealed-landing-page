@@ -32,7 +32,11 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   2. Visiting the landing page in dev mode renders the hero without runtime errors, and the counter shows a real number (115 on a fresh DB) sourced from the `public.signup_counter` view via the anon client.
   3. `app_private.waitlist_signups` table and `public.signup_counter` view exist in the shared Supabase project, with the view granted to the `anon` role.
   4. The "pulse" indicator next to the counter still animates and the page reads identically to its pre-Firebase appearance.
-**Plans**: TBD
+**Plans**: 4 plans
+  - [ ] 01-01-PLAN.md — Supabase client + env contract (Wave 1)
+  - [ ] 01-02-PLAN.md — Counter component (Wave 1)
+  - [ ] 01-03-PLAN.md — SQL migration in sibling repo + handoff prompt + HALT (Wave 1)
+  - [ ] 01-04-PLAN.md — App.tsx surgery + end-to-end verification (Wave 2)
 
 ### Phase 2: Signup Flow
 **Goal**: A real visitor can enter their email, pass an invisible Turnstile check, hit the IP rate limit if they retry, and see the counter increment immediately — with Path A (no letter) emitting the simple Template 1A confirmation handoff to Phase 3.
@@ -105,7 +109,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/TBD | Not started | - |
+| 1. Foundation | 0/4 | Not started | - |
 | 2. Signup Flow | 0/TBD | Not started | - |
 | 3. Email Infrastructure | 0/TBD | Not started | - |
 | 4. Letter + Verify Flow | 0/TBD | Not started | - |
