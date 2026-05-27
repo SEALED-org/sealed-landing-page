@@ -231,7 +231,24 @@ Use these entry points:
 Do not make direct repo edits outside a GSD workflow unless the user explicitly asks to bypass it.
 <!-- GSD:workflow-end -->
 
+## UI Workflow
 
+Any UI work in this repo MUST invoke the `frontend-design` skill (Anthropic's official plugin) before writing or editing code. The skill sets the aesthetic direction; `/gsd-ui-phase` captures the resulting contract; both run before `/gsd-plan-phase` for UI-tagged phases.
+
+**Applies to:**
+- Editing any component in `src/components/*.tsx`
+- Editing JSX inside `src/App.tsx`
+- Editing `src/index.css` or any Tailwind class change that affects visuals
+- Editing the standalone HTML pages (`index.html`, `privacy.html`, `terms.html`)
+- Adding new visual elements, animations, or layout changes
+- Planning any phase tagged `UI hint: yes` in `ROADMAP.md`
+
+**Does NOT apply to:**
+- Non-visual wiring (Supabase client, Edge Functions, env vars, SQL migrations)
+- Pure logic refactors that don't change rendered output
+- Dependency installs, build config, deployment files
+
+If you (the agent) are about to edit a UI file and have not yet invoked `frontend-design`, stop and invoke it first.
 
 <!-- GSD:profile-start -->
 ## Developer Profile

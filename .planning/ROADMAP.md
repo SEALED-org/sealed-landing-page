@@ -14,7 +14,8 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
 - Integer phases (1, 2, 3): Planned milestone work
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 1: Foundation** - Firebase out, Supabase in, build green, counter live
+- [x] **Phase 1: Foundation** - Firebase out, Supabase in, build green, counter live
+- [ ] **Phase 1.5: UI Redesign (INSERTED)** - Rebuild landing UI to match `Landing.html` Claude Design prototype (hero, counter, FirstLetter, Research, FAQ, Footer)
 - [ ] **Phase 2: Signup Flow** - `join-waitlist` Edge Function end-to-end with Turnstile + rate limit + Path A confirmation
 - [ ] **Phase 3: Email Infrastructure** - DNS verified, Resend connected, Templates 1A and 1B deliverable
 - [ ] **Phase 4: Letter + Verify Flow** - Letter writing wired to Supabase, `verify-email` Edge Function seals letters, Path B complete
@@ -36,7 +37,31 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   - [x] 01-01-PLAN.md — Supabase client + env contract (Wave 1)
   - [x] 01-02-PLAN.md — Counter component (Wave 1)
   - [x] 01-03-PLAN.md — SQL migration in sibling repo + handoff prompt + HALT (Wave 1)
-  - [ ] 01-04-PLAN.md — App.tsx surgery + end-to-end verification (Wave 2)
+  - [x] 01-04-PLAN.md — App.tsx surgery + end-to-end verification (Wave 2)
+
+### Phase 1.5: UI Redesign (INSERTED)
+**Goal**: The live landing page renders pixel-faithful to the `Landing.html` Claude Design prototype — hero wordmark, italic-emphasis headline, ink-separator, pill form with mono CTA, 5-digit flip-card counter, animated success card, 3-column How-it-Works step cards, peer-reviewed Research section, restyled FirstLetter (multi-step write→seal with typewriter and paper pad), restyled FAQ, restyled footer — without breaking the Phase 1 Supabase data layer.
+**Depends on**: Phase 1
+**Inserted because**: The React `src/App.tsx` handed over to GSD was an older scaffold byte-identical to the bundle's `project/src/App.tsx`, not the iterated `Landing.html` prototype. The bundle's own README mandates recreating the HTML prototype pixel-perfectly in React. Wiring Phase 2's signup form into the current (old) UI would force a re-wire after the redesign — inserting the redesign here avoids that waste.
+**Requirements** (to be finalized in `/gsd-ui-phase`):
+  - UI-01: Hero matches `Landing.html` — wordmark size/font, italic-emphasis headline, ink separator PNG, pill form, mono CTA, hand-drawn tagline
+  - UI-02: Counter rendered as 5-digit flip-card pattern with `Sign ups so far` label; preserves Phase 1's `getSignupCount()` data path and `?? 115` fallback
+  - UI-03: Submit success state is the animated white card with checkmark stamp + "Write your first letter now" CTA (replaces the black pill)
+  - UI-04: How-it-Works section is 3 step-cards with screenshot PNGs (step-write/seal/open) — 2-column quote layout retired
+  - UI-05: New Research section — peer-reviewed rubber-stamp SVG, two studies (+22% / +42%), Schippers + Matthews citations
+  - UI-06: FirstLetter component rewritten to multi-step write→seal flow with typewriter placeholder and paper-pad texture
+  - UI-07: FAQ restyled to prototype's spec
+  - UI-08: Footer restyled to prototype's spec
+  - UI-09: Asset pipeline — `assets/separator-ink.png`, `assets/step-write.png`, `assets/step-seal.png`, `assets/step-open.png` (Nour to provide OR placeholder treatment until provided)
+  - UI-10: Phase 1's data wiring preserved — `getSignupCount()`, `joinWaitlistLocal()`, `setWaitlistCount` increment, `.catch` fallback to 115 all carry over unchanged
+**Success Criteria** (what must be TRUE):
+  1. The dev server renders the landing page with side-by-side parity against `Landing.html` opened in a browser — wordmark, headline, separator, form, counter, success state, How-it-Works, Research, FirstLetter, FAQ, Footer all match the prototype's visual treatment.
+  2. The counter still fetches from `public.signup_counter` on mount, animates from `000` to the real number, falls back to `115` on fetch failure, and increments locally by +1 on successful submit (Phase 1's data path is intact).
+  3. `npm run build` exits 0 with no new console errors or runtime warnings introduced.
+  4. Email form submit still calls `joinWaitlistLocal()` (await shape preserved) so Phase 2 can drop in the real Edge Function call without UI rework.
+  5. All four required PNG assets are present in the bundle (or replaced with documented placeholder treatments tracked as TODOs for Phase 5).
+**Plans**: TBD (will be produced by `/gsd-plan-phase 1.5` after `/gsd-ui-phase 1.5` writes UI-SPEC.md)
+**UI hint**: yes
 
 ### Phase 2: Signup Flow
 **Goal**: A real visitor can enter their email, pass an invisible Turnstile check, hit the IP rate limit if they retry, and see the counter increment immediately — with Path A (no letter) emitting the simple Template 1A confirmation handoff to Phase 3.
@@ -105,11 +130,12 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
+Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/4 | Not started | - |
+| 1. Foundation | 4/4 | ✅ Complete | 2026-05-28 |
+| 1.5. UI Redesign (INSERTED) | 0/TBD | Not started | - |
 | 2. Signup Flow | 0/TBD | Not started | - |
 | 3. Email Infrastructure | 0/TBD | Not started | - |
 | 4. Letter + Verify Flow | 0/TBD | Not started | - |

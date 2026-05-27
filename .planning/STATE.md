@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Phase 1 context gathered
-last_updated: "2026-05-27T19:42:54.305Z"
-last_activity: 2026-05-27 -- Phase 01 execution started
+status: phase-complete
+stopped_at: Phase 1 closed; Phase 1.5 (UI Redesign) inserted, awaiting /gsd-ui-phase
+last_updated: "2026-05-28T00:00:00.000Z"
+last_activity: 2026-05-28 -- Phase 01 closed; Phase 1.5 INSERTED for UI redesign
 progress:
-  total_phases: 6
-  completed_phases: 0
+  total_phases: 7
+  completed_phases: 1
   total_plans: 4
-  completed_plans: 0
-  percent: 0
+  completed_plans: 4
+  percent: 14
 ---
 
 # Project State
@@ -21,35 +21,35 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** A frictionless one-screen moment: enter your email, write a letter to your future self, and forget about it until 2027.
-**Current focus:** Phase 01 — foundation
+**Current focus:** Phase 1.5 — UI redesign to match Claude Design `Landing.html` prototype
 
 ## Current Position
 
-Phase: 01 (foundation) — EXECUTING
-Plan: 1 of 4
-Status: Executing Phase 01
-Last activity: 2026-05-27 -- Phase 01 execution started
+Phase: 1.5 (UI Redesign, INSERTED) — AWAITING `/gsd-ui-phase`
+Plan: — (UI-SPEC.md and plans will be produced by the UI workflow)
+Status: Phase 1 closed (all 4 plans complete); Phase 1.5 inserted into ROADMAP, ready for UI contract generation
+Last activity: 2026-05-28 -- Phase 1 closed; Phase 1.5 inserted for UI redesign
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 14%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: 0 hours
+- Total plans completed: 4 (all in Phase 1)
+- Average duration: ~17 min/plan
+- Total execution time: ~1.1 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| - | - | - | - |
+| 01 Foundation | 4 | ~1.1h | ~17min |
 
 **Recent Trend:**
 
-- Last 5 plans: none yet
-- Trend: —
+- Last 5 plans: 01-01 ✓, 01-02 ✓, 01-03 ✓, 01-04 ✓
+- Trend: steady execution; one cross-repo HALT handled cleanly; Phase 4 closed via human-verify
 
 *Updated after each plan completion*
 
@@ -60,6 +60,9 @@ Progress: [░░░░░░░░░░] 0%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- **Insert Phase 1.5 (UI Redesign) before Phase 2** — the React code that was handed over predates the `Landing.html` prototype; wiring Phase 2's signup form into the old UI would force a rewire later. Rebuild UI first, then wire data.
+- **Use `/gsd-ui-phase` workflow for Phase 1.5** (not `/gsd-quick`) — CLAUDE.md mandates `frontend-design` + `/gsd-ui-phase` before `/gsd-plan-phase` for any UI-tagged work; the UI rebuild is multi-component (hero, counter, success card, Research section, FirstLetter, FAQ, Footer) so it warrants a full UI contract.
+- **Preserve Phase 1 data layer through the redesign** — `getSignupCount()`, `joinWaitlistLocal()`, `?? 115` fallback, local +1 increment all carry forward into the new UI unchanged.
 - Replace Firebase with Supabase (main app already on Supabase — one source of truth)
 - Create Supabase Auth accounts at signup (enables OTP login on app launch day)
 - All writes go through Edge Functions (service role key never reaches client)
@@ -72,9 +75,13 @@ None yet.
 
 ### Blockers/Concerns
 
+- **`.env.local` has two config issues discovered during Phase 1 verification.** Must be fixed before Phase 2 wires real Edge Function writes (the Phase 1 fallback masks them today):
+  1. `VITE_SUPABASE_ANON_KEY=` has a leading space — bearer header is malformed.
+  2. URL subdomain `tiaeiioiyelhekgrllnjn` doesn't match the JWT's `ref` claim `tiaeioiylephekgrllnj`. One has typos; Nour to cross-check against the main SEALED-org app's `.env.local` to confirm which is canonical.
+- **PNG assets required for Phase 1.5** — `assets/separator-ink.png`, `assets/step-write.png`, `assets/step-seal.png`, `assets/step-open.png` are referenced in `Landing.html` but don't exist in this repo. Nour to export from Claude Design, OR Phase 1.5 will use placeholder treatments tracked as TODOs.
 - **DNS propagation is on the critical path for Phase 3.** SPF/DKIM/DMARC for sealedapp.io should be initiated as early as possible (ideally in parallel with Phase 1–2) since propagation can take hours and blocks all real email tests.
 - **Service role key bundle leak risk.** Add a CI grep on `dist/` for the service role key prefix before any Vercel deploy.
-- **Open questions in research/SUMMARY.md** (timezone for `deliver_at`, resignup-with-pending-letter behaviour, letter length cap, DNS ownership) should be resolved during Phase 1 / Phase 2 planning.
+- **Open questions in research/SUMMARY.md** (timezone for `deliver_at`, resignup-with-pending-letter behaviour, letter length cap, DNS ownership) should be resolved during Phase 2 / Phase 3 planning.
 
 ## Deferred Items
 
@@ -89,6 +96,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-27T18:20:35.328Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-foundation/01-CONTEXT.md
+Last session: 2026-05-28T00:00:00.000Z
+Stopped at: Phase 1 closed (4/4 plans); Phase 1.5 inserted into ROADMAP for UI redesign
+Resume file: — (next: `/gsd-ui-phase 1.5` to generate UI-SPEC.md design contract)
