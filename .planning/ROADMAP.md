@@ -33,9 +33,9 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   3. `app_private.waitlist_signups` table and `public.signup_counter` view exist in the shared Supabase project, with the view granted to the `anon` role.
   4. The "pulse" indicator next to the counter still animates and the page reads identically to its pre-Firebase appearance.
 **Plans**: 4 plans
-  - [ ] 01-01-PLAN.md — Supabase client + env contract (Wave 1)
-  - [ ] 01-02-PLAN.md — Counter component (Wave 1)
-  - [ ] 01-03-PLAN.md — SQL migration in sibling repo + handoff prompt + HALT (Wave 1)
+  - [x] 01-01-PLAN.md — Supabase client + env contract (Wave 1)
+  - [x] 01-02-PLAN.md — Counter component (Wave 1)
+  - [x] 01-03-PLAN.md — SQL migration in sibling repo + handoff prompt + HALT (Wave 1)
   - [ ] 01-04-PLAN.md — App.tsx surgery + end-to-end verification (Wave 2)
 
 ### Phase 2: Signup Flow
