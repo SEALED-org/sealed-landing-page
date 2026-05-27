@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Privacy Policy — SEALED</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --paper:      #fefcf8;
+    --ink:        #000;
+    --ink-70:     rgba(0,0,0,0.70);
+    --ink-50:     rgba(0,0,0,0.50);
+    --ink-35:     rgba(0,0,0,0.35);
+    --ink-20:     rgba(0,0,0,0.20);
+    --ink-10:     rgba(0,0,0,0.10);
+    --ink-06:     rgba(0,0,0,0.06);
+    --font-sans:  "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-serif: "Instrument Serif", Georgia, serif;
+    --font-mono:  "Space Mono", ui-monospace, monospace;
+    --shell:      1180px;
+    --legal:      720px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* Paper grain */
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    background-image:
+      radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+      radial-gradient(rgba(0,0,0,0.018) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 1px;
+    mix-blend-mode: multiply; opacity: 0.6;
+  }
+
+  /* ─── Nav ─────────────────────────────────────────────────── */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+    padding: 16px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(254,252,248,0.82);
+    backdrop-filter: blur(10px) saturate(120%);
+    border-bottom: 1px solid var(--ink-06);
+  }
+  nav.top .mark {
+    font-family: var(--font-serif); font-weight: 500;
+    font-size: 20px; letter-spacing: 0.12em;
+  }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em;
+    padding: 9px 18px; border-radius: 999px;
+    background: var(--ink); color: #fff;
+    border: none; transition: opacity 0.18s;
+    text-decoration: none;
+  }
+  .btn-back:hover { opacity: 0.78; }
+
+  /* ─── Legal header ─────────────────────────────────────────── */
+  .legal-header {
+    padding: 140px 28px 64px;
+    max-width: var(--legal); margin: 0 auto;
+    border-bottom: 1px solid var(--ink-10);
+  }
+  .legal-eyebrow {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--ink-50); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .legal-eyebrow::before {
+    content: ''; display: block; width: 24px; height: 1px;
+    background: var(--ink-35);
+  }
+  .legal-header h1 {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(40px, 6vw, 72px); line-height: 1.05;
+    letter-spacing: -0.01em; margin: 0 0 24px;
+  }
+  .legal-header h1 em { font-style: italic; color: var(--ink-70); }
+  .legal-meta {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.06em; color: var(--ink-50);
+  }
+
+  /* ─── Legal body ───────────────────────────────────────────── */
+  .legal-body {
+    max-width: var(--legal); margin: 0 auto;
+    padding: 64px 28px 120px;
+  }
+  .legal-section {
+    padding: 52px 0;
+    border-bottom: 1px solid var(--ink-10);
+  }
+  .legal-section:last-child { border-bottom: none; }
+
+  .section-num {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--ink-35); margin-bottom: 10px;
+  }
+  .legal-section > h2 {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(24px, 3vw, 34px); line-height: 1.1;
+    margin: 0 0 28px; letter-spacing: -0.01em;
+  }
+  .legal-section > h2 em { font-style: italic; }
+
+  .legal-section h3 {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--ink-70); margin: 36px 0 12px;
+  }
+  .legal-section p {
+    font-size: 16px; line-height: 1.7;
+    color: var(--ink-70); margin: 0 0 16px;
+    text-wrap: pretty;
+  }
+  .legal-section p:last-child { margin-bottom: 0; }
+  .legal-section ul, .legal-section ol {
+    margin: 0 0 16px; padding-left: 20px;
+    color: var(--ink-70); font-size: 16px; line-height: 1.7;
+  }
+  .legal-section li { margin-bottom: 8px; }
+  .legal-section strong { color: var(--ink); font-weight: 600; }
+
+  /* Callout box */
+  .callout {
+    background: rgba(0,0,0,0.03);
+    border-left: 2px solid var(--ink-20);
+    border-radius: 0 4px 4px 0;
+    padding: 16px 20px; margin: 24px 0;
+    font-size: 15px; color: var(--ink-70); line-height: 1.6;
+  }
+
+  /* Flag / needs-input note */
+  .flag {
+    display: inline-flex; align-items: flex-start; gap: 10px;
+    background: rgba(220,170,0,0.08); border: 1px solid rgba(220,170,0,0.3);
+    border-radius: 6px; padding: 12px 16px; margin: 16px 0;
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.06em; color: #7a5c00; line-height: 1.5;
+    width: 100%;
+  }
+  .flag::before { content: '⚑'; font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+
+  /* Rights grid */
+  .rights-grid {
+    display: grid; grid-template-columns: 1fr;
+    gap: 16px; margin: 20px 0;
+  }
+  @media (min-width: 560px) { .rights-grid { grid-template-columns: 1fr 1fr; } }
+  .right-card {
+    border: 1px solid var(--ink-10); border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .right-card .right-title {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--ink-50); margin-bottom: 8px;
+  }
+  .right-card p {
+    font-size: 14px; line-height: 1.55; margin: 0;
+  }
+
+  /* ─── Footer ───────────────────────────────────────────────── */
+  footer.foot {
+    padding: 80px 28px 40px;
+    background: #000; color: #fff;
+    position: relative; overflow: hidden;
+  }
+  footer.foot::before {
+    content: ''; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  }
+  .foot-inner {
+    max-width: var(--shell); margin: 0 auto;
+    display: grid; gap: 56px; grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px)  { .foot-inner { grid-template-columns: 1fr 1fr; gap: 48px; } }
+  @media (min-width: 1040px) { .foot-inner { grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px; } }
+  .foot-brand .mark {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 56px; letter-spacing: -0.02em; line-height: 0.9; margin-bottom: 16px;
+  }
+  .foot-brand .tag {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 17px; color: rgba(255,255,255,0.55);
+    max-width: 280px; line-height: 1.5; margin-bottom: 24px;
+  }
+  .foot-col h4 {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.4); margin: 0 0 20px;
+  }
+  .foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .foot-col a {
+    font-family: var(--font-serif); font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    transition: opacity 0.2s, transform 0.2s; display: inline-block;
+  }
+  .foot-col a:hover { opacity: 0.6; transform: translateX(2px); }
+  .social-list { flex-direction: row !important; gap: 16px !important; }
+  .social-list a {
+    width: 44px; height: 44px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.85);
+    transition: background 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
+  }
+  .social-list a:hover { background: #fff; color: #000; border-color: #fff; transform: translateY(-2px); }
+  .foot-bottom {
+    max-width: var(--shell); margin: 56px auto 0;
+    padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; flex-direction: column; gap: 12px;
+    align-items: center; justify-content: space-between;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.3); text-align: center;
+  }
+  @media (min-width: 640px) { .foot-bottom { flex-direction: row; text-align: left; } }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="Landing.html" class="mark">SEALED</a>
+  <a href="Landing.html" class="btn-back">← Back to home</a>
+</nav>
+
+<div class="legal-header">
+  <div class="legal-eyebrow">Legal</div>
+  <h1>Privacy<br/><em>Policy</em></h1>
+  <p class="legal-meta">Effective Date: May 25, 2026</p>
+</div>
+
+<main class="legal-body">
+
+  <!-- 1 -->
+  <section class="legal-section">
+    <div class="section-num">§ 01</div>
+    <h2>Overview &amp; <em>Acceptance</em></h2>
+    <p>This Privacy Policy ("Policy") governs the manner in which SEALED ("we," "us," "our," or "Company") collects, uses, maintains, and discloses information collected from users ("User," "you," or "your") of the SEALED service (the "Service"). By accessing or using the Service, you acknowledge that you have read, understood, and agree to be bound by this Policy.</p>
+    <p>We built SEALED on the belief that your most personal words deserve the highest respect. This Policy is our commitment to being transparent about what we collect, why, and how we protect it.</p>
+  </section>
+
+  <!-- 2 -->
+  <section class="legal-section">
+    <div class="section-num">§ 02</div>
+    <h2>Information <em>We Collect</em></h2>
+
+    <h3>2.1 Account Information</h3>
+    <p>When you register for an account, we collect your email address and an encrypted password. We do not collect your name unless you voluntarily provide it. Passwords are hashed using industry-standard cryptographic algorithms and are never stored or accessible in plain text.</p>
+
+    <h3>2.2 Your Letters</h3>
+    <p>The Service stores the Letters you compose until their scheduled delivery date. Your Letters are private by default and accessible only to you.</p>
+    <div class="flag">NEEDS YOUR INPUT — Confirm how letters are stored: encrypted at rest, plain text, or partially encrypted. This matters legally. FuturePost stored letters in plain text; if SEALED does the same, you should disclose it here. If SEALED encrypts at rest, say so — it's a meaningful differentiator.</div>
+    <div class="callout">Your letters are personal and meaningful. We do not read, analyse, or use the content of your letters for any purpose other than storing and delivering them to you.</div>
+
+    <h3>2.3 Usage Data</h3>
+    <p>We may collect non-personal technical information when you interact with the Service, including: browser type, device information, IP address, operating system, timestamp data, and referring pages. This information is used solely to maintain and improve the Service.</p>
+
+    <h3>2.4 Cookies &amp; Session Data</h3>
+    <p>The Service uses cookies and similar technologies for authentication and session management. These are essential for the Service to function. We do not use third-party advertising or behavioural tracking cookies.</p>
+  </section>
+
+  <!-- 3 -->
+  <section class="legal-section">
+    <div class="section-num">§ 03</div>
+    <h2>How We Use <em>Your Information</em></h2>
+    <p>SEALED collects and uses your information strictly for the following purposes:</p>
+    <ul>
+      <li><strong>Service Provision</strong> — To store your Letters securely and deliver them on your chosen date</li>
+      <li><strong>Account Management</strong> — To authenticate you, manage your account, and verify your identity</li>
+      <li><strong>Communication</strong> — To send your Letters on delivery day, and to send security or administrative notices when necessary</li>
+      <li><strong>Service Improvement</strong> — To diagnose technical issues and improve the performance and features of the Service</li>
+      <li><strong>Security &amp; Fraud Prevention</strong> — To detect, prevent, and address security incidents or illegal activities</li>
+      <li><strong>Legal Compliance</strong> — To comply with applicable laws, regulations, or enforceable governmental requests</li>
+    </ul>
+    <p>We do not sell your data. We do not use your information for advertising. We do not profile you.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="legal-section">
+    <div class="section-num">§ 04</div>
+    <h2>Data Protection <em>&amp; Security</em></h2>
+    <p>We implement commercially reasonable administrative, technical, and physical security measures to protect your information from unauthorized access, alteration, disclosure, or destruction. These measures include:</p>
+    <ul>
+      <li>SSL/TLS encryption for all data in transit</li>
+      <li>Restricted access controls limiting who can access stored data</li>
+      <li>Regular security assessments and infrastructure updates</li>
+      <li>Secure hosting with redundancy and backup systems</li>
+      <li>Password hashing using industry-standard cryptographic algorithms</li>
+    </ul>
+    <div class="flag">NEEDS YOUR INPUT — Add any additional security measures specific to SEALED (e.g. end-to-end encryption, zero-knowledge architecture, SOC 2 compliance, etc.) if applicable.</div>
+    <div class="callout"><strong>Important:</strong> No method of transmission over the internet or electronic storage is 100% secure. While we take your privacy seriously and work hard to protect your information, we cannot guarantee absolute security.</div>
+  </section>
+
+  <!-- 5 -->
+  <section class="legal-section">
+    <div class="section-num">§ 05</div>
+    <h2>Information Sharing <em>&amp; Disclosure</em></h2>
+    <p>We do not sell, trade, rent, or otherwise transfer your personally identifiable information or letter content to third parties. We may share information only in the following limited circumstances:</p>
+    <ul>
+      <li><strong>Service Providers</strong> — Trusted third-party providers who perform functions on our behalf (e.g. hosting, email delivery, database management) are contractually obligated to maintain confidentiality and use information only as directed</li>
+      <li><strong>Legal Requirements</strong> — We may disclose information when required by law, subpoena, court order, or other legal process, or when we believe in good faith that disclosure is necessary to protect our rights or the safety of others</li>
+      <li><strong>Business Transfers</strong> — In the event of a merger, acquisition, bankruptcy, or sale of assets, your information may be transferred to the acquiring entity, subject to this Policy</li>
+      <li><strong>With Your Consent</strong> — We may share information for any other purpose disclosed to you with your explicit consent</li>
+    </ul>
+    <div class="flag">NEEDS YOUR INPUT — List any specific third-party services SEALED uses (e.g. AWS, Postmark, Stripe, Vercel, Supabase). Users increasingly expect this level of transparency.</div>
+  </section>
+
+  <!-- 6 -->
+  <section class="legal-section">
+    <div class="section-num">§ 06</div>
+    <h2>Data <em>Retention</em></h2>
+    <p>We retain your account information and letter content for as long as your account remains active or as needed to provide the Service. You may request deletion of your account and associated data at any time.</p>
+    <p>Upon account deletion, we will remove your personal information and letter content from our active databases within a reasonable timeframe, subject to legal retention requirements. Certain information may be retained in backup systems for a limited period before being permanently purged.</p>
+    <p>Letters that have already been delivered are stored in your account archive until you choose to delete them.</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="legal-section">
+    <div class="section-num">§ 07</div>
+    <h2>Your Rights <em>&amp; Choices</em></h2>
+    <p>Subject to applicable law, you have the following rights regarding your personal information:</p>
+    <div class="rights-grid">
+      <div class="right-card">
+        <div class="right-title">Access</div>
+        <p>Request access to the personal information we hold about you.</p>
+      </div>
+      <div class="right-card">
+        <div class="right-title">Rectification</div>
+        <p>Update, correct, or modify your account information at any time through your account settings.</p>
+      </div>
+      <div class="right-card">
+        <div class="right-title">Deletion</div>
+        <p>Request deletion of your account and all associated personal information and letter content.</p>
+      </div>
+      <div class="right-card">
+        <div class="right-title">Portability</div>
+        <p>Request a copy of your letters and account data in a machine-readable format.</p>
+      </div>
+      <div class="right-card">
+        <div class="right-title">Object</div>
+        <p>Object to certain processing of your information, subject to legal limitations.</p>
+      </div>
+      <div class="right-card">
+        <div class="right-title">Withdraw Consent</div>
+        <p>Where processing is based on consent, you may withdraw it at any time.</p>
+      </div>
+    </div>
+    <p>To exercise any of these rights, contact us at <a href="mailto:hello@sealed.io" style="text-decoration:underline;text-underline-offset:3px;">hello@sealed.io</a>.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="legal-section">
+    <div class="section-num">§ 08</div>
+    <h2>Children's <em>Privacy</em></h2>
+    <p>The Service is not intended for, nor directed to, children under the age of thirteen (13) years. We do not knowingly collect personal information from children under 13. If we become aware that a child under 13 has provided us with personal information, we will take steps to delete such information promptly. If you believe that a child under 13 has provided personal information to us, please contact us immediately.</p>
+  </section>
+
+  <!-- 9 -->
+  <section class="legal-section">
+    <div class="section-num">§ 09</div>
+    <h2>International Data <em>Transfers</em></h2>
+    <p>Your information may be transferred to, stored, and processed in countries other than your country of residence. These countries may have data protection laws that differ from those of your jurisdiction. By using the Service, you consent to such transfers. We take steps to ensure that any such transfers comply with applicable data protection laws.</p>
+    <div class="flag">NEEDS YOUR INPUT — If SEALED's servers are in a specific region (e.g. US, EU), state it. If you serve EU users, confirm GDPR compliance and whether you have a Data Processing Agreement (DPA) with your hosting provider.</div>
+  </section>
+
+  <!-- 10 -->
+  <section class="legal-section">
+    <div class="section-num">§ 10</div>
+    <h2>Third-Party <em>Links</em></h2>
+    <p>The Service may contain links to third-party websites or services. We are not responsible for the privacy practices or content of such third parties. We encourage you to review the privacy policies of any third-party sites you visit.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="legal-section">
+    <div class="section-num">§ 11</div>
+    <h2>Changes to This <em>Policy</em></h2>
+    <p>We reserve the right to modify this Privacy Policy at any time. When we make material changes, we will notify you by email (to the address on your account) or by posting a prominent notice on the Service at least thirty (30) days prior to the changes taking effect. Your continued use of the Service after such modifications constitutes your acceptance of the modified Policy.</p>
+  </section>
+
+  <!-- 12 -->
+  <section class="legal-section">
+    <div class="section-num">§ 12</div>
+    <h2>Contact <em>Information</em></h2>
+    <p>If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us at:</p>
+    <p><strong>SEALED</strong><br/>Email: <a href="mailto:hello@sealed.io" style="text-decoration:underline;text-underline-offset:3px;">hello@sealed.io</a></p>
+    <div class="flag">NEEDS YOUR INPUT — Confirm the contact email. If you have a Data Protection Officer (DPO) or a physical address you want to include (required in some jurisdictions), add them here.</div>
+  </section>
+
+  <!-- 13 -->
+  <section class="legal-section">
+    <div class="section-num">§ 13</div>
+    <h2>Governing <em>Law</em></h2>
+    <p>This Privacy Policy shall be governed by and construed in accordance with the laws of [JURISDICTION], without regard to its conflict of law provisions.</p>
+    <div class="flag">NEEDS YOUR INPUT — Specify the governing jurisdiction (e.g. "the State of California, United States" or "England and Wales"). This should match what you put in the Terms of Service.</div>
+    <p>By using the SEALED Service, you acknowledge that you have read and understood this Privacy Policy and agree to its terms.</p>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <div class="mark">SEALED</div>
+      <div class="tag">Some letters are worth waiting for.</div>
+    </div>
+    <div class="foot-col">
+      <h4>Discover</h4>
+      <ul>
+        <li><a href="Landing.html#waitlist">Join the waitlist</a></li>
+        <li><a href="Landing.html#first-letter">Write a letter</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Connect</h4>
+      <ul class="social-list">
+        <li><a href="#" aria-label="Instagram" title="Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a></li>
+        <li><a href="#" aria-label="X" title="X">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.52 7.452L22 22h-6.828l-4.77-6.231L4.8 22H2l7.02-8.024L2 2h6.914l4.32 5.713L18.244 2zm-1.197 18h1.84L7.06 4H5.117l11.93 16z"/></svg>
+        </a></li>
+        <li><a href="mailto:hello@sealed.io" aria-label="Email" title="hello@sealed.io">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,7 12,13 21,7"/></svg>
+        </a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 SEALED · All rights reserved</span>
+  </div>
+</footer>
+
+</body>
+</html>

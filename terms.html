@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Terms of Service — SEALED</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --paper:      #fefcf8;
+    --ink:        #000;
+    --ink-70:     rgba(0,0,0,0.70);
+    --ink-50:     rgba(0,0,0,0.50);
+    --ink-35:     rgba(0,0,0,0.35);
+    --ink-20:     rgba(0,0,0,0.20);
+    --ink-10:     rgba(0,0,0,0.10);
+    --ink-06:     rgba(0,0,0,0.06);
+    --font-sans:  "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-serif: "Instrument Serif", Georgia, serif;
+    --font-mono:  "Space Mono", ui-monospace, monospace;
+    --shell:      1180px;
+    --legal:      720px;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* Paper grain */
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    background-image:
+      radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+      radial-gradient(rgba(0,0,0,0.018) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 1px;
+    mix-blend-mode: multiply; opacity: 0.6;
+  }
+
+  /* ─── Nav ─────────────────────────────────────────────────── */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+    padding: 16px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(254,252,248,0.82);
+    backdrop-filter: blur(10px) saturate(120%);
+    border-bottom: 1px solid var(--ink-06);
+  }
+  nav.top .mark {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 20px; letter-spacing: 0.12em;
+    font-weight: 500;
+  }
+  .btn-back {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em;
+    padding: 9px 18px; border-radius: 999px;
+    background: var(--ink); color: #fff;
+    border: none; transition: opacity 0.18s;
+  }
+  .btn-back:hover { opacity: 0.78; }
+
+  /* ─── Legal header ─────────────────────────────────────────── */
+  .legal-header {
+    padding: 140px 28px 64px;
+    max-width: var(--legal); margin: 0 auto;
+    border-bottom: 1px solid var(--ink-10);
+  }
+  .legal-eyebrow {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--ink-50); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .legal-eyebrow::before {
+    content: ''; display: block; width: 24px; height: 1px;
+    background: var(--ink-35);
+  }
+  .legal-header h1 {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(40px, 6vw, 72px); line-height: 1.05;
+    letter-spacing: -0.01em; margin: 0 0 24px;
+  }
+  .legal-header h1 em { font-style: italic; color: var(--ink-70); }
+  .legal-meta {
+    font-family: var(--font-mono); font-size: 12px;
+    letter-spacing: 0.06em; color: var(--ink-50);
+  }
+
+  /* ─── Legal body ───────────────────────────────────────────── */
+  .legal-body {
+    max-width: var(--legal); margin: 0 auto;
+    padding: 64px 28px 120px;
+  }
+  .legal-section {
+    padding: 52px 0;
+    border-bottom: 1px solid var(--ink-10);
+  }
+  .legal-section:last-child { border-bottom: none; }
+
+  .section-num {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--ink-35); margin-bottom: 10px;
+  }
+  .legal-section > h2 {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(24px, 3vw, 34px); line-height: 1.1;
+    margin: 0 0 28px; letter-spacing: -0.01em;
+  }
+  .legal-section > h2 em { font-style: italic; }
+
+  .legal-section h3 {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--ink-70); margin: 36px 0 12px;
+  }
+  .legal-section p {
+    font-size: 16px; line-height: 1.7;
+    color: var(--ink-70); margin: 0 0 16px;
+    text-wrap: pretty;
+  }
+  .legal-section p:last-child { margin-bottom: 0; }
+  .legal-section ul, .legal-section ol {
+    margin: 0 0 16px; padding-left: 20px;
+    color: var(--ink-70); font-size: 16px; line-height: 1.7;
+  }
+  .legal-section li { margin-bottom: 8px; }
+  .legal-section strong { color: var(--ink); font-weight: 600; }
+
+  /* Warning / callout box */
+  .callout {
+    background: rgba(0,0,0,0.03);
+    border-left: 2px solid var(--ink-20);
+    border-radius: 0 4px 4px 0;
+    padding: 16px 20px; margin: 24px 0;
+    font-size: 15px; color: var(--ink-70); line-height: 1.6;
+  }
+  .callout strong { color: var(--ink); }
+
+  /* Flag / needs-input note */
+  .flag {
+    display: inline-flex; align-items: flex-start; gap: 10px;
+    background: rgba(220,170,0,0.08); border: 1px solid rgba(220,170,0,0.3);
+    border-radius: 6px; padding: 12px 16px; margin: 16px 0;
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.06em; color: #7a5c00; line-height: 1.5;
+    width: 100%;
+  }
+  .flag::before { content: '⚑'; font-size: 13px; margin-top: 1px; flex-shrink: 0; }
+
+  /* Uppercase caps sections (Warranty, Liability) */
+  .legal-section p.caps {
+    font-size: 13px; line-height: 1.65;
+    letter-spacing: 0.01em;
+  }
+
+  /* ─── Footer ───────────────────────────────────────────────── */
+  footer.foot {
+    padding: 80px 28px 40px;
+    background: #000; color: #fff;
+    position: relative; overflow: hidden;
+  }
+  footer.foot::before {
+    content: ''; position: absolute; left: 0; right: 0; top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  }
+  .foot-inner {
+    max-width: var(--shell); margin: 0 auto;
+    display: grid; gap: 56px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px)  { .foot-inner { grid-template-columns: 1fr 1fr; gap: 48px; } }
+  @media (min-width: 1040px) { .foot-inner { grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px; } }
+
+  .foot-brand .mark {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 56px; letter-spacing: -0.02em; line-height: 0.9;
+    margin-bottom: 16px;
+  }
+  .foot-brand .tag {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 17px; color: rgba(255,255,255,0.55);
+    max-width: 280px; line-height: 1.5; margin-bottom: 24px;
+  }
+  .foot-col h4 {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.4); margin: 0 0 20px;
+  }
+  .foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .foot-col a {
+    font-family: var(--font-serif); font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-block;
+  }
+  .foot-col a:hover { opacity: 0.6; transform: translateX(2px); }
+  .social-list { flex-direction: row !important; gap: 16px !important; }
+  .social-list a {
+    width: 44px; height: 44px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.85);
+    transition: background 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
+  }
+  .social-list a:hover { background: #fff; color: #000; border-color: #fff; transform: translateY(-2px); }
+  .foot-bottom {
+    max-width: var(--shell); margin: 56px auto 0;
+    padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; flex-direction: column; gap: 12px;
+    align-items: center; justify-content: space-between;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.3); text-align: center;
+  }
+  @media (min-width: 640px) { .foot-bottom { flex-direction: row; text-align: left; } }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <a href="Landing.html" class="mark">SEALED</a>
+  <a href="Landing.html" class="btn-back">← Back to home</a>
+</nav>
+
+<div class="legal-header">
+  <div class="legal-eyebrow">Legal</div>
+  <h1>Terms of<br/><em>Service</em></h1>
+  <p class="legal-meta">Effective Date: May 25, 2026</p>
+</div>
+
+<main class="legal-body">
+
+  <!-- 1 -->
+  <section class="legal-section">
+    <div class="section-num">§ 01</div>
+    <h2>Acceptance of Terms</h2>
+    <p>These Terms of Service ("Terms," "Agreement") constitute a legally binding agreement between you ("User," "you," or "your") and SEALED ("we," "us," "our," or "Company") governing your access to and use of the SEALED service (the "Service"). By creating an account, accessing, or using the Service in any manner, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy, which is incorporated herein by reference.</p>
+    <p>If you do not agree to these Terms, you must immediately discontinue use of the Service.</p>
+    <div class="flag">NEEDS YOUR INPUT — Confirm the formal legal entity name to use throughout (e.g. "Sealed Inc.", "Sealed Ltd.", or simply "SEALED"). Currently using "SEALED" as a placeholder.</div>
+  </section>
+
+  <!-- 2 -->
+  <section class="legal-section">
+    <div class="section-num">§ 02</div>
+    <h2>Description of <em>Service</em></h2>
+    <p>SEALED is a web-based platform that enables Users to compose and schedule written letters ("Letters") for future delivery, opened only on a date of the User's choosing. The Service includes, but is not limited to:</p>
+    <ul>
+      <li>A web interface for composing, sealing, and managing Letters</li>
+      <li>Scheduled delivery of Letters at User-specified future dates</li>
+      <li>Secure storage of Letters on our servers until their designated delivery date</li>
+      <li>A private, personal archive accessible only to the account holder</li>
+    </ul>
+    <div class="flag">NEEDS YOUR INPUT — If SEALED has additional features (e.g. sharing, physical delivery, team accounts, integrations), list them here. Also confirm whether letters are delivered by email, in-app notification, or both.</div>
+  </section>
+
+  <!-- 3 -->
+  <section class="legal-section">
+    <div class="section-num">§ 03</div>
+    <h2>Eligibility &amp; Account <em>Registration</em></h2>
+
+    <h3>3.1 Eligibility</h3>
+    <p>You must be at least thirteen (13) years of age to use the Service. By using the Service, you represent and warrant that you meet this age requirement and have the legal capacity to enter into these Terms. If you are under the age of eighteen (18), you represent that you have obtained parental or guardian consent.</p>
+
+    <h3>3.2 Account Registration</h3>
+    <p>To access the Service, you must register for an account by providing a valid email address and creating a password. You agree to provide accurate, current, and complete information during registration and to update such information to maintain its accuracy.</p>
+
+    <h3>3.3 Account Security</h3>
+    <p>You are solely responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You agree to immediately notify us of any unauthorized access. We shall not be liable for any loss or damage arising from your failure to comply with this obligation.</p>
+
+    <h3>3.4 Account Limitations</h3>
+    <p>You may not create multiple accounts, share your account with others, or transfer your account to another party without our prior written consent. We reserve the right to refuse registration or cancel accounts in our sole discretion.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="legal-section">
+    <div class="section-num">§ 04</div>
+    <h2>User Content <em>&amp; License</em></h2>
+
+    <h3>4.1 Ownership of User Content</h3>
+    <p>You retain all intellectual property rights and ownership of the Letters and content you create through the Service ("User Content"). We do not claim ownership of your User Content.</p>
+
+    <h3>4.2 License Grant to Company</h3>
+    <p>By submitting User Content to the Service, you grant SEALED a non-exclusive, worldwide, royalty-free license to use, reproduce, store, process, and transmit your User Content solely for the purposes of: (a) providing the Service to you, including storing and delivering your Letters; (b) maintaining and improving the Service; (c) complying with legal obligations; and (d) enforcing these Terms.</p>
+
+    <h3>4.3 Content Standards and Restrictions</h3>
+    <p>You agree that your User Content shall not:</p>
+    <ul>
+      <li>Violate any applicable local, state, national, or international law or regulation</li>
+      <li>Infringe upon or misappropriate any intellectual property or other proprietary rights of any third party</li>
+      <li>Contain defamatory, obscene, pornographic, abusive, harassing, threatening, or hateful content</li>
+      <li>Contain spam, unsolicited advertising, or promotional materials</li>
+      <li>Contain malicious code or any technology designed to harm the Service or other users</li>
+      <li>Impersonate any person or entity</li>
+      <li>Constitute or encourage illegal activity</li>
+    </ul>
+
+    <h3>4.4 Content Monitoring and Removal</h3>
+    <p>While we generally do not monitor User Content, we reserve the right (but have no obligation) to review, monitor, and remove any User Content that we determine, in our sole discretion, violates these Terms, our policies, or applicable law. We may also remove content in response to valid legal requests.</p>
+  </section>
+
+  <!-- 5 -->
+  <section class="legal-section">
+    <div class="section-num">§ 05</div>
+    <h2>Prohibited <em>Conduct</em></h2>
+    <p>In addition to the content restrictions outlined above, you agree not to:</p>
+    <ul>
+      <li>Attempt to gain unauthorized access to any portion of the Service or other Users' accounts</li>
+      <li>Interfere with or disrupt the Service or servers or networks connected to the Service</li>
+      <li>Use any automated means (including robots, scrapers, or spiders) to access the Service without our express written permission</li>
+      <li>Reverse engineer, decompile, disassemble, or otherwise attempt to discover the source code of the Service</li>
+      <li>Modify, adapt, translate, or create derivative works based upon the Service</li>
+      <li>Circumvent, disable, or interfere with security-related features of the Service</li>
+      <li>Use the Service for any commercial purpose not expressly permitted by these Terms</li>
+      <li>Collect or harvest any personally identifiable information of other Users</li>
+      <li>Use the Service in any manner that could damage, disable, overburden, or impair the Service</li>
+    </ul>
+  </section>
+
+  <!-- 6 -->
+  <section class="legal-section">
+    <div class="section-num">§ 06</div>
+    <h2>Pricing &amp; <em>Access</em></h2>
+    <div class="flag">NEEDS YOUR INPUT — This section depends on your pricing model. The placeholder below assumes a free waitlist / early-access model. Revise to reflect whether SEALED is free, freemium, subscription-based, or otherwise.</div>
+
+    <h3>6.1 Current Access</h3>
+    <p>SEALED is currently in early access. Waitlist members who are granted access may use the Service as described herein. We reserve the right to introduce pricing tiers, subscription plans, or paid features in the future.</p>
+
+    <h3>6.2 Future Pricing Changes</h3>
+    <p>We will provide reasonable advance notice to Users before any paid features are introduced. Any changes will be clearly communicated via email or a prominent notice within the Service.</p>
+  </section>
+
+  <!-- 7 -->
+  <section class="legal-section">
+    <div class="section-num">§ 07</div>
+    <h2>Service Availability <em>&amp; Modifications</em></h2>
+
+    <h3>7.1 Service Availability</h3>
+    <p>We strive to provide reliable and uninterrupted Service; however, we do not guarantee that the Service will be available at all times or that it will be error-free. The Service may be temporarily unavailable due to maintenance, updates, technical issues, or circumstances beyond our control.</p>
+
+    <h3>7.2 Modifications to Service</h3>
+    <p>We reserve the right, at any time and in our sole discretion, to modify, suspend, or discontinue any aspect of the Service, including features, functionality, or availability, with or without notice.</p>
+
+    <h3>7.3 Letter Delivery</h3>
+    <p>While we make commercially reasonable efforts to deliver Letters at the scheduled date and time, we do not guarantee timely or successful delivery. Delivery may be affected by technical issues, email provider filtering, network problems, or other factors beyond our control. We are not liable for any failure or delay in Letter delivery.</p>
+  </section>
+
+  <!-- 8 -->
+  <section class="legal-section">
+    <div class="section-num">§ 08</div>
+    <h2>Intellectual <em>Property</em></h2>
+    <p>The Service, including its design, layout, graphics, user interface, code, algorithms, and all other elements (excluding User Content), is owned by SEALED and is protected by copyright, trademark, patent, trade secret, and other intellectual property laws. You are granted a limited, non-exclusive, non-transferable, revocable license to access and use the Service solely for its intended purpose. You may not:</p>
+    <ul>
+      <li>Copy, reproduce, distribute, or create derivative works of any portion of the Service</li>
+      <li>Remove, alter, or obscure any copyright, trademark, or other proprietary notices</li>
+      <li>Use any SEALED trademarks, service marks, or logos without prior written consent</li>
+    </ul>
+  </section>
+
+  <!-- 9 -->
+  <section class="legal-section">
+    <div class="section-num">§ 09</div>
+    <h2>Disclaimer of <em>Warranties</em></h2>
+    <p class="caps">THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, SEALED DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO:</p>
+    <ul>
+      <li>IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT</li>
+      <li>WARRANTIES REGARDING THE ACCURACY, RELIABILITY, OR AVAILABILITY OF THE SERVICE</li>
+      <li>WARRANTIES THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, OR ERROR-FREE</li>
+      <li>WARRANTIES REGARDING THE SECURITY OF USER CONTENT OR DATA TRANSMISSION</li>
+    </ul>
+    <p class="caps">NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED BY YOU FROM SEALED SHALL CREATE ANY WARRANTY NOT EXPRESSLY STATED IN THESE TERMS.</p>
+  </section>
+
+  <!-- 10 -->
+  <section class="legal-section">
+    <div class="section-num">§ 10</div>
+    <h2>Limitation of <em>Liability</em></h2>
+    <p class="caps">TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL SEALED, ITS OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, OR AFFILIATES BE LIABLE TO YOU FOR ANY:</p>
+    <ul>
+      <li>INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES</li>
+      <li>LOSS OF PROFITS, REVENUE, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES</li>
+      <li>DAMAGES RESULTING FROM UNAUTHORIZED ACCESS TO OR ALTERATION OF YOUR TRANSMISSIONS OR DATA</li>
+      <li>DAMAGES RESULTING FROM MISSED OR FAILED LETTER DELIVERIES</li>
+    </ul>
+    <p class="caps">THIS LIMITATION APPLIES REGARDLESS OF THE LEGAL THEORY ON WHICH THE CLAIM IS BASED, AND EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.</p>
+  </section>
+
+  <!-- 11 -->
+  <section class="legal-section">
+    <div class="section-num">§ 11</div>
+    <h2><em>Indemnification</em></h2>
+    <p>You agree to indemnify, defend, and hold harmless SEALED and its officers, directors, employees, agents, and affiliates from and against any and all claims, liabilities, damages, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising from: (a) your use of the Service; (b) your User Content; (c) your violation of these Terms; or (d) your violation of any rights of another party.</p>
+  </section>
+
+  <!-- 12 -->
+  <section class="legal-section">
+    <div class="section-num">§ 12</div>
+    <h2><em>Termination</em></h2>
+
+    <h3>12.1 Termination by User</h3>
+    <p>You may terminate your account at any time by following the account deletion process within the Service or by contacting us. Upon termination, your right to access and use the Service will immediately cease. You are encouraged to export any Letters you wish to retain prior to account deletion.</p>
+
+    <h3>12.2 Termination by Company</h3>
+    <p>We reserve the right to suspend or terminate your account and access to the Service at any time, with or without cause, and with or without notice, for any reason including but not limited to: (a) violation of these Terms; (b) fraudulent, abusive, or illegal activity; (c) prolonged inactivity; or (d) at our sole discretion.</p>
+
+    <h3>12.3 Effect of Termination</h3>
+    <p>Upon termination of your account: (a) your User Content will be removed from our active databases in accordance with our Privacy Policy; (b) scheduled Letters that have not yet been delivered will not be sent; and (c) provisions of these Terms that by their nature should survive termination shall survive, including ownership provisions, warranty disclaimers, indemnification, and limitations of liability.</p>
+  </section>
+
+  <!-- 13 -->
+  <section class="legal-section">
+    <div class="section-num">§ 13</div>
+    <h2>Dispute Resolution &amp; <em>Governing Law</em></h2>
+    <div class="flag">NEEDS YOUR INPUT — Specify the governing jurisdiction (country and/or state). Also confirm whether you want a binding arbitration clause or informal dispute resolution only.</div>
+
+    <h3>13.1 Governing Law</h3>
+    <p>These Terms shall be governed by and construed in accordance with the laws of [JURISDICTION], without regard to its conflict of law provisions.</p>
+
+    <h3>13.2 Dispute Resolution</h3>
+    <p>In the event of any dispute, controversy, or claim arising out of or relating to these Terms or the Service, you agree to first contact us to attempt to resolve the dispute informally. If we are unable to resolve the dispute within thirty (30) days, either party may pursue formal dispute resolution.</p>
+  </section>
+
+  <!-- 14 -->
+  <section class="legal-section">
+    <div class="section-num">§ 14</div>
+    <h2>Modifications to <em>Terms</em></h2>
+    <p>We reserve the right to modify these Terms at any time and in our sole discretion. When we make material changes, we will notify you by email (to the address specified in your account) or by posting a prominent notice on the Service at least thirty (30) days prior to the changes taking effect. Your continued use of the Service after such modifications constitutes your acceptance of the modified Terms.</p>
+  </section>
+
+  <!-- 15 -->
+  <section class="legal-section">
+    <div class="section-num">§ 15</div>
+    <h2>General <em>Provisions</em></h2>
+
+    <h3>15.1 Entire Agreement</h3>
+    <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and SEALED regarding the Service and supersede all prior or contemporaneous understandings and agreements, whether written or oral.</p>
+
+    <h3>15.2 Severability</h3>
+    <p>If any provision of these Terms is found to be invalid, illegal, or unenforceable, the remaining provisions shall continue in full force and effect.</p>
+
+    <h3>15.3 Waiver</h3>
+    <p>No waiver of any term or provision of these Terms shall be deemed a further or continuing waiver of such term or provision or any other term or provision.</p>
+
+    <h3>15.4 Assignment</h3>
+    <p>You may not assign or transfer these Terms or your rights hereunder without our prior written consent. We may assign or transfer these Terms without restriction.</p>
+
+    <h3>15.5 Force Majeure</h3>
+    <p>We shall not be liable for any failure or delay in performance due to circumstances beyond our reasonable control, including but not limited to acts of God, natural disasters, war, terrorism, labor disputes, or internet service provider failures.</p>
+  </section>
+
+  <!-- 16 -->
+  <section class="legal-section">
+    <div class="section-num">§ 16</div>
+    <h2>Contact <em>Information</em></h2>
+    <p>If you have any questions, concerns, or requests regarding these Terms of Service, please contact us at:</p>
+    <p><strong>SEALED</strong><br/>Email: <a href="mailto:hello@sealed.io" style="text-decoration:underline;text-underline-offset:3px;">hello@sealed.io</a></p>
+    <div class="flag">NEEDS YOUR INPUT — Confirm the contact email and whether you want to include a mailing address.</div>
+    <p>By using the SEALED Service, you acknowledge that you have read and understood these Terms of Service and agree to be bound by them.</p>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <div class="mark">SEALED</div>
+      <div class="tag">Some letters are worth waiting for.</div>
+    </div>
+    <div class="foot-col">
+      <h4>Discover</h4>
+      <ul>
+        <li><a href="Landing.html#waitlist">Join the waitlist</a></li>
+        <li><a href="Landing.html#first-letter">Write a letter</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Connect</h4>
+      <ul class="social-list">
+        <li><a href="#" aria-label="Instagram" title="Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a></li>
+        <li><a href="#" aria-label="X" title="X">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.52 7.452L22 22h-6.828l-4.77-6.231L4.8 22H2l7.02-8.024L2 2h6.914l4.32 5.713L18.244 2zm-1.197 18h1.84L7.06 4H5.117l11.93 16z"/></svg>
+        </a></li>
+        <li><a href="mailto:hello@sealed.io" aria-label="Email" title="hello@sealed.io">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,7 12,13 21,7"/></svg>
+        </a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 SEALED · All rights reserved</span>
+  </div>
+</footer>
+
+</body>
+</html>
