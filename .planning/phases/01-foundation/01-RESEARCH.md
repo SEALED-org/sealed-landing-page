@@ -712,32 +712,32 @@ const handleSubscribe = async (e: React.FormEvent) => {
 | A7 | Nour's `.env.local` for this repo does not yet exist and must be created at the Wave A → Wave B handoff. | Runtime State Inventory | Low — verified by `ls` showing no `.env*` files in repo root. |
 | A8 | The `motion.span` will render a `MotionValue<string>` as its updating text content without re-rendering the React component on every animation frame. | Pattern 2 | None — [CITED: motion.dev — "When a MotionValue is passed as a child to a motion component, it displays the latest animated value without triggering React re-renders."] |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should the new Counter component live in `src/components/Counter.tsx` or inline in `App.tsx`?**
    - What we know: Both work. CONVENTIONS.md says "sub-components used only within one parent file are co-located in that file" (e.g., FAQItem inside FAQ.tsx).
    - What's unclear: Whether Phase 2's "You're #N on the list" chip (`src/App.tsx:124-127`) should also use the odometer animation. If yes, Counter should be its own file to be reused.
-   - Recommendation: Make it `src/components/Counter.tsx`. The chip might want to reuse it in Phase 2, and having it as a standalone file makes test surface area cleaner.
+   - RESOLVED: Make it `src/components/Counter.tsx`. The chip might want to reuse it in Phase 2, and having it as a standalone file makes test surface area cleaner.
 
 2. **Should we add `.env.example` to this repo?**
    - What we know: No `.env*` file exists today. CLAUDE.md says they're expected.
    - What's unclear: Whether documenting the contract belongs in Phase 1 (small, self-contained) or Phase 5 (deploy & polish).
-   - Recommendation: Yes, add `.env.example` in Phase 1 with `VITE_SUPABASE_URL=` and `VITE_SUPABASE_ANON_KEY=` (empty values). Documents the contract immediately for any future contributor or for Nour himself when he sets up Vercel in Phase 5.
+   - RESOLVED: Yes, add `.env.example` in Phase 1 with `VITE_SUPABASE_URL=` and `VITE_SUPABASE_ANON_KEY=` (empty values). Documents the contract immediately for any future contributor or for Nour himself when he sets up Vercel in Phase 5.
 
 3. **Should we commit `package-lock.json` in Phase 1?**
    - What we know: No lockfile exists today. Adding `@supabase/supabase-js` will create one when running `npm install`.
    - What's unclear: Whether Nour wants reproducible builds locked in now or wait for Phase 5.
-   - Recommendation: Commit it now. Vercel uses the lockfile if present. Locking the Supabase version on day one prevents drift between Nour's machine and Vercel.
+   - RESOLVED: Commit it now. Vercel uses the lockfile if present. Locking the Supabase version on day one prevents drift between Nour's machine and Vercel.
 
 4. **Animation duration — 1.2s, or something else?**
    - What we know: The original Firebase counter just hard-set the number; no animation. D-09/D-10 says "rolling odometer style" but doesn't set duration.
    - What's unclear: How fast feels right for an odometer rolling from 0 to ~115.
-   - Recommendation: 1.2s with `easeOut`. Long enough to feel deliberate, short enough to not delay perceived load. Numbers larger than ~999 (4-tier and 5-tier) might want a 1.6s duration so each digit feels intentional — but for v1 with `target ≈ 115`, 1.2s is fine. Planner can lock the value at one and revisit if Nour wants tuning.
+   - RESOLVED: 1.2s with `easeOut`. Long enough to feel deliberate, short enough to not delay perceived load. Numbers larger than ~999 (4-tier and 5-tier) might want a 1.6s duration so each digit feels intentional — but for v1 with `target ≈ 115`, 1.2s is fine. Planner can lock the value at one and revisit if Nour wants tuning.
 
 5. **The handoff prompt: store as a file or just print to stdout?**
    - What we know: Per CONTEXT.md "Specifics", the prompt is for Nour to paste verbatim.
    - What's unclear: Whether to commit it (audit trail) or just emit it at the end of Wave A.
-   - Recommendation: Write it to `.planning/phases/01-foundation/HANDOFF-PROMPT.md` AND print it to stdout. The file lets Nour copy it cleanly even after the terminal scrolls; printing makes it impossible to miss.
+   - RESOLVED: Write it to `.planning/phases/01-foundation/HANDOFF-PROMPT.md` AND print it to stdout. The file lets Nour copy it cleanly even after the terminal scrolls; printing makes it impossible to miss.
 
 ## Environment Availability
 
