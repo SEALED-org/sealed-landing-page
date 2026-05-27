@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: phase-complete
-stopped_at: Phase 1 closed; Phase 1.5 (UI Redesign) inserted, awaiting /gsd-ui-phase
-last_updated: "2026-05-28T00:00:00.000Z"
-last_activity: 2026-05-28 -- Phase 01 closed; Phase 1.5 INSERTED for UI redesign
+status: ui-spec-approved
+stopped_at: Phase 1.5 UI-SPEC approved (6/6 PASS); awaiting /gsd-plan-phase 1.5
+last_updated: "2026-05-28T01:30:00.000Z"
+last_activity: 2026-05-28 -- Phase 1.5 UI-SPEC.md generated + verified by gsd-ui-checker
 progress:
   total_phases: 7
   completed_phases: 1
@@ -96,6 +96,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T00:00:00.000Z
-Stopped at: Phase 1 closed (4/4 plans); Phase 1.5 inserted into ROADMAP for UI redesign
-Resume file: — (next: `/gsd-ui-phase 1.5` to generate UI-SPEC.md design contract)
+Last session: 2026-05-28T01:30:00.000Z
+Stopped at: Phase 1.5 UI-SPEC.md approved by gsd-ui-checker (6/6 PASS, 3 non-blocking recommendations)
+Resume file: .planning/phases/01.5-ui-redesign-inserted/01.5-UI-SPEC.md
+Next command: `/gsd-plan-phase 1.5` — produce atomic plan files from the UI-SPEC contract
