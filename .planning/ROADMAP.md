@@ -43,7 +43,7 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
 **Goal**: The live landing page renders pixel-faithful to the `Landing.html` Claude Design prototype — hero wordmark, italic-emphasis headline, ink-separator, pill form with mono CTA, 5-digit flip-card counter, animated success card, 3-column How-it-Works step cards, peer-reviewed Research section, restyled FirstLetter (multi-step write→seal with typewriter and paper pad), restyled FAQ, restyled footer — without breaking the Phase 1 Supabase data layer.
 **Depends on**: Phase 1
 **Inserted because**: The React `src/App.tsx` handed over to GSD was an older scaffold byte-identical to the bundle's `project/src/App.tsx`, not the iterated `Landing.html` prototype. The bundle's own README mandates recreating the HTML prototype pixel-perfectly in React. Wiring Phase 2's signup form into the current (old) UI would force a re-wire after the redesign — inserting the redesign here avoids that waste.
-**Requirements** (to be finalized in `/gsd-ui-phase`):
+**Requirements**:
   - UI-01: Hero matches `Landing.html` — wordmark size/font, italic-emphasis headline, ink separator PNG, pill form, mono CTA, hand-drawn tagline
   - UI-02: Counter rendered as 5-digit flip-card pattern with `Sign ups so far` label; preserves Phase 1's `getSignupCount()` data path and `?? 115` fallback
   - UI-03: Submit success state is the animated white card with checkmark stamp + "Write your first letter now" CTA (replaces the black pill)
@@ -60,7 +60,16 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   3. `npm run build` exits 0 with no new console errors or runtime warnings introduced.
   4. Email form submit still calls `joinWaitlistLocal()` (await shape preserved) so Phase 2 can drop in the real Edge Function call without UI rework.
   5. All four required PNG assets are present in the bundle (or replaced with documented placeholder treatments tracked as TODOs for Phase 5).
-**Plans**: TBD (will be produced by `/gsd-plan-phase 1.5` after `/gsd-ui-phase 1.5` writes UI-SPEC.md)
+**Plans**: 9 plans
+  - [ ] 01.5-01-PLAN.md — Asset pipeline + reference snapshot + index.html title (Wave 1)
+  - [ ] 01.5-02-PLAN.md — Tailwind v4 @theme tokens + 10 @keyframes + global CSS rules in src/index.css (Wave 1)
+  - [ ] 01.5-03-PLAN.md — Nav.tsx + Footer.tsx (Wave 2)
+  - [ ] 01.5-04-PLAN.md — WaitlistForm.tsx + WaitlistSuccessCard.tsx (Wave 2)
+  - [ ] 01.5-05-PLAN.md — Counter.tsx rewrite as 5-digit flip-card (Wave 2)
+  - [ ] 01.5-06-PLAN.md — HowItWorks.tsx + ResearchSection.tsx (Wave 2)
+  - [ ] 01.5-07-PLAN.md — Typewriter.tsx trim + FirstLetter.tsx 3-step state machine (Wave 2)
+  - [ ] 01.5-08-PLAN.md — FAQ.tsx restyle + 8 verbatim Q&A (Wave 2)
+  - [ ] 01.5-09-PLAN.md — App.tsx JSX rewrite + ShareButtons.tsx delete + npm run build + side-by-side parity check (Wave 3, autonomous: false)
 **UI hint**: yes
 
 ### Phase 2: Signup Flow
@@ -135,9 +144,11 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | ✅ Complete | 2026-05-28 |
-| 1.5. UI Redesign (INSERTED) | 0/TBD | Not started | - |
+| 1.5. UI Redesign (INSERTED) | 0/9 | Not started | - |
 | 2. Signup Flow | 0/TBD | Not started | - |
 | 3. Email Infrastructure | 0/TBD | Not started | - |
 | 4. Letter + Verify Flow | 0/TBD | Not started | - |
 | 5. Deploy & Polish | 0/TBD | Not started | - |
 | 6. Pre-launch QA | 0/TBD | Not started | - |
+</content>
+</invoke>
