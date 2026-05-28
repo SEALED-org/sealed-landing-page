@@ -83,7 +83,7 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   4. Re-signing up with the same email gracefully returns one of the four states (new / unverified / verified-no-letter / verified-with-letter) and shows the correct inline message.
   5. The form shows a visible loading state during submit and an inline error message on failure (no silent console errors).
 **Plans**: 5 plans
-  - [ ] 02-01-PLAN.md — .env.local fix + REQUIREMENTS.md SEC-02 amendment + @marsidev/react-turnstile@1.5.2 install (Wave 1)
+  - [x] 02-01-PLAN.md — .env.local fix + REQUIREMENTS.md SEC-02 amendment + @marsidev/react-turnstile@1.5.2 install (Wave 1)
   - [ ] 02-02-PLAN.md — Migration 0032_signup_attempts.sql in sibling repo (Wave 1)
   - [ ] 02-03-PLAN.md — join-waitlist Edge Function (deno.json + index.ts) in sibling repo (Wave 1)
   - [ ] 02-04-PLAN.md — HANDOFF-PROMPT.md + HALT until Nour deploys migration + function + Turnstile secret (Wave 1, autonomous: false)
