@@ -13,7 +13,7 @@
 ### Security & Spam Defense
 
 - [ ] **SEC-01**: Cloudflare Turnstile (invisible CAPTCHA) validates every form submission before any DB writes — users never see or interact with it
-- [ ] **SEC-02**: Server-side IP rate limit of 1 signup attempt per day per IP enforced in the Edge Function
+- [ ] **SEC-02**: Server-side IP rate limit of 3 signup attempts per rolling 24h per IP enforced in the Edge Function *(Amended Phase 2 per 02-CONTEXT.md D-05 — rationale: NAT/shared-IP false positives; Turnstile remains the primary bot defense.)*
 - [ ] **SEC-03**: Signup endpoint only creates DB records if Turnstile verification passes
 - [ ] **SEC-04**: Supabase service role key is never exposed to the client (Edge Function only)
 - [ ] **SEC-05**: Email verification gate — letters are only scheduled for delivery after the user clicks the verification link (prevents letter-bombing arbitrary emails). Waitlist-only signups do NOT require verification.
