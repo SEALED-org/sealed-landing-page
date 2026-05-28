@@ -82,7 +82,12 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   3. Submitting with Turnstile disabled or tampered fails server-side and writes no DB rows; the `VITE_*` env contains only the anon key and Turnstile site key — no service role key in the client bundle.
   4. Re-signing up with the same email gracefully returns one of the four states (new / unverified / verified-no-letter / verified-with-letter) and shows the correct inline message.
   5. The form shows a visible loading state during submit and an inline error message on failure (no silent console errors).
-**Plans**: TBD
+**Plans**: 5 plans
+  - [ ] 02-01-PLAN.md — .env.local fix + REQUIREMENTS.md SEC-02 amendment + @marsidev/react-turnstile@1.5.2 install (Wave 1)
+  - [ ] 02-02-PLAN.md — Migration 0032_signup_attempts.sql in sibling repo (Wave 1)
+  - [ ] 02-03-PLAN.md — join-waitlist Edge Function (deno.json + index.ts) in sibling repo (Wave 1)
+  - [ ] 02-04-PLAN.md — HANDOFF-PROMPT.md + HALT until Nour deploys migration + function + Turnstile secret (Wave 1, autonomous: false)
+  - [ ] 02-05-PLAN.md — Client wiring (supabase.ts + messages.ts + WaitlistForm + FirstLetter + App.tsx) + end-to-end verification (Wave 2, autonomous: false)
 **UI hint**: yes
 
 ### Phase 3: Email Infrastructure
@@ -145,10 +150,8 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | ✅ Complete | 2026-05-28 |
 | 1.5. UI Redesign (INSERTED) | 0/9 | Not started | - |
-| 2. Signup Flow | 0/TBD | Not started | - |
+| 2. Signup Flow | 0/5 | Not started | - |
 | 3. Email Infrastructure | 0/TBD | Not started | - |
 | 4. Letter + Verify Flow | 0/TBD | Not started | - |
 | 5. Deploy & Polish | 0/TBD | Not started | - |
 | 6. Pre-launch QA | 0/TBD | Not started | - |
-</content>
-</invoke>
