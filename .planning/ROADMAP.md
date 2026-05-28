@@ -61,8 +61,8 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   4. Email form submit still calls `joinWaitlistLocal()` (await shape preserved) so Phase 2 can drop in the real Edge Function call without UI rework.
   5. All four required PNG assets are present in the bundle (or replaced with documented placeholder treatments tracked as TODOs for Phase 5).
 **Plans**: 9 plans
-  - [ ] 01.5-01-PLAN.md — Asset pipeline + reference snapshot + index.html title (Wave 1)
-  - [ ] 01.5-02-PLAN.md — Tailwind v4 @theme tokens + 10 @keyframes + global CSS rules in src/index.css (Wave 1)
+  - [x] 01.5-01-PLAN.md — Asset pipeline + reference snapshot + index.html title (Wave 1)
+  - [x] 01.5-02-PLAN.md — Tailwind v4 @theme tokens + 10 @keyframes + global CSS rules in src/index.css (Wave 1)
   - [ ] 01.5-03-PLAN.md — Nav.tsx + Footer.tsx (Wave 2)
   - [ ] 01.5-04-PLAN.md — WaitlistForm.tsx + WaitlistSuccessCard.tsx (Wave 2)
   - [ ] 01.5-05-PLAN.md — Counter.tsx rewrite as 5-digit flip-card (Wave 2)
