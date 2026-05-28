@@ -85,7 +85,7 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
 **Plans**: 5 plans
   - [x] 02-01-PLAN.md — .env.local fix + REQUIREMENTS.md SEC-02 amendment + @marsidev/react-turnstile@1.5.2 install (Wave 1)
   - [x] 02-02-PLAN.md — Migration 0032_signup_attempts.sql in sibling repo (Wave 1)
-  - [ ] 02-03-PLAN.md — join-waitlist Edge Function (deno.json + index.ts) in sibling repo (Wave 1)
+  - [x] 02-03-PLAN.md — join-waitlist Edge Function (deno.json + index.ts) in sibling repo (Wave 1)
   - [ ] 02-04-PLAN.md — HANDOFF-PROMPT.md + HALT until Nour deploys migration + function + Turnstile secret (Wave 1, autonomous: false)
   - [ ] 02-05-PLAN.md — Client wiring (supabase.ts + messages.ts + WaitlistForm + FirstLetter + App.tsx) + end-to-end verification (Wave 2, autonomous: false)
 **UI hint**: yes
