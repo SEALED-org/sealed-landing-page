@@ -10,7 +10,6 @@ export const typewriterPhrases = [
   "To celebrate a recent win",
   "So future you has something to open when things get heavy",
   "Because a chapter is ending and you want to close it with intention",
-  "To realize one day you were exactly where you needed to be",
   "From the version of you who is doing it scared",
   "To capture what you're feeling before life moves too fast",
   "For the adventure you're about to take",
@@ -55,7 +54,7 @@ export default function Typewriter({ phrases, className }: TypewriterProps) {
   return (
     <span className={`inline-block ${className || ""}`}>
       {currentText}
-      <span className="animate-pulse ml-1">|</span>
+      <span className="fl-caret" aria-hidden="true">|</span>
     </span>
   );
 }
