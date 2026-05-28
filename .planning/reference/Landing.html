@@ -1,0 +1,1966 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SEALED — Some letters are worth waiting for.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital,wght@0,400;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --paper: #fefcf8;
+    --off-white: #FDFCF9;
+    --ink: #000;
+    --ink-70: rgba(0,0,0,0.70);
+    --ink-50: rgba(0,0,0,0.50);
+    --ink-35: rgba(0,0,0,0.35);
+    --ink-20: rgba(0,0,0,0.20);
+    --ink-10: rgba(0,0,0,0.10);
+    --ink-06: rgba(0,0,0,0.06);
+    --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-serif: "Instrument Serif", Georgia, serif;
+    --font-mono: "Space Mono", ui-monospace, monospace;
+
+    /* Type scale (responsive, tightened — no orphan jumps) */
+    --t-eyebrow:  11px;
+    --t-meta:     12px;
+    --t-body:     17px;
+    --t-body-sm:  15px;
+    --t-lede:     clamp(18px, 1.6vw, 22px);
+    --t-h3:       clamp(22px, 2.2vw, 28px);
+    --t-h2:       clamp(34px, 4vw, 52px);
+    --t-h1:       clamp(48px, 7.5vw, 96px);
+    --t-mark:     clamp(80px, 13vw, 132px);
+
+    --shell:      1180px;
+    --narrow:     760px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+  ::selection { background: #000; color: #fff; }
+  img { max-width: 100%; display: block; }
+  button { font-family: inherit; cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+
+  /* Subtle paper grain everywhere */
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100;
+    background-image:
+      radial-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+      radial-gradient(rgba(0,0,0,0.018) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 1px;
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+  }
+
+  /* ─── Shared atoms ─────────────────────────────────────────── */
+  .shell  { max-width: var(--shell);  margin: 0 auto; padding: 0 28px; }
+  .narrow { max-width: var(--narrow); margin: 0 auto; padding: 0 28px; }
+  .stamp {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: var(--t-eyebrow); text-transform: uppercase;
+    letter-spacing: 0.22em;
+  }
+  .meta {
+    font-family: var(--font-mono); font-weight: 400;
+    font-size: var(--t-meta); letter-spacing: 0.04em;
+    color: var(--ink-50);
+  }
+  .serif { font-family: var(--font-serif); }
+  .it    { font-style: italic; }
+
+  /* Section header pattern: § number, label, hairlines  */
+  .eyebrow {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 0 auto 28px;
+    color: var(--ink-50);
+  }
+  .eyebrow .rule { flex: 1; max-width: 64px; height: 1px; background: var(--ink-20); }
+  .eyebrow .sym  { font-family: var(--font-serif); font-style: italic; opacity: 0.5; }
+
+  /* Asterism ornament — used as soft section separator */
+  .ornament {
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    color: var(--ink-35);
+    font-family: var(--font-serif); font-size: 18px;
+    margin: 0;
+  }
+  .ornament .rule { width: 56px; height: 1px; background: var(--ink-20); }
+
+  .hero-separator {
+    display: block; width: clamp(260px, 48%, 480px);
+    height: auto; aspect-ratio: 2572 / 190;
+    margin: 4px auto 28px; opacity: 0.85;
+  }
+
+  /* ─── Nav ──────────────────────────────────────────────────── */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+    padding: 16px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(254,252,248,0.72);
+    backdrop-filter: blur(10px) saturate(120%);
+    border-bottom: 1px solid var(--ink-06);
+  }
+  nav.top .mark {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 22px; letter-spacing: 0.12em;
+  }
+  nav.top .nav-meta {
+    display: none; gap: 18px; align-items: center;
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--ink-50);
+  }
+  @media (min-width: 720px) { nav.top .nav-meta { display: flex; } }
+  nav.top .join {
+    border: 0; background: transparent; padding: 8px 0;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.18em;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: opacity 0.2s;
+  }
+  nav.top .join:hover { opacity: 0.55; }
+  nav.top .join .arrow { font-family: var(--font-serif); font-style: italic; opacity: 0.6; }
+
+  /* ─── Hero ─────────────────────────────────────────────────── */
+  header.hero {
+    padding: 132px 24px 48px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero-inner { max-width: 960px; margin: 0 auto; position: relative; z-index: 1; }
+  /* Stamp pair at top */
+  .hero-stamps {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; margin: 0 auto 56px;
+    max-width: 720px; color: var(--ink-50);
+  }
+  .hero-stamps .center {
+    flex: 1; height: 1px; background: var(--ink-20);
+    position: relative;
+  }
+  .hero-stamps .center::before {
+    content: '✦'; position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--paper); padding: 0 12px;
+    color: var(--ink-35); font-size: 12px;
+  }
+  .wordmark {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: var(--t-mark);
+    letter-spacing: -0.02em; line-height: 0.9;
+    margin: 0 0 8px;
+  }
+  .hero-byline {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: clamp(15px, 1.4vw, 18px);
+    color: var(--ink-50);
+    margin: 0 0 56px;
+  }
+  h1.headline {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: var(--t-h1);
+    line-height: 0.98; letter-spacing: -0.025em;
+    margin: 0 0 24px; text-wrap: balance;
+  }
+  h1.headline em { font-style: italic; }
+  .tagline {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: var(--t-lede);
+    color: var(--ink-50);
+    margin: 0 auto 44px;
+    max-width: 560px;
+    text-wrap: balance;
+  }
+
+  /* Hero envelope decoration */
+  .hero-env {
+    position: absolute; left: 50%; bottom: -90px;
+    transform: translateX(-50%);
+    width: min(420px, 80vw); aspect-ratio: 7/5;
+    opacity: 0.06; pointer-events: none;
+  }
+  .hero-env svg { width: 100%; height: 100%; }
+
+  .hero-tagline {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: clamp(17px, 1.6vw, 21px);
+    color: var(--ink-50); margin: 20px auto 28px;
+    max-width: 480px; line-height: 1.55; text-wrap: pretty;
+  }
+
+  /* Form */
+  form.waitlist {
+    max-width: 580px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 8px;
+    position: relative; z-index: 2;
+  }
+  @media (min-width: 540px) { form.waitlist { flex-direction: row; } }
+  form.waitlist input[type=email] {
+    flex: 1; padding: 14px 22px;
+    border: 1px solid var(--ink-10); border-radius: 999px;
+    background: #fff; font: inherit; font-size: 16px;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  form.waitlist input[type=email]:focus {
+    border-color: #000;
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.04);
+  }
+  .btn-primary {
+    background: #000; color: #fff;
+    border: 0; border-radius: 999px;
+    padding: 14px 28px;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.18em;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    white-space: nowrap; transition: transform 0.2s, background 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-1px); background: #1a1a1a; }
+
+  /* ─── Waitlist success card (replaces form on submit) ──── */
+  form.waitlist.is-submitted { display: none; }
+  .waitlist-success {
+    max-width: 580px; margin: 0 auto;
+    position: relative; z-index: 2;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+    pointer-events: none;
+    display: none;
+  }
+  .waitlist-success.is-mounted { display: block; }
+  .waitlist-success.is-visible {
+    opacity: 1; transform: translateY(0);
+    pointer-events: auto;
+  }
+  .wls-card {
+    background: #fff;
+    border: 1px solid var(--ink-10);
+    border-radius: 18px;
+    padding: 22px 26px 20px;
+    box-shadow: 0 1px 0 var(--ink-06), 0 22px 56px -32px rgba(0,0,0,0.22);
+    position: relative; overflow: hidden;
+    text-align: left;
+  }
+  .wls-card::before {
+    content: ''; position: absolute; top: -54px; right: -54px;
+    width: 108px; height: 108px;
+    border: 1px dashed var(--ink-20);
+    border-radius: 999px;
+    opacity: 0.45; pointer-events: none;
+  }
+  .wls-head { display: flex; align-items: center; gap: 16px; }
+  .wls-mark {
+    width: 42px; height: 42px; flex-shrink: 0;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+  }
+  .waitlist-success.is-visible .wls-mark {
+    animation: wls-stamp 0.5s cubic-bezier(0.34, 1.46, 0.64, 1) 0.15s both;
+  }
+  @keyframes wls-stamp {
+    0%   { transform: scale(0.4); opacity: 0; }
+    100% { transform: scale(1);   opacity: 1; }
+  }
+  .wls-title {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(22px, 3.2vw, 28px);
+    line-height: 1.05; letter-spacing: -0.01em;
+  }
+  .wls-title em { font-style: italic; color: var(--ink-70); }
+  .wls-meta {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--ink-50); margin: 4px 0 0;
+  }
+  .wls-meta .num { color: var(--ink); }
+  .wls-divider {
+    height: 1px; margin: 18px 0 14px;
+    background: linear-gradient(90deg, transparent, var(--ink-10) 20%, var(--ink-10) 80%, transparent);
+  }
+  .wls-next {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-serif); font-style: italic;
+    font-size: clamp(17px, 2vw, 20px);
+    color: var(--ink);
+    background: none; border: none; padding: 6px 0; margin: 0;
+    cursor: pointer; text-align: left;
+    transition: gap 0.25s ease, opacity 0.2s;
+  }
+  .wls-next:hover { gap: 16px; opacity: 0.78; }
+  .wls-next .arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px;
+    border: 1px solid var(--ink-20); border-radius: 999px;
+    font-family: var(--font-sans); font-style: normal; font-size: 13px;
+    line-height: 1;
+    animation: wls-bob 1.6s ease-in-out infinite;
+  }
+  @keyframes wls-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(3px); }
+  }
+
+  .live-row {
+    margin-top: 24px;
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--ink-50);
+  }
+  .live-dot { position: relative; display: inline-flex; width: 8px; height: 8px; }
+  .live-dot::before {
+    content: ''; position: absolute; inset: 0; border-radius: 4px;
+    background: #4ade80; opacity: 0.75; animation: ping 1.6s cubic-bezier(0,0,0.2,1) infinite;
+  }
+  .live-dot::after {
+    content: ''; position: relative; display: inline-block;
+    width: 8px; height: 8px; border-radius: 4px; background: #22c55e;
+  }
+  .vsep { width: 1px; height: 12px; background: var(--ink-20); }
+  @keyframes ping { 75%, 100% { transform: scale(2.4); opacity: 0; } }
+
+  /* Trust strip below the hero CTA */
+  .trust-strip {
+    display: grid; gap: 12px; margin-top: 64px;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 720px; margin-left: auto; margin-right: auto;
+    border-top: 1px solid var(--ink-10);
+    border-bottom: 1px solid var(--ink-10);
+    padding: 22px 0;
+  }
+  .trust-strip .cell {
+    text-align: center;
+    border-right: 1px solid var(--ink-10);
+  }
+  .trust-strip .cell:last-child { border-right: 0; }
+  .trust-strip .num {
+    font-family: var(--font-serif); font-size: 26px; line-height: 1;
+    letter-spacing: -0.01em; margin-bottom: 6px;
+  }
+  .trust-strip .lab {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.18em;
+    color: var(--ink-50);
+  }
+  @media (max-width: 520px) {
+    .trust-strip { grid-template-columns: 1fr; }
+    .trust-strip .cell { border-right: 0; border-bottom: 1px solid var(--ink-10); padding-bottom: 14px; }
+    .trust-strip .cell:last-child { border-bottom: 0; padding-bottom: 0; }
+  }
+
+  /* ─── Section divider ─────────────────────────────────────── */
+  .section-divider {
+    padding: 8px 24px 0;
+    display: flex; justify-content: center;
+  }
+  .section-divider .inner {
+    width: 100%; max-width: var(--shell);
+    display: flex; align-items: center; justify-content: center;
+    gap: 18px; padding: 48px 0;
+  }
+  .section-divider .rule { flex: 1; height: 1px; background: var(--ink-20); }
+  .section-divider .sym {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 16px; color: var(--ink-50);
+    letter-spacing: 0.18em; text-transform: uppercase;
+  }
+
+  /* ─── How it Works ────────────────────────────────────────── */
+  section.how {
+    padding: 32px 24px 96px;
+  }
+  @media (min-width: 768px) { section.how { padding: 96px 24px 128px; } }
+  .how-inner { max-width: var(--shell); margin: 0 auto; text-align: center; }
+
+  .how-eyebrow, .research-eyebrow {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 0 auto 28px;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--ink-50);
+  }
+  .how-eyebrow .rule, .research-eyebrow .rule {
+    flex: 0 1 64px; height: 1px; background: var(--ink-20);
+  }
+  .how-h {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(36px, 5vw, 64px); line-height: 1.0;
+    letter-spacing: -0.015em; margin: 0 0 64px;
+    color: var(--ink); text-wrap: balance;
+  }
+  .how-h em { font-style: italic; color: var(--ink-70); }
+
+  .steps-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  @media (min-width: 860px) {
+    .steps-row { grid-template-columns: repeat(3, 1fr); gap: 40px; align-items: start; }
+  }
+  .step-card {
+    display: flex; flex-direction: column; align-items: center;
+    text-align: left;
+  }
+  .step-screenshot {
+    width: 100%; max-width: 280px;
+    aspect-ratio: 230 / 340;
+    background: linear-gradient(180deg, #f5f1ea 0%, #ede7dc 100%);
+    border: 1px solid var(--ink-10);
+    border-radius: 14px;
+    padding: 18px 18px 0;
+    margin-bottom: 28px;
+    overflow: hidden;
+    position: relative;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.6),
+      0 24px 60px -28px rgba(31,26,20,0.32),
+      0 2px 8px rgba(31,26,20,0.06);
+    transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+  }
+  .step-card:hover .step-screenshot { transform: translateY(-6px); }
+  .step-screenshot img {
+    width: 100%; height: 100%; display: block; object-fit: cover; object-position: top;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 8px 24px -12px rgba(0,0,0,0.18);
+  }
+  .step-meta {
+    width: 100%; max-width: 280px;
+  }
+  .step-n {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-35); margin-bottom: 12px;
+  }
+  .step-card h3 {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(25px, 2.5vw, 32px); line-height: 1.1;
+    margin: 0 0 10px; letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .step-card h3 em { font-style: italic; color: var(--ink-70); }
+  .step-card p {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 17px; line-height: 1.55;
+    color: var(--ink-50); margin: 0;
+    text-wrap: pretty;
+  }
+
+  /* ─── The Research ─────────────────────────────────────────── */
+  section.research {
+    padding: 88px 24px 96px;
+    background: var(--off-white);
+    border-top: 1px solid var(--ink-06);
+    border-bottom: 1px solid var(--ink-06);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Faint manuscript-margin hairlines */
+  section.research::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg, transparent 0, transparent 96px,
+      rgba(0,0,0,0.018) 96px, rgba(0,0,0,0.018) 97px
+    );
+    pointer-events: none;
+  }
+  .research-inner {
+    max-width: 1040px; margin: 0 auto;
+    position: relative; text-align: center;
+  }
+
+  section.research .research-eyebrow { margin-bottom: 28px; }
+
+  /* Headline */
+  .rs-headline {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(40px, 5.6vw, 72px);
+    line-height: 1.02; letter-spacing: -0.028em;
+    color: var(--ink);
+    margin: 0 auto 12px;
+    max-width: 740px;
+    text-wrap: balance;
+  }
+  .rs-headline em {
+    font-style: italic;
+    color: var(--ink);
+    position: relative;
+  }
+  .rs-headline em::after {
+    content: '';
+    position: absolute; left: 2%; right: 2%; bottom: -2px;
+    height: 5px;
+    background: rgba(0,0,0,0.07);
+    border-radius: 2px;
+    z-index: -1;
+  }
+  .rs-deck {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ink-35);
+    margin: 0 auto 56px;
+  }
+  .rs-deck .mark {
+    color: var(--ink); margin: 0 6px;
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 14px; font-weight: 400; letter-spacing: 0;
+    position: relative; top: 1px;
+  }
+
+  /* Stats poster band */
+  .rs-stats {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: stretch;
+    border-top: 1px solid var(--ink-20);
+    border-bottom: 1px solid var(--ink-20);
+    padding: 56px 0 52px;
+    margin: 0 auto 56px;
+    position: relative;
+  }
+  /* Corner ticks — feel like a registered document */
+  .rs-stats::before, .rs-stats::after,
+  .rs-tick-bl, .rs-tick-br {
+    content: ''; position: absolute;
+    width: 10px; height: 10px;
+    border-color: var(--ink); border-style: solid;
+  }
+  .rs-stats::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+  .rs-stats::after  { top: -1px; right: -1px; border-width: 1px 1px 0 0; }
+  .rs-tick-bl { bottom: -1px; left: -1px; border-width: 0 0 1px 1px; }
+  .rs-tick-br { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+
+  .rs-stat {
+    margin: 0;
+    padding: 0 12px;
+    display: flex; flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .rs-stat-tag {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--ink-50);
+    padding: 5px 11px;
+    border: 1px solid var(--ink-20);
+    border-radius: 999px;
+    background: var(--off-white);
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .rs-stat-tag .dot {
+    width: 5px; height: 5px; border-radius: 3px;
+    background: var(--ink);
+  }
+  .rs-stat-num {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(80px, 11vw, 140px);
+    line-height: 0.85; letter-spacing: -0.04em;
+    color: var(--ink);
+    font-variant-numeric: lining-nums tabular-nums;
+    display: inline-flex; align-items: baseline;
+  }
+  .rs-sign {
+    font-style: italic;
+    font-size: 0.34em;
+    color: var(--ink-50);
+    position: relative; top: -0.45em; line-height: 0;
+    margin-right: 0.05em;
+  }
+  .rs-pct {
+    font-style: italic;
+    font-size: 0.38em;
+    color: var(--ink-50);
+    margin-left: 0.04em;
+  }
+  .rs-stat figcaption {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: clamp(18px, 1.85vw, 22px);
+    line-height: 1.4;
+    color: var(--ink-70);
+    max-width: 300px;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .rs-ref {
+    font-family: var(--font-mono); font-style: normal;
+    font-size: 0.6em; font-weight: 700;
+    color: var(--ink); margin-left: 3px;
+    vertical-align: 0.55em;
+    letter-spacing: 0.06em;
+  }
+
+  /* Hairline divider between the two stats with editorial mark */
+  .rs-divider {
+    position: relative;
+    width: 1px;
+    background: var(--ink-20);
+    margin: 8px 24px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rs-divider-mark {
+    position: absolute;
+    background: var(--off-white);
+    padding: 10px 6px;
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 24px; line-height: 1;
+    color: var(--ink-35);
+  }
+
+  /* Rubber-stamp seal — playful authority */
+  .rs-stamp {
+    position: absolute;
+    top: -8px; right: -4px;
+    width: 110px; height: 110px;
+    transform: rotate(-13deg);
+    color: var(--ink);
+    opacity: 0.42;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .rs-stamp svg { display: block; width: 100%; height: 100%; }
+
+  /* Closing kicker */
+  .rs-kicker {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.35;
+    text-align: center;
+    color: var(--ink-70);
+    margin: 0 auto 36px;
+    max-width: 620px;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  .rs-kicker em {
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  /* Footnote citations */
+  .rs-refs {
+    list-style: none;
+    margin: 0 auto;
+    padding: 22px 0 0;
+    border-top: 1px solid var(--ink-10);
+    display: flex;
+    gap: 56px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 11px; line-height: 1.55;
+    color: var(--ink-50);
+    letter-spacing: 0.02em;
+    max-width: 880px;
+  }
+  .rs-refs li {
+    display: flex; align-items: flex-start; gap: 10px;
+    max-width: 380px; text-align: left;
+  }
+  .rs-refs .num {
+    font-weight: 700;
+    color: var(--paper);
+    background: var(--ink);
+    font-variant-numeric: tabular-nums;
+    width: 18px; height: 18px; border-radius: 4px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 10.5px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .rs-refs em {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 13px; color: var(--ink);
+    letter-spacing: 0; font-weight: 400;
+  }
+
+  @media (max-width: 760px) {
+    section.research { padding: 56px 20px 64px; }
+    .rs-stamp { width: 78px; height: 78px; top: -2px; right: 4px; }
+    .rs-stats {
+      grid-template-columns: 1fr;
+      padding: 36px 0 32px;
+      gap: 16px;
+    }
+    .rs-divider {
+      width: 100%; height: 1px;
+      margin: 24px 0;
+    }
+    .rs-divider-mark {
+      padding: 6px 14px;
+    }
+    .rs-stat { padding: 0; }
+    .rs-refs {
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+
+  /* ─── First Letter (interactive black section) ────────────── */
+  section.first-letter {
+    padding: 96px 24px 120px;
+    background: #000; color: #fff;
+    position: relative; overflow: hidden;
+  }
+  /* Subtle radial glow */
+  section.first-letter::before {
+    content: ''; position: absolute; left: 50%; top: -20%;
+    width: 900px; height: 900px; transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgba(255,255,255,0.06), transparent 70%);
+    pointer-events: none;
+  }
+  .fl-inner { max-width: 880px; margin: 0 auto; position: relative; }
+  .fl-eyebrow {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 0 0 28px;
+    color: rgba(255,255,255,0.95);
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.22em;
+  }
+  .fl-eyebrow .rule { width: 56px; height: 1px; background: rgba(255,255,255,0.55); }
+  .fl-head { text-align: center; margin: 0 0 56px; }
+  .fl-head h2 {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(44px, 6vw, 80px); line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin: 0; text-wrap: balance;
+  }
+  .fl-head h2 em { font-style: italic; }
+  .fl-head p {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: clamp(16px, 1.5vw, 19px);
+    color: rgba(255,255,255,0.6);
+    margin: 12px 0 0;
+  }
+  .fl-head p strong { font-style: normal; color: rgba(255,255,255,0.9); font-weight: 400; }
+  .fl-pad {
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 28px 32px 24px;
+    min-height: 440px;
+    display: flex; flex-direction: column;
+    overflow: visible;
+    box-shadow: 0 40px 80px -20px rgba(0,0,0,0.6), 0 2px 0 rgba(255,255,255,0.04);
+  }
+  .fl-pad-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://i.postimg.cc/yWZ0XSgh/lightpaper.jpg');
+    background-size: cover; background-position: center;
+    pointer-events: none;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  /* Stationery header */
+  .fl-pad-head {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.10);
+    margin-bottom: 18px;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: rgba(0,0,0,0.45);
+  }
+  .fl-pad-head .salut {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 18px; text-transform: none; letter-spacing: 0;
+    color: rgba(0,0,0,0.7); font-weight: 400;
+  }
+  .fl-pad-content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
+  .fl-pad-body {
+    position: relative; flex: 1;
+    min-height: 220px;
+    display: flex; flex-direction: column;
+  }
+  .fl-typewriter {
+    position: absolute; top: 0; left: 0; right: 0;
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 24px;
+    line-height: 1.65; color: rgba(0,0,0,0.32);
+    pointer-events: none;
+  }
+  .fl-typewriter .caret {
+    animation: blink 1.1s steps(1) infinite;
+    margin-left: 2px; color: rgba(0,0,0,0.45);
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  textarea.fl-textarea {
+    flex: 1; width: 100%;
+    background: transparent; border: 0; outline: none; resize: none;
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 22px;
+    line-height: 1.65; color: rgba(0,0,0,0.92);
+    letter-spacing: 0.005em;
+    margin-top: 0; padding: 0;
+    position: relative; z-index: 2;
+    min-height: 200px; overflow: hidden;
+  }
+  .fl-pad-foot {
+    position: relative; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 16px;
+    margin-top: 20px;
+    border-top: 1px solid rgba(0,0,0,0.10);
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em;
+    color: rgba(0,0,0,0.35);
+  }
+  .fl-pad-foot .sign {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 14px; text-transform: none; letter-spacing: 0;
+    color: rgba(0,0,0,0.5); font-weight: 400;
+  }
+  .fl-cta {
+    margin-top: 24px; width: 100%;
+    background: var(--paper); color: #000;
+    border: 0; border-radius: 999px;
+    padding: 22px 24px;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 13px; text-transform: uppercase; letter-spacing: 0.22em;
+    display: flex; align-items: center; justify-content: center; gap: 14px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .fl-cta:hover:not(:disabled) { opacity: 0.92; transform: translateY(-1px); }
+  .fl-cta:disabled { opacity: 0.35; cursor: not-allowed; }
+  /* Multi-step letter flow */
+  .fl-stage { position: relative; }
+  .fl-step { transition: opacity 0.4s ease, transform 0.4s ease; }
+  .fl-step-hidden {
+    display: none;
+    opacity: 0; transform: translateY(12px);
+  }
+  .fl-step-entering {
+    display: block;
+    animation: stepIn 0.4s ease forwards;
+  }
+  .fl-step-leaving {
+    animation: stepOut 0.3s ease forwards;
+  }
+  @keyframes stepIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes stepOut {
+    from { opacity: 1; transform: translateY(0); }
+    to   { opacity: 0; transform: translateY(-10px); }
+  }
+
+  /* Email step — envelope */
+  .fl-pad-email {
+    min-height: 400px;
+    background: #faf7f1;
+    border-color: rgba(0,0,0,0.12);
+  }
+  .fl-pad-email .fl-pad-bg { display: none; }
+
+  .fl-stamps {
+    position: absolute; top: 14px; left: 14px;
+    display: flex; flex-direction: row; gap: 0;
+    align-items: flex-start; z-index: 3;
+  }
+  .fl-stamps-right {
+    position: absolute; top: 14px; right: 14px;
+    display: flex; flex-direction: row; gap: 0;
+    align-items: flex-start; z-index: 3;
+  }
+  .fl-stamp { display: block; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.14)); position: relative; }
+  .fl-stamps-right > svg:nth-child(1) { z-index: 3; }
+  .fl-stamps-right > svg:nth-child(2) { z-index: 2; margin-left: -18px; }
+  @media (max-width: 520px) {
+    .fl-stamps { transform: scale(0.65); transform-origin: top left; }
+    .fl-stamps-right { transform: scale(0.65); transform-origin: top right; }
+  }
+
+  .fl-env-return {
+    position: absolute; top: 20px; left: 24px; z-index: 3;
+    font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.22em;
+    color: rgba(0,0,0,0.26);
+  }
+
+  .fl-address-block {
+    display: flex; flex-direction: column; gap: 12px;
+    width: 100%; max-width: 520px; margin: 0 auto;
+  }
+  .fl-address-label {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.16em;
+    color: rgba(0,0,0,0.55);
+  }
+  .fl-address-subnote {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 15px; color: rgba(0,0,0,0.55);
+    margin-top: -4px;
+  }
+  .fl-address-subnote strong { font-style: normal; color: rgba(0,0,0,0.85); font-weight: 600; }
+  .fl-address-to-row {
+    display: flex; align-items: baseline; gap: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.10);
+    padding-bottom: 10px;
+  }
+  .fl-address-to-label {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: rgba(0,0,0,0.28); flex-shrink: 0; padding-bottom: 6px;
+  }
+  .fl-email-field {
+    flex: 1; border: 0; outline: none; background: transparent;
+    font-family: var(--font-serif); font-style: italic;
+    font-size: clamp(22px, 3.2vw, 30px); line-height: 1.3;
+    color: rgba(0,0,0,0.82); letter-spacing: 0.01em;
+    padding: 4px 0; caret-color: rgba(0,0,0,0.55);
+  }
+  .fl-email-field::placeholder { color: rgba(0,0,0,0.16); font-style: italic; }
+
+  .fl-env-actions {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 14px; margin-top: 8px;
+    border-top: 1px solid rgba(0,0,0,0.07);
+  }
+  .fl-email-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 13px 24px;
+    background: rgba(0,0,0,0.88); color: #faf7f1;
+    border: 0; border-radius: 999px;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.18em;
+    cursor: pointer; transition: transform 0.2s, background 0.2s;
+  }
+  .fl-email-btn:hover { transform: translateY(-1px); background: #000; }
+  .fl-back {
+    background: transparent; border: 0;
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.18em;
+    color: rgba(0,0,0,0.3); cursor: pointer;
+    transition: color 0.2s; padding: 4px 0;
+  }
+  .fl-back:hover { color: rgba(0,0,0,0.6); }
+
+  .fl-arrow-btn {
+    flex-shrink: 0;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(0,0,0,0.88); color: #faf7f1;
+    border: 0; font-size: 20px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: transform 0.2s, background 0.2s;
+  }
+  .fl-arrow-btn:hover { transform: scale(1.08); background: #000; }
+
+  /* Success step — envelope back with wax seal */
+  .fl-pad-success {
+    min-height: 440px;
+    background: #faf7f1;
+    border-color: rgba(0,0,0,0.12);
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .fl-pad-success .fl-pad-bg { display: none; }
+  .fl-env-back {
+    position: relative; width: 100%; height: 440px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .fl-env-flap {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .fl-wax-seal {
+    position: relative; z-index: 2;
+    transform: translateY(40px);
+    animation: waxDrop 0.95s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .fl-wax-seal img { display: block; }
+  @keyframes waxDrop {
+    0%   { transform: translateY(-60px) scale(0.6) rotate(-18deg); opacity: 0; }
+    55%  { transform: translateY(50px) scale(1.1) rotate(-3deg); opacity: 1; }
+    100% { transform: translateY(40px) scale(1) rotate(0deg); opacity: 1; }
+  }
+  .fl-env-caption {
+    position: absolute; left: 0; right: 0; bottom: 28px;
+    text-align: center; z-index: 2;
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 16px;
+    color: rgba(0,0,0,0.5);
+  }
+  .fl-env-caption strong { font-style: normal; color: rgba(0,0,0,0.82); font-weight: 600; }
+  .fl-success-seal { animation: sealDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) both; }
+  .fl-success-h {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(28px, 3.5vw, 40px);
+    letter-spacing: -0.02em; line-height: 1.05;
+    color: rgba(0,0,0,0.92); margin: 8px 0 0;
+  }
+  .fl-success-p {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 17px; color: rgba(0,0,0,0.55);
+    line-height: 1.6; margin: 12px 0 0;
+  }
+  .fl-success-p strong { font-style: normal; color: rgba(0,0,0,0.8); font-weight: 400; }
+
+  .fl-promise {
+    margin-top: 18px; text-align: center;
+    font-family: var(--font-mono); font-size: 12.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.14em;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    flex-wrap: wrap;
+  }
+  .fl-promise .sep {
+    width: 4px; height: 4px; border-radius: 2px;
+    background: rgba(255,255,255,0.25);
+  }
+
+  /* ─── Prototype CTA strip ─────────────────────────────────── */
+  section.proto {
+    padding: 96px 24px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink-06);
+  }
+  .proto-inner {
+    max-width: 860px; margin: 0 auto;
+    display: grid; gap: 32px;
+    grid-template-columns: 1fr;
+    align-items: center; justify-items: center;
+    text-align: center;
+  }
+  @media (min-width: 720px) {
+    .proto-inner { grid-template-columns: 1fr 1fr; text-align: left; justify-items: start; }
+    .proto-inner .right { justify-self: end; }
+  }
+  .proto h3 {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(28px, 3.4vw, 40px);
+    line-height: 1.05; letter-spacing: -0.02em;
+    margin: 0 0 12px; text-wrap: balance;
+  }
+  .proto h3 em { font-style: italic; }
+  .proto p {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: var(--t-body); color: var(--ink-50);
+    margin: 0; max-width: 380px;
+  }
+  .proto-cta {
+    display: inline-flex; align-items: center; gap: 14px;
+    padding: 16px 28px;
+    border: 1px solid var(--ink); border-radius: 999px;
+    background: transparent;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.2em;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+  }
+  .proto-cta:hover { background: var(--ink); color: var(--paper); transform: translateY(-1px); }
+  .proto-cta .arrow { font-family: var(--font-serif); font-style: italic; opacity: 0.7; font-size: 14px; }
+
+  /* ─── FAQ ─────────────────────────────────────────────────── */
+  section.faq {
+    padding: 96px 24px 112px;
+  }
+  .faq-inner { max-width: var(--narrow); margin: 0 auto; }
+  .faq-head {
+    text-align: center; margin: 0 0 64px;
+  }
+  .faq-head h2 {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: var(--t-h2);
+    line-height: 1.05; letter-spacing: -0.02em;
+    margin: 0 0 16px;
+  }
+  .faq-head p {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: var(--t-lede); color: var(--ink-50);
+    margin: 0;
+  }
+  .faq-list {
+    display: flex; flex-direction: column;
+    border-top: 1px solid var(--ink-10);
+  }
+  .faq-item {
+    border-bottom: 1px solid var(--ink-10);
+  }
+  .faq-q {
+    width: 100%; background: transparent; border: 0;
+    padding: 24px 4px;
+    display: grid; grid-template-columns: 28px 1fr 24px; gap: 16px;
+    align-items: center;
+    text-align: left; font-family: inherit;
+  }
+  .faq-q .num {
+    font-family: var(--font-mono); font-weight: 700;
+    letter-spacing: 0.18em; color: var(--ink-35);
+    font-size: 18.7px;
+  }
+  .faq-q .label {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(21px, 1.9vw, 25px);
+    letter-spacing: -0.005em;
+    transition: transform 0.25s ease;
+    transform-origin: left center;
+  }
+  .faq-q:hover .label { transform: translateX(4px); }
+  .faq-icon { width: 16px; height: 16px; flex-shrink: 0; transition: transform 0.3s; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    overflow: hidden; max-height: 0;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding-left: 44px; padding-right: 28px;
+  }
+  .faq-a-inner {
+    font-family: var(--font-serif); font-size: 19px;
+    line-height: 1.65; color: var(--ink-70);
+    padding-bottom: 24px;
+    text-wrap: pretty;
+    max-width: 560px;
+  }
+  .faq-item.open .faq-a { max-height: 600px; }
+
+  /* ─── Footer ──────────────────────────────────────────────── */
+  footer.foot {
+    padding: 80px 28px 40px;
+    background: #000; color: #fff;
+    position: relative; overflow: hidden;
+  }
+  footer.foot::before {
+    content: ''; position: absolute; left: 0; right: 0; top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  }
+  .foot-inner {
+    max-width: var(--shell); margin: 0 auto;
+    display: grid; gap: 56px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) {
+    .foot-inner { grid-template-columns: 1fr 1fr; gap: 48px; }
+  }
+  @media (min-width: 1040px) {
+    .foot-inner { grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 48px; }
+  }
+  .foot-brand .mark {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 56px; letter-spacing: -0.02em; line-height: 0.9;
+    margin-bottom: 16px;
+  }
+  .foot-brand .tag {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 17px; color: rgba(255,255,255,0.55);
+    max-width: 280px; line-height: 1.5;
+    margin-bottom: 24px;
+  }
+  .foot-brand .seal {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.35);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .foot-brand .seal::before {
+    content: ''; width: 8px; height: 8px; border-radius: 4px;
+    background: rgba(255,255,255,0.18);
+  }
+  .foot-col h4 {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.4);
+    margin: 0 0 20px;
+  }
+  .foot-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .foot-col a {
+    font-family: var(--font-serif); font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    transition: opacity 0.2s, transform 0.2s;
+    display: inline-block; white-space: nowrap;
+  }
+  .foot-col a:hover { opacity: 0.6; transform: translateX(2px); }
+  .foot-bottom {
+    max-width: var(--shell); margin: 56px auto 0;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; flex-direction: column; gap: 12px;
+    align-items: center; justify-content: space-between;
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+  }
+  @media (min-width: 640px) {
+    .foot-bottom { flex-direction: row; text-align: left; }
+  }
+
+  .social-list { flex-direction: row !important; gap: 16px !important; }
+  .social-list a {
+    width: 44px; height: 44px; border-radius: 999px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.85);
+    transition: background 0.2s, color 0.2s, transform 0.2s, border-color 0.2s;
+  }
+  .social-list a:hover {
+    background: #fff; color: #000; border-color: #fff; transform: translateY(-2px);
+  }
+
+  /* Dynamic count pill */
+  .count-pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 9px 16px 9px 14px;
+    background: #fff;
+    border: 1px solid var(--ink-10);
+    border-radius: 999px;
+    box-shadow: 0 1px 0 var(--ink-06);
+  }
+  .count-dot {
+    width: 7px; height: 7px; border-radius: 4px;
+    background: #22c55e; position: relative;
+  }
+  .count-dot::before {
+    content: ''; position: absolute; inset: -3px; border-radius: 999px;
+    background: #22c55e; opacity: 0.35;
+    animation: ping 1.8s cubic-bezier(0,0,0.2,1) infinite;
+  }
+  .count-num {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 18px; letter-spacing: -0.01em;
+    color: var(--ink); line-height: 1;
+    text-transform: none;
+    min-width: 1.6em; text-align: right;
+    display: inline-block;
+  }
+  .count-num.bump { animation: countBump 0.6s ease; }
+  @keyframes countBump {
+    0% { transform: translateY(0); color: var(--ink); }
+    35% { transform: translateY(-3px); color: #16a34a; }
+    100% { transform: translateY(0); color: var(--ink); }
+  }
+  .count-label {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--ink-70);
+  }
+
+  /* Digit-block counter */
+  .counter {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 14px;
+  }
+  .digit-row {
+    display: inline-flex; gap: 8px;
+  }
+  .digit {
+    position: relative;
+    width: 44px; height: 60px;
+    background: #fff;
+    border: 1px solid var(--ink-10);
+    border-radius: 8px;
+    box-shadow: 0 1px 0 var(--ink-06), inset 0 -2px 0 rgba(0,0,0,0.03);
+    overflow: hidden;
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: 36px; line-height: 60px; text-align: center;
+    color: var(--ink); letter-spacing: -0.01em;
+  }
+  .digit::after {
+    content: ''; position: absolute; left: 6px; right: 6px; top: 50%;
+    height: 1px; background: var(--ink-06); pointer-events: none;
+  }
+  .digit .d-cur, .digit .d-next {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .digit .d-next { transform: translateY(100%); }
+  .digit.flip .d-cur  { animation: digitOut 0.5s cubic-bezier(0.7,0,0.3,1) forwards; }
+  .digit.flip .d-next { animation: digitIn  0.5s cubic-bezier(0.7,0,0.3,1) forwards; }
+  @keyframes digitOut {
+    0%   { transform: translateY(0);     opacity: 1; }
+    100% { transform: translateY(-100%); opacity: 0; }
+  }
+  @keyframes digitIn {
+    0%   { transform: translateY(100%);  opacity: 0; }
+    100% { transform: translateY(0);     opacity: 1; }
+  }
+  .counter-label {
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.22em;
+    color: var(--ink-50);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .counter-label .dot {
+    width: 5px; height: 5px; border-radius: 0;
+    background: var(--ink-35);
+    transform: rotate(45deg);
+    position: relative;
+  }
+  }
+  .counter-label .dot::before { display: none; }
+    animation: ping 1.8s cubic-bezier(0,0,0.2,1) infinite;
+  }
+  @media (max-width: 480px) {
+    .digit { width: 38px; height: 52px; font-size: 30px; line-height: 52px; }
+  }
+
+  /* ── Mobile hero type scale ─────────────────────────────────────────── */
+  @media (max-width: 540px) {
+    :root {
+      --t-mark: clamp(48px, 14vw, 72px);
+      --t-h1:   clamp(32px, 10vw, 52px);
+    }
+    .hero-tagline { font-size: clamp(15px, 4vw, 19px) !important; line-height: 1.5; }
+    h1.headline { line-height: 1.05; margin: 0 0 16px; }
+    .wordmark { margin-bottom: 20px !important; }
+  }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal.d1 { transition-delay: 0.08s; }
+  .reveal.d2 { transition-delay: 0.16s; }
+  .reveal.d3 { transition-delay: 0.24s; }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="mark" data-comment-anchor="841f07b71e-div" style="font-weight: 500; font-size: 20px">SEALED</div>
+  <button class="join" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="font-weight: 500; font-size: 10px" data-comment-anchor="a03e998667-button">
+    Join Waitlist <span class="arrow">↑</span>
+  </button>
+</nav>
+
+<header class="hero" data-comment-anchor="b7f48790bb-header">
+  <div class="hero-inner reveal in">
+
+    <div class="wordmark" data-comment-anchor="ad8138316a-div" style="margin-bottom: 32px">SEALED</div>
+
+    <h1 class="headline" data-comment-anchor="05f028578d-h1">Some letters are<br/><em data-comment-anchor="97f6117c95-em">worth waiting for.</em></h1>
+    <p class="hero-tagline" data-comment-anchor="99868318ac-p">Write a letter to your future self.<br/>Sealed today, opened on the date you choose.</p>
+
+    <img src="assets/separator-ink.png" alt="" aria-hidden="true" width="2572" height="190" class="hero-separator" data-comment-anchor="d537164c0e-p" decoding="async" fetchpriority="high"/>
+
+    <form id="waitlist" class="waitlist" onsubmit="return handleSubscribe(event)">
+      <input type="email" placeholder="Your email address" required id="email-input" data-comment-anchor="66a8c3b4dc-input"/>
+      <button type="submit" class="btn-primary" id="submit-btn">
+        <span id="btn-label" data-comment-anchor="4e9fe858f5-span">Join the waitlist</span>
+        <svg id="btn-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </form>
+
+    <div id="waitlist-success" class="waitlist-success" aria-live="polite">
+      <div class="wls-card">
+        <div class="wls-head" data-comment-anchor="912bf41434-div">
+          <div class="wls-mark" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="wls-title">Added to waitlist.</div>
+          </div>
+        </div>
+        <div class="wls-divider"></div>
+        <button type="button" class="wls-next" onclick="scrollToFirstLetter()" data-comment-anchor="59cb8a2a75-button">
+          Write your first letter now
+          <span class="arrow" aria-hidden="true">↓</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="live-row" style="color:var(--ink-70);">
+      <div class="counter" data-comment-anchor="024033b79c-span">
+        <div class="digit-row" id="count" aria-label="Sign ups so far">
+          <div class="digit"><span class="d-cur">0</span><span class="d-next">0</span></div>
+          <div class="digit"><span class="d-cur">0</span><span class="d-next">0</span></div>
+          <div class="digit"><span class="d-cur">1</span><span class="d-next">1</span></div>
+          <div class="digit"><span class="d-cur">6</span><span class="d-next">6</span></div>
+          <div class="digit"><span class="d-cur">2</span><span class="d-next">2</span></div>
+        </div>
+        <div class="counter-label">
+          <span class="dot" aria-hidden="true" data-comment-anchor="9a2e94bf50-span"></span>
+          <span data-comment-anchor="deb7a29511-span">Sign ups so far</span>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</header>
+
+<div class="section-divider" aria-hidden="true">
+  <div class="inner" data-comment-anchor="114c20e26e-div">
+    <span class="rule" style="flex:1;width:auto"></span>
+  </div>
+  </div>
+</div>
+
+<section class="how" data-comment-anchor="c6db7ee410-section">
+  <div class="how-inner">
+    <div class="how-eyebrow reveal">
+      <span class="rule"></span>
+      <span>How it works</span>
+      <span class="rule"></span>
+    </div>
+    <h2 class="how-h reveal">Three steps. <em>One letter.</em></h2>
+
+    <div class="steps-row">
+      <div class="step-card reveal">
+        <div class="step-screenshot">
+          <img src="assets/step-write.png" alt="Writing a letter to your future self"/>
+        </div>
+        <div class="step-meta">
+          <h3><span style="opacity:0.38">01</span>&ensp;Write a letter to your future self.</h3>
+          <p>A hope, a fear, a prediction, a promise. Photos and voice notes welcome.</p>
+        </div>
+      </div>
+
+      <div class="step-card reveal d1">
+        <div class="step-screenshot">
+          <img src="assets/step-seal.png" alt="A sealed letter with a wax seal and countdown until delivery"/>
+        </div>
+        <div class="step-meta">
+          <h3 data-comment-anchor="1ae705d4ea-h3"><span style="opacity:0.38">02</span>&ensp;Seal it.</h3>
+          <p>Pick the date it opens — six months, a year, a decade. Locked until then.</p>
+        </div>
+      </div>
+
+      <div class="step-card reveal d2">
+        <div class="step-screenshot">
+          <img src="assets/step-open.png" alt="A mailbox of letters waiting to be opened on their delivery date" data-comment-anchor="8ae9b6bd88-img"/>
+        </div>
+        <div class="step-meta">
+          <h3 data-comment-anchor="1e09ebe585-h3"><span style="opacity:0.38">03</span>&ensp;Open it <em>when the time comes.</em></h3>
+          <p data-comment-anchor="bea33526c6-p">Meet your past self. Reflect on who you were when you wrote it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="research">
+  <div class="research-inner">
+
+    <!-- Peer-reviewed rubber stamp -->
+    <div class="rs-stamp reveal" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <defs>
+          <path id="rs-stamp-arc" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
+        </defs>
+        <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="1"/>
+        <circle cx="50" cy="50" r="33" fill="none" stroke="currentColor" stroke-width="0.6"/>
+        <text font-family='"Space Mono", monospace' font-size="5.4" font-weight="700"
+              fill="currentColor" letter-spacing="1.6">
+          <textPath href="#rs-stamp-arc" startOffset="0">PEER REVIEWED · METHODOLOGY · </textPath>
+        </text>
+        <text x="50" y="46" text-anchor="middle"
+              font-family='"Instrument Serif", serif' font-style="italic"
+              font-size="14" fill="currentColor">vetted</text>
+        <text x="50" y="60" text-anchor="middle"
+              font-family='"Space Mono", monospace' font-size="4.2" font-weight="700"
+              fill="currentColor" letter-spacing="1.4">N = 2 STUDIES</text>
+      </svg>
+    </div>
+
+    <div class="research-eyebrow reveal">
+      <span class="rule"></span>
+      <span>The science</span>
+      <span class="rule"></span>
+    </div>
+
+    <h2 class="rs-headline reveal">
+      Writing it down <em>actually works.</em>
+    </h2>
+    <p class="rs-deck reveal">
+      Two studies <span class="mark">·</span> one conclusion
+    </p>
+
+    <div class="rs-stats reveal d1">
+      <span class="rs-tick-bl" aria-hidden="true"></span>
+      <span class="rs-tick-br" aria-hidden="true"></span>
+
+      <figure class="rs-stat">
+        <span class="rs-stat-tag"><span class="dot"></span>Study 01</span>
+        <div class="rs-stat-num" data-comment-anchor="f64a60a138-div">
+          <span class="rs-sign">+</span>22<span class="rs-pct">%</span>
+        </div>
+        <figcaption>
+          Performance increase when goals are written.<sup class="rs-ref">1</sup>
+        </figcaption>
+      </figure>
+
+      <div class="rs-divider" aria-hidden="true">
+        <span class="rs-divider-mark">×</span>
+      </div>
+
+      <figure class="rs-stat">
+        <span class="rs-stat-tag"><span class="dot"></span>Study 02</span>
+        <div class="rs-stat-num">
+          <span class="rs-sign">+</span>42<span class="rs-pct">%</span>
+        </div>
+        <figcaption>
+          More likely to follow through on a written goal.<sup class="rs-ref">2</sup>
+        </figcaption>
+      </figure>
+    </div>
+
+    <p class="rs-kicker reveal d2" data-comment-anchor="1443a8b481-p">
+      Your brain treats a written commitment as a <em data-comment-anchor="9391f10b54-em">promise.</em>
+    </p>
+    </p>
+
+    <ol class="rs-refs reveal d2">
+      <li>
+        <span class="num">1</span>
+        <span>Schippers, Morisano, Locke &amp; Latham — <em>Contemporary Educational Psychology</em>, n = 2,928, 2020</span>
+      </li>
+      <li>
+        <span class="num">2</span>
+        <span>Matthews, PhD — <em>Dominican University of California</em>, n = 267, 2015</span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="first-letter" class="first-letter">
+  <div class="fl-inner">
+    <div class="fl-eyebrow">
+      <span class="rule"></span>
+      <span data-comment-anchor="670d7a6301-span">Try it now</span>
+      <span class="rule"></span>
+    </div>
+
+    <div class="fl-head reveal">
+      <h2>Your first letter <em>starts now.</em></h2>
+      <p class="fl-head-sub">Send a letter to your future self, and we'll deliver it on <strong style="background: rgba(255,255,255,0.18); border-radius: 3px; padding: 1px 5px;">January 1, 2027.</strong></p>
+    </div>
+
+    <div class="fl-stage reveal d1">
+      <!-- Step 1: Write -->
+      <div class="fl-step" id="fl-step-write">
+        <div class="fl-pad">
+          <div class="fl-pad-bg"></div>
+          <div class="fl-pad-content">
+            <div class="fl-pad-body" style="padding-top: 8px; font-size: 22px; font-weight: 600">
+              <div class="fl-typewriter" id="typewriter"><span id="tw-text"></span><span class="caret">|</span></div>
+              <textarea class="fl-textarea" id="fl-textarea" spellcheck="false" oninput="updateWordCount()"></textarea>
+            </div>
+            <div class="fl-pad-foot" style="justify-content:flex-start;">
+              <span id="fl-words" data-comment-anchor="b19b3d9f5e-span">0 words</span>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="fl-cta" id="fl-cta" disabled onclick="showEmailStep()">
+          
+          Seal &amp; send
+        </button>
+      </div>
+
+      <!-- Step 2: Email — envelope -->
+      <div class="fl-step fl-step-hidden" id="fl-step-email">
+        <div class="fl-pad fl-pad-email">
+
+          <!-- Stamp left -->
+          <div class="fl-stamps" aria-hidden="true">
+
+            <!-- Stamp 1: Wavy lines (cancellation style) -->
+            <svg class="fl-stamp" width="119" height="93" viewBox="0 0 160 120" fill="none" xmlns="http://www.w3.org/2000/svg" data-comment-anchor="a420643442-svg">
+              <rect x="2" y="2" width="156" height="116" rx="1.5" stroke="#2b35b0" stroke-width="1.4" stroke-dasharray="3 1.8"/>
+              <rect x="5" y="5" width="150" height="110" rx="0.5" stroke="#2b35b0" stroke-width="0.5" stroke-opacity="0.28"/>
+              <path fill="none" stroke="#2b35b0" stroke-width="1.9" stroke-linecap="round" d="
+                M8,16 C20,10 30,10 43,16 C56,22 66,22 79,16 C92,10 102,10 115,16 C128,22 138,22 152,16
+                M8,23 C20,17 30,17 43,23 C56,29 66,29 79,23 C92,17 102,17 115,23 C128,29 138,29 152,23
+                M8,30 C20,24 30,24 43,30 C56,36 66,36 79,30 C92,24 102,24 115,30 C128,36 138,36 152,30
+                M8,37 C20,31 30,31 43,37 C56,43 66,43 79,37 C92,31 102,31 115,37 C128,43 138,43 152,37
+                M8,44 C20,38 30,38 43,44 C56,50 66,50 79,44 C92,38 102,38 115,44 C128,50 138,50 152,44
+                M8,51 C20,45 30,45 43,51 C56,57 66,57 79,51 C92,45 102,45 115,51 C128,57 138,57 152,51
+                M8,58 C20,52 30,52 43,58 C56,64 66,64 79,58 C92,52 102,52 115,58 C128,64 138,64 152,58
+                M8,65 C20,59 30,59 43,65 C56,71 66,71 79,65 C92,59 102,59 115,65 C128,71 138,71 152,65
+                M8,72 C20,66 30,66 43,72 C56,78 66,78 79,72 C92,66 102,66 115,72 C128,78 138,78 152,72
+                M8,79 C20,73 30,73 43,79 C56,85 66,85 79,79 C92,73 102,73 115,79 C128,85 138,85 152,79
+                M8,86 C20,80 30,80 43,86 C56,92 66,92 79,86 C92,80 102,80 115,86 C128,92 138,92 152,86
+              "/>
+              <text x="80" y="110" text-anchor="middle" font-family="Space Mono, monospace" font-size="7.5" font-weight="700" fill="#2b35b0" letter-spacing="1.2">FIRST CLASS · SEALED</text>
+            </svg>
+
+          </div>
+
+          <!-- Stamps right -->
+          <div class="fl-stamps-right" aria-hidden="true">
+
+            <!-- Stamp 2: Circular -->
+            <svg class="fl-stamp" width="93" height="93" viewBox="0 0 130 130" fill="none" xmlns="http://www.w3.org/2000/svg" data-comment-anchor="6756b48b58-svg">
+              <defs>
+                <path id="sld-circ-top" d="M 12,65 A 53 53 0 0 1 118,65"/>
+                <path id="sld-circ-bot" d="M 12,65 A 53 53 0 0 0 118,65"/>
+              </defs>
+              <circle cx="65" cy="65" r="62" stroke="#2b35b0" stroke-width="1.5"/>
+              <circle cx="65" cy="65" r="54" stroke="#2b35b0" stroke-width="0.9" stroke-dasharray="2 2"/>
+              <circle cx="65" cy="65" r="46" stroke="#2b35b0" stroke-width="0.4" stroke-opacity="0.35"/>
+              <text font-family="Space Mono, monospace" font-size="8.5" font-weight="700" fill="#2b35b0" letter-spacing="2">
+                <textPath href="#sld-circ-top" startOffset="50%" text-anchor="middle">SEALED · FIRST CLASS ·</textPath>
+              </text>
+              <text x="65" y="64" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" font-weight="700" fill="#2b35b0" letter-spacing="0.5">MMXXVI</text>
+              <text x="65" y="79" text-anchor="middle" font-family="Space Mono, monospace" font-size="8" font-weight="700" fill="#2b35b0" letter-spacing="2.5">SEALED</text>
+              <text x="65" y="99" text-anchor="middle" font-size="12" fill="#2b35b0">★</text>
+              <text font-family="Space Mono, monospace" font-size="8.5" font-weight="700" fill="#2b35b0" letter-spacing="2">
+                <textPath href="#sld-circ-bot" startOffset="50%" text-anchor="middle">YOUR FUTURE SELF</textPath>
+              </text>
+            </svg>
+
+            <!-- Stamp 3: Hexagonal — rightmost -->
+            <svg class="fl-stamp" width="101" height="87" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg" data-comment-anchor="fa9bd3f8df-svg">
+              <defs>
+                <path id="sld-hex-top" d="M 40,26 Q 100,13 160,26"/>
+                <path id="sld-hex-bot" d="M 40,128 Q 100,143 160,128"/>
+              </defs>
+              <polygon points="40,18 160,18 192,80 160,142 40,142 8,80" stroke="#2b35b0" stroke-width="2.2" fill="none"/>
+              <polygon points="47,28 153,28 181,80 153,132 47,132 19,80" stroke="#2b35b0" stroke-width="0.7" fill="none" stroke-opacity="0.4"/>
+              <text font-family="Space Mono, monospace" font-size="10" font-weight="700" fill="#2b35b0" letter-spacing="1.8">
+                <textPath href="#sld-hex-top" startOffset="50%" text-anchor="middle">YOUR FIRST LETTER</textPath>
+              </text>
+              <text x="100" y="57" text-anchor="middle" font-size="13" fill="#2b35b0">✦</text>
+              <text x="23" y="85" text-anchor="middle" font-family="monospace" font-size="11" fill="#2b35b0">→</text>
+              <text x="177" y="85" text-anchor="middle" font-family="monospace" font-size="11" fill="#2b35b0">←</text>
+              <text x="100" y="87" text-anchor="middle" font-family="Space Mono, monospace" font-size="13" font-weight="700" fill="#2b35b0" letter-spacing="0.8">14 MAY 2026</text>
+              <text x="100" y="105" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" font-weight="700" fill="#2b35b0" letter-spacing="2.5">SEALED</text>
+              <text font-family="Space Mono, monospace" font-size="10" font-weight="700" fill="#2b35b0" letter-spacing="1.8">
+                <textPath href="#sld-hex-bot" startOffset="50%" text-anchor="middle">TO YOUR FUTURE SELF</textPath>
+              </text>
+            </svg>
+
+          </div>
+
+          <div class="fl-pad-content" style="padding: 106px 0 0; justify-content: center;">
+            <div class="fl-address-block">
+              <div class="fl-address-label" data-comment-anchor="a3b0f5519d-div" style="font-size: 15px; font-weight: 500; width: 444px; font-family: &quot;Space Mono&quot;">Where should we send this?</div>
+              <form onsubmit="return submitLetter(event)" style="width:100%;">
+                <div class="fl-address-to-row">
+                  <span class="fl-address-to-label">To</span>
+                  <input type="email" id="fl-email-input" placeholder="your@email.com"
+                         required autocomplete="email" class="fl-email-field"/>
+                  <button type="submit" class="fl-arrow-btn" aria-label="Seal it">→</button>
+                </div>
+                <div class="fl-env-actions">
+                  <button type="button" class="fl-back" onclick="showWriteStep()" data-comment-anchor="dfe74c76e4-button">← Back</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Success — envelope back -->
+      <div class="fl-step fl-step-hidden" id="fl-step-success">
+        <div class="fl-pad fl-pad-success">
+          <div class="fl-env-back">
+
+            <!-- Envelope flap (triangle from top corners meeting at center) -->
+            <svg class="fl-env-flap" viewBox="0 0 800 440" preserveAspectRatio="none" aria-hidden="true">
+              <!-- flap fill only — no stroke lines so no creases through the seal -->
+              <path d="M0 0 L400 270 L800 0 Z" fill="rgba(0,0,0,0.022)"/>
+            </svg>
+
+            <!-- Wax seal — real wax stamp image -->
+            <div class="fl-wax-seal" aria-hidden="true">
+              <img src="assets/wax-seal.png" alt="" width="140" height="143"/>
+            </div>
+
+            <div class="fl-env-caption">
+              We'll deliver it on <strong>January 1, 2027</strong> · in <strong><span id="fl-countdown-days">…</span> days</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fl-promise reveal d2" data-comment-anchor="1396c9c392-div" style="color:#fff;">
+      <span data-comment-anchor="3b888830a4-span">Secure</span>
+      <span class="sep" style="background:rgba(255,255,255,0.8);"></span>
+      <span data-comment-anchor="ad49982cf5-span">Delivered Jan 1, 2027</span>
+      <span class="sep" style="background:rgba(255,255,255,0.8);"></span>
+      <span data-comment-anchor="76e15d7931-span">Only you can read it</span>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="faq-inner">
+    <div class="faq-head reveal">
+      <h2 data-comment-anchor="91a894db82-h2">Frequently Asked Questions (FAQs)</h2>
+    </div>
+    <div class="faq-list" id="faq-list"></div>
+  </div>
+</section>
+
+<div id="tweaks-root"></div>
+<script>
+  window.TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{}/*EDITMODE-END*/;
+</script>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <div class="mark">SEALED</div>
+      <div class="tag" data-comment-anchor="054a1ff766-div">Some letters are worth waiting for.</div>
+    </div>
+    <div class="foot-col">
+      <h4>Discover</h4>
+      <ul>
+        <li data-comment-anchor="9766f948a6-li"><a href="#waitlist">Join the waitlist</a></li>
+        <li><a href="#first-letter">Write a letter</a></li>
+      </ul>
+    </div>
+    <div class="foot-col foot-social" data-comment-anchor="4fc59666e2-div">
+      <h4>Connect</h4>
+      <ul class="social-list">
+        <li><a href="#" aria-label="Instagram" title="Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a></li>
+        <li><a href="#" aria-label="X" title="X">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.52 7.452L22 22h-6.828l-4.77-6.231L4.8 22H2l7.02-8.024L2 2h6.914l4.32 5.713L18.244 2zm-1.197 18h1.84L7.06 4H5.117l11.93 16z"/></svg>
+        </a></li>
+        <li><a href="mailto:hello@sealed.io" aria-label="Email" title="hello@sealed.io">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3,7 12,13 21,7"/></svg>
+        </a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4 data-comment-anchor="c2317a4e74-h4">Legal</h4>
+      <ul>
+        <li><a href="privacy.html" data-comment-anchor="250d07bf65-a">Privacy Policy</a></li>
+        <li><a href="terms.html" data-comment-anchor="b85668d9ce-a">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span data-comment-anchor="e54b530fc5-span">© 2026 · All rights reserved</span>
+  </div>
+</footer>
+
+<script>
+
+
+  // Countdown to delivery date (Jan 1, 2027)
+  (function(){
+    const target = new Date(2027, 0, 1);
+    function update() {
+      const now = new Date();
+      const days = Math.max(0, Math.ceil((target - now) / (1000 * 60 * 60 * 24)));
+      document.querySelectorAll('#fl-countdown-days, #fl-countdown-pre').forEach(el => {
+        el.textContent = days;
+      });
+    }
+    update();
+    // Re-run when success step shows so the number is fresh
+    window.__updateCountdown = update;
+  })();
+
+  // Date stamp on the pad
+  (function(){
+    const d = new Date();
+    const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+    const el = document.getElementById('fl-date');
+    if (el) el.textContent = months[d.getMonth()] + ' ' + String(d.getDate()).padStart(2,'0') + ', ' + d.getFullYear();
+  })();
+
+  // Live count — digit flip counter
+  let count = 162;
+  const digitRow = document.getElementById('count');
+  function setCount(n) {
+    const s = String(n).padStart(5, '0');
+    const digits = digitRow.querySelectorAll('.digit');
+    digits.forEach((d, i) => {
+      const ch = s[i];
+      const cur = d.querySelector('.d-cur');
+      const next = d.querySelector('.d-next');
+      if (cur.textContent === ch) return;
+      next.textContent = ch;
+      d.classList.remove('flip');
+      void d.offsetWidth;
+      d.classList.add('flip');
+      setTimeout(() => {
+        cur.textContent = ch;
+        d.classList.remove('flip');
+      }, 500);
+    });
+  }
+  function bumpCount() {
+    count += 1;
+    setCount(count);
+  }
+  setInterval(() => {
+    if (Math.random() < 0.35) bumpCount();
+  }, 4200);
+
+  // Form
+  function handleSubscribe(e){
+    e.preventDefault();
+    const form = document.getElementById('waitlist');
+    const success = document.getElementById('waitlist-success');
+    const emailEl = document.getElementById('email-input');
+    const email = emailEl ? emailEl.value.trim() : '';
+    // Prefill the first-letter envelope so the user doesn't have to retype.
+    if (email) {
+      const flEmail = document.getElementById('fl-email-input');
+      if (flEmail) flEmail.value = email;
+    }
+    form.classList.add('is-submitted');
+    success.classList.add('is-mounted');
+    // Force layout flush so the opacity transition reliably fires
+    // (rAF would stall if the tab is backgrounded mid-submit).
+    void success.offsetHeight;
+    success.classList.add('is-visible');
+    setTimeout(scrollToFirstLetter, 3900);
+    return false;
+  }
+
+  function scrollToFirstLetter(){
+    const target = document.getElementById('first-letter');
+    if (!target) return;
+    const y = target.getBoundingClientRect().top + window.pageYOffset - 24;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  }
+
+  // Word count
+  function updateWordCount(){
+    const ta = document.getElementById('fl-textarea');
+    // Auto-grow
+    ta.style.height = 'auto';
+    ta.style.height = ta.scrollHeight + 'px';
+    const words = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
+    document.getElementById('fl-words').textContent = words + ' word' + (words === 1 ? '' : 's');
+    document.getElementById('fl-cta').disabled = words === 0;
+    document.getElementById('typewriter').style.display = ta.value.length === 0 ? 'block' : 'none';
+  }
+
+  // Letter flow steps
+  function showStep(hideId, showId) {
+    const hideEl = document.getElementById(hideId);
+    const showEl = document.getElementById(showId);
+    hideEl.classList.add('fl-step-leaving');
+    setTimeout(() => {
+      hideEl.classList.add('fl-step-hidden');
+      hideEl.classList.remove('fl-step-leaving');
+      showEl.classList.remove('fl-step-hidden');
+      showEl.classList.add('fl-step-entering');
+      setTimeout(() => showEl.classList.remove('fl-step-entering'), 400);
+    }, 300);
+  }
+
+  function showEmailStep() {
+    showStep('fl-step-write', 'fl-step-email');
+    setTimeout(() => {
+      const input = document.getElementById('fl-email-input');
+      if (input) input.focus();
+    }, 400);
+  }
+
+  function showWriteStep() {
+    showStep('fl-step-email', 'fl-step-write');
+  }
+
+  function submitLetter(e) {
+    e.preventDefault();
+    if (window.__updateCountdown) window.__updateCountdown();
+    showStep('fl-step-email', 'fl-step-success');
+    // Also bump the waitlist count
+    bumpCount();
+    return false;
+  }
+
+  // Typewriter
+  const phrases = [
+    "To the person you're becoming",
+    "Because you're proud of yourself and you don't say that enough",
+    "If you're about to take a risk",
+    "Because you want to make a promise to yourself and this makes it real",
+    "To reflect on the messy middle that no one talks about",
+    "So you don't forget why you started",
+    "To celebrate a recent win",
+    "So future you has something to open when things get heavy",
+    "Because a chapter is ending and you want to close it with intention",
+    "From the version of you who is doing it scared",
+    "To capture what you're feeling before life moves too fast",
+    "For the adventure you're about to take",
+    "So future you remembers how strong you were right now"
+  ];
+  let phraseIdx = 0, charIdx = 0;
+  const twText = document.getElementById('tw-text');
+  function typeLoop(){
+    const full = phrases[phraseIdx];
+    if (charIdx < full.length) {
+      twText.textContent = full.slice(0, charIdx + 1);
+      charIdx++;
+      setTimeout(typeLoop, 32);
+    } else {
+      setTimeout(() => {
+        twText.textContent = '';
+        charIdx = 0;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        typeLoop();
+      }, 3000);
+    }
+  }
+  typeLoop();
+
+  // FAQ — real answers in brand voice
+  const faqs = [
+    { q: "What is SEALED?",
+      a: "SEALED is an app for writing letters to your future self. You write when something matters, pick the day the letter opens, and seal it. Once sealed, the letter is locked. No one can read it until the delivery date. Not even you.<br><br>When the day comes, your letter arrives in the app and to your email. You can write from the iOS app or the web. It\u2019s built on a simple belief: some things are worth writing down before you forget why they mattered." },
+    { q: "Is SEALED free?",
+      a: "Yes. Write as many letters as you want, with delivery dates up to one year out.<br><br>A premium plan unlocks longer time horizons, plus the ability to attach photos and voice notes to your letters." },
+    { q: "Who can I send a letter to?",
+      a: "Right now, you. Only you.<br><br>SEALED is built for letters to your future self. The experience is personal, private, and designed around the act of writing to the person you\u2019re becoming. Sending to others is something we\u2019re exploring for future releases." },
+    { q: "What can I include in a letter?",
+      a: "Your words. Write as much or as little as you want.<br><br>Photos and voice notes are coming with premium, so you can attach the sound of a room or a face you don\u2019t want to forget. But the core of every letter is always text. Some things are better written." },
+    { q: "Can I edit a letter after it\u2019s sealed?",
+      a: "No. Once sealed, a letter cannot be opened or edited.<br><br>You can delete a letter within 24 hours of sealing it. After that, it\u2019s permanent. No edits, no deletions, no exceptions. A letter you can take back isn\u2019t a letter worth opening." },
+    { q: "Is my letter private?",
+      a: "Yes. Once you seal a letter, it's locked at the database level until the open date — no peeking, no editing, no early access, not even by you. We built the lock that way on purpose: sealing is a one-way commitment, and the system enforces it. Sealed means sealed." },
+    { q: "Why not just schedule the email from Gmail or Outlook?",
+      a: "Gmail and Outlook are built for short-term communication, not messages meant to survive years into the future. Accounts can be disabled after long periods of inactivity, emails can fail without you realizing. <strong>Simply put: there's no long-term guarantee that a scheduled email will actually be delivered years later.</strong> SEALED is built specifically for long-term delivery, with a clear promise, safeguards, and an experience designed around intentional messages to your future self or others, not everyday inbox management." },
+    { q: "What if you shut down the app? What happens to my letters?",
+      a: "SEALED is a long-term commitment, not a side project. We're not planning to shut down — we know how much these letters matter, and we've built the company around outlasting them. But if the unthinkable ever happened, we're committed to delivering every last letter on its open date, even after the service itself stops. A sealed letter is a promise. We keep it, no matter what." },
+  ];
+  const faqList = document.getElementById('faq-list');
+  faqs.forEach((f, i) => {
+    const item = document.createElement('div');
+    item.className = 'faq-item';
+    const num = String(i + 1).padStart(2, '0');
+    item.style.setProperty('--faq-i', i);
+    item.innerHTML = `
+      <button class="faq-q" type="button">
+        <span class="num" style="--faq-i:${i};">${num}</span>
+        <span class="label">${f.q}</span>
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
+    `;
+    item.querySelector('.faq-q').addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+    faqList.appendChild(item);
+  });
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="landing-tweaks.jsx"></script>
+</body>
+</html>
