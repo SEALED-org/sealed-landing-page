@@ -63,13 +63,13 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
 **Plans**: 9 plans
   - [x] 01.5-01-PLAN.md — Asset pipeline + reference snapshot + index.html title (Wave 1)
   - [x] 01.5-02-PLAN.md — Tailwind v4 @theme tokens + 10 @keyframes + global CSS rules in src/index.css (Wave 1)
-  - [ ] 01.5-03-PLAN.md — Nav.tsx + Footer.tsx (Wave 2)
-  - [ ] 01.5-04-PLAN.md — WaitlistForm.tsx + WaitlistSuccessCard.tsx (Wave 2)
-  - [ ] 01.5-05-PLAN.md — Counter.tsx rewrite as 5-digit flip-card (Wave 2)
-  - [ ] 01.5-06-PLAN.md — HowItWorks.tsx + ResearchSection.tsx (Wave 2)
-  - [ ] 01.5-07-PLAN.md — Typewriter.tsx trim + FirstLetter.tsx 3-step state machine (Wave 2)
-  - [ ] 01.5-08-PLAN.md — FAQ.tsx restyle + 8 verbatim Q&A (Wave 2)
-  - [ ] 01.5-09-PLAN.md — App.tsx JSX rewrite + ShareButtons.tsx delete + npm run build + side-by-side parity check (Wave 3, autonomous: false)
+  - [x] 01.5-03-PLAN.md — Nav.tsx + Footer.tsx (Wave 2)
+  - [x] 01.5-04-PLAN.md — WaitlistForm.tsx + WaitlistSuccessCard.tsx (Wave 2)
+  - [x] 01.5-05-PLAN.md — Counter.tsx rewrite as 5-digit flip-card (Wave 2)
+  - [x] 01.5-06-PLAN.md — HowItWorks.tsx + ResearchSection.tsx (Wave 2)
+  - [x] 01.5-07-PLAN.md — Typewriter.tsx trim + FirstLetter.tsx 3-step state machine (Wave 2)
+  - [x] 01.5-08-PLAN.md — FAQ.tsx restyle + 8 verbatim Q&A (Wave 2)
+  - [x] 01.5-09-PLAN.md — App.tsx JSX rewrite + ShareButtons.tsx delete + npm run build + side-by-side parity check (Wave 3, autonomous: false)
 **UI hint**: yes
 
 ### Phase 2: Signup Flow
