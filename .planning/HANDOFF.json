@@ -1,0 +1,63 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-05-29T15:45:08.068Z",
+  "phase": "02",
+  "phase_name": "signup-flow",
+  "phase_dir": ".planning/phases/02-signup-flow",
+  "plan": 5,
+  "task": 7,
+  "total_tasks": 7,
+  "status": "paused",
+  "completed_tasks": [
+    {"id": 1, "name": "supabase.ts: joinWaitlist + WaitlistState + env validation", "status": "done", "commit": "d7ce87f"},
+    {"id": 2, "name": "messages.ts: MESSAGES map", "status": "done", "commit": "5c51f03"},
+    {"id": 3, "name": "WaitlistForm.tsx: Turnstile mount + error slot", "status": "done", "commit": "084f7b4"},
+    {"id": 4, "name": "FirstLetter.tsx: second Turnstile + error slot", "status": "done", "commit": "b833502"},
+    {"id": 5, "name": "App.tsx: wire both call sites + Pitfall 9 gating", "status": "done", "commit": "aebe6d2"},
+    {"id": 6, "name": "index.css: error-slot utility classes", "status": "skipped", "reason": "inline styles satisfy D-08; optional per plan"},
+    {"id": 7, "name": "HUMAN VERIFY: exercise pipeline end-to-end", "status": "in_progress", "progress": "client-side fully wired and verified working (Turnstile widget mints real tokens now; getting past input validation). Server returns 500 on real submit — likely schema('auth') restriction in lookupSignupState helper (RESEARCH Open Question A2). Function logs need to be checked to confirm root cause."}
+  ],
+  "remaining_tasks": [
+    {"id": 7, "name": "Diagnose function 500 + apply fix (likely server-side: swap schema('auth').from('users') for auth.admin.listUsers in lookupSignupState)", "status": "blocked", "blocker": "needs Edge Function runtime logs to confirm exact exception"}
+  ],
+  "blockers": [
+    {
+      "description": "Function returns 500 Internal Server Error on real submits (post-Turnstile)",
+      "type": "technical",
+      "workaround": "none yet — need to read Edge Function runtime logs (stderr/console.error output) to confirm which helper threw. Strongest hypothesis: lookupSignupState's `supabase.schema('auth').from('users').select(...)` is restricted on hosted Supabase plans. Fix is server-side: switch to `supabase.auth.admin.listUsers({ filter: \\`email.eq.${email}\\` })` per RESEARCH §Pattern 3 fallback. Requires edit + redeploy in sibling SEALED-org repo."
+    },
+    {
+      "description": "Counter shows 00000 instead of 115 even though signup_counter view query returns 200",
+      "type": "technical",
+      "workaround": "secondary issue — not blocking Phase 2 verification. Investigate after the 500 is fixed: check what data.total actually returns from the view, and whether Counter component animation completes."
+    },
+    {
+      "description": "AdBlock Plus may intermittently block Cloudflare Turnstile",
+      "type": "external",
+      "workaround": "test in incognito or disable extension for localhost:3000 to rule it out. Not currently blocking — Turnstile is producing tokens (we got past 400 server_error to 500)."
+    }
+  ],
+  "human_actions_pending": [
+    {
+      "action": "Read Supabase Edge Function runtime logs for join-waitlist's last 500 invocation",
+      "context": "Supabase dashboard → Edge Functions → join-waitlist → Logs tab → expand non-boot/shutdown entries → look for `join-waitlist exception`, `letters lookup error`, or `permission denied for schema auth` strings",
+      "blocking": true
+    },
+    {
+      "action": "If A2 confirmed: redeploy join-waitlist function from SEALED-org repo after lookupSignupState fix",
+      "context": "Server-side fix: edit `/Users/nourismaiel/SEALED ORG (FINAL)/SEALED-org/supabase/functions/join-waitlist/index.ts` lookupSignupState helper to use auth.admin.listUsers instead of schema('auth').from('users'), then `supabase functions deploy join-waitlist` from sibling repo",
+      "blocking": true
+    }
+  ],
+  "decisions": [
+    {"decision": "D-07 deviation: switched from lazy execute-on-submit to onSuccess auto-mint pattern", "rationale": "Invisible mode auto-mints token on widget render; trying to imperatively await via execute()/getResponsePromise() created an unfightable race with Cloudflare's script initialization timing. New pattern uses onSuccess callback to capture token to state, then handleSubmit reads from state. Behavioral intent preserved (no manual challenge, fresh tokens per submit via reset).", "phase": "02"},
+    {"decision": "Dropped `appearance: 'interaction-only'` from Turnstile options", "rationale": "Incompatible with `size: 'invisible'` — Cloudflare returned 400020 errors in a loop while these two flags were both set. Invisible mode has its own complete render behavior; appearance is irrelevant.", "phase": "02"},
+    {"decision": "Created .gitignore mid-HALT during Plan 02-04 (Rule 3 blocker deviation)", "rationale": "Repo had no .gitignore at all, so .env.local with real Supabase keys was untracked-but-unprotected. Promoted to blocker once a real TURNSTILE_SECRET_KEY was about to land in .env.local. Committed as 5bd2a1d.", "phase": "02"},
+    {"decision": "Recorded privacy.html Cloudflare Turnstile Privacy Addendum as Phase 5 todo (260529-privacy-turnstile-addendum)", "rationale": "Cloudflare requires invisible mode users to reference the Turnstile Privacy Addendum in their privacy policy. Out of Phase 2 scope but tracked so Phase 5 (Deploy & Polish) closes the loop.", "phase": "02"}
+  ],
+  "uncommitted_files": [
+    ".env.local (gitignored — contains real Turnstile site key 0x4AAAAAADYc8aBX8NQDwGv4)"
+  ],
+  "next_action": "Open Supabase dashboard → Edge Functions → join-waitlist → Logs. Find the last 500 invocation (timestamp around 2026-05-29 ~14:40 UTC). Expand the entry and look for console.error lines starting with `join-waitlist exception` or `letters lookup error`. Paste the exception message into the next session — that determines whether the fix is the schema('auth') swap or something else.",
+  "context_notes": "Phase 2 client-side wiring is DONE. All five autonomous tasks (1-5) of Plan 02-05 committed cleanly. Phase 2 server-side is DEPLOYED (Plan 02-04 HALT resolved earlier — migration applied, function ACTIVE v1, TURNSTILE_SECRET_KEY set). The remaining hop is one server-side fix in the SEALED-org repo's join-waitlist function. Session was long and emotionally taxing due to a chain of unrelated debug rabbit holes (wrong site key copied vs secret key, dashboard mode mismatch, library API misuse, intermittent AdBlock). All resolved or accounted for. The 500 is the last hop; once the function returns success, Plan 02-05 closes and Phase 2 wraps up."
+}
