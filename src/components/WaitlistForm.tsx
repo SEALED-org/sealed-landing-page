@@ -17,18 +17,15 @@ export default function WaitlistForm({ onSubmit, isSubmitting, isSubmitted, erro
   const [email, setEmail] = useState('');
   const turnstileRef = useRef<TurnstileInstance | null>(null);
   const [turnstileBlocked, setTurnstileBlocked] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || isSubmitting || turnstileBlocked) return;
     try {
-      turnstileRef.current?.execute();
-      const token = (await turnstileRef.current?.getResponsePromise(10_000)) ?? '';
-      await onSubmit(email, token);
-    } catch (err) {
-      console.warn('Turnstile token not produced in time:', err);
-      await onSubmit(email, '');
+      await onSubmit(email, turnstileToken);
     } finally {
+      setTurnstileToken('');
       turnstileRef.current?.reset();
     }
   };
@@ -73,14 +70,11 @@ export default function WaitlistForm({ onSubmit, isSubmitting, isSubmitted, erro
         <Turnstile
           ref={turnstileRef}
           siteKey={TURNSTILE_SITE_KEY}
-          options={{
-            execution: 'execute',
-            appearance: 'interaction-only',
-            size: 'invisible',
-          }}
-          onError={() => setTurnstileBlocked(true)}
-          onUnsupported={() => setTurnstileBlocked(true)}
-          onExpire={() => turnstileRef.current?.reset()}
+          options={{ size: 'invisible' }}
+          onSuccess={(token) => setTurnstileToken(token)}
+          onError={() => { setTurnstileBlocked(true); setTurnstileToken(''); }}
+          onUnsupported={() => { setTurnstileBlocked(true); setTurnstileToken(''); }}
+          onExpire={() => { setTurnstileToken(''); turnstileRef.current?.reset(); }}
         />
       </form>
       <div

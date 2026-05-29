@@ -45,6 +45,7 @@ export default function FirstLetter({
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const firstLetterTurnstileRef = useRef<TurnstileInstance | null>(null);
   const [turnstileBlocked, setTurnstileBlocked] = useState(false);
+  const [firstLetterTurnstileToken, setFirstLetterTurnstileToken] = useState('');
   const [emailError, setEmailError] = useState<WaitlistState | null>(null);
 
   useEffect(() => {
@@ -111,9 +112,7 @@ export default function FirstLetter({
     e.preventDefault();
     if (!email || turnstileBlocked) return;
     try {
-      firstLetterTurnstileRef.current?.execute();
-      const token = (await firstLetterTurnstileRef.current?.getResponsePromise(10_000)) ?? '';
-      const state = await onEmailSubmit(email, token);
+      const state = await onEmailSubmit(email, firstLetterTurnstileToken);
       if (state === 'success') {
         setEmailError(null);
         transitionTo('success');
@@ -124,6 +123,7 @@ export default function FirstLetter({
       console.error('Letter email submit failed:', error);
       setEmailError('server_error');
     } finally {
+      setFirstLetterTurnstileToken('');
       firstLetterTurnstileRef.current?.reset();
     }
   };
@@ -481,14 +481,11 @@ export default function FirstLetter({
                     <Turnstile
                       ref={firstLetterTurnstileRef}
                       siteKey={TURNSTILE_SITE_KEY}
-                      options={{
-                        execution: 'execute',
-                        appearance: 'interaction-only',
-                        size: 'invisible',
-                      }}
-                      onError={() => setTurnstileBlocked(true)}
-                      onUnsupported={() => setTurnstileBlocked(true)}
-                      onExpire={() => firstLetterTurnstileRef.current?.reset()}
+                      options={{ size: 'invisible' }}
+                      onSuccess={(token) => setFirstLetterTurnstileToken(token)}
+                      onError={() => { setTurnstileBlocked(true); setFirstLetterTurnstileToken(''); }}
+                      onUnsupported={() => { setTurnstileBlocked(true); setFirstLetterTurnstileToken(''); }}
+                      onExpire={() => { setFirstLetterTurnstileToken(''); firstLetterTurnstileRef.current?.reset(); }}
                     />
                   </form>
                   <div
