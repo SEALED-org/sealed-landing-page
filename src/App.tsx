@@ -8,13 +8,14 @@ import HowItWorks from './components/HowItWorks';
 import ResearchSection from './components/ResearchSection';
 import FirstLetter from './components/FirstLetter';
 import FAQ from './components/FAQ';
-import { getSignupCount, joinWaitlistLocal } from './lib/supabase';
+import { getSignupCount, joinWaitlist, type WaitlistState } from './lib/supabase';
 
 export default function App() {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [waitlistCount, setWaitlistCount] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [waitlistError, setWaitlistError] = useState<WaitlistState | null>(null);
 
   useEffect(() => {
     getSignupCount()
@@ -25,16 +26,23 @@ export default function App() {
       });
   }, []);
 
-  const handleSubscribe = async (formEmail: string) => {
+  const handleSubscribe = async (formEmail: string, turnstileToken: string) => {
     if (formEmail && !isSubmitting) {
       setIsSubmitting(true);
+      setWaitlistError(null);
       try {
-        await joinWaitlistLocal(formEmail);
-        setEmail(formEmail);
-        setIsSubscribed(true);
-        setWaitlistCount((c) => (c ?? 115) + 1);
+        const state = await joinWaitlist(formEmail, turnstileToken);
+        if (state === 'success') {
+          setEmail(formEmail);
+          setIsSubscribed(true);
+          setWaitlistCount((c) => (c ?? 115) + 1);
+          setWaitlistError(null);
+        } else {
+          setWaitlistError(state);
+        }
       } catch (error) {
         console.error('Subscription failed:', error);
+        setWaitlistError('server_error');
       } finally {
         setIsSubmitting(false);
       }
@@ -73,6 +81,7 @@ export default function App() {
             onSubmit={handleSubscribe}
             isSubmitting={isSubmitting}
             isSubmitted={isSubscribed}
+            error={waitlistError}
           />
 
           <WaitlistSuccessCard
@@ -100,14 +109,18 @@ export default function App() {
 
       <FirstLetter
         initialEmail={isSubscribed ? email : undefined}
-        onEmailSubmit={async (newEmail) => {
-          setEmail(newEmail);
+        onEmailSubmit={async (newEmail, turnstileToken) => {
           try {
-            await joinWaitlistLocal(newEmail);
-            setIsSubscribed(true);
-            setWaitlistCount((c) => (c ?? 115) + 1);
+            const state = await joinWaitlist(newEmail, turnstileToken);
+            if (state === 'success') {
+              setEmail(newEmail);
+              setIsSubscribed(true);
+              setWaitlistCount((c) => (c ?? 115) + 1);
+            }
+            return state;
           } catch (error) {
             console.error('Waitlist join failed:', error);
+            return 'server_error';
           }
         }}
         waitlistCount={waitlistCount ?? 115}
