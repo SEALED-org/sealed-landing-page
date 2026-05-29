@@ -1,12 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
+import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 import Typewriter, { typewriterPhrases } from './Typewriter';
+import type { WaitlistState } from '../lib/supabase';
+import { MESSAGES } from '../lib/messages';
+
+const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY as string;
 
 type Step = 'write' | 'email' | 'success';
 
 interface FirstLetterProps {
   initialEmail?: string;
-  onEmailSubmit: (email: string) => Promise<void>;
+  onEmailSubmit: (email: string, turnstileToken: string) => Promise<WaitlistState>;
   waitlistCount: number;
 }
 
@@ -38,6 +43,9 @@ export default function FirstLetter({
   const transitioningRef = useRef(false);
   const timersRef = useRef<number[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const firstLetterTurnstileRef = useRef<TurnstileInstance | null>(null);
+  const [turnstileBlocked, setTurnstileBlocked] = useState(false);
+  const [emailError, setEmailError] = useState<WaitlistState | null>(null);
 
   useEffect(() => {
     return () => {
@@ -101,12 +109,22 @@ export default function FirstLetter({
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || turnstileBlocked) return;
     try {
-      await onEmailSubmit(email);
-      transitionTo('success');
+      await firstLetterTurnstileRef.current?.execute();
+      const token = firstLetterTurnstileRef.current?.getResponse();
+      const state = await onEmailSubmit(email, token ?? '');
+      if (state === 'success') {
+        setEmailError(null);
+        transitionTo('success');
+      } else {
+        setEmailError(state);
+      }
     } catch (error) {
       console.error('Letter email submit failed:', error);
+      setEmailError('server_error');
+    } finally {
+      firstLetterTurnstileRef.current?.reset();
     }
   };
 
@@ -460,7 +478,35 @@ export default function FirstLetter({
                         ← Back
                       </button>
                     </div>
+                    <Turnstile
+                      ref={firstLetterTurnstileRef}
+                      siteKey={TURNSTILE_SITE_KEY}
+                      options={{
+                        execution: 'execute',
+                        appearance: 'interaction-only',
+                        size: 'invisible',
+                      }}
+                      onError={() => setTurnstileBlocked(true)}
+                      onUnsupported={() => setTurnstileBlocked(true)}
+                      onExpire={() => firstLetterTurnstileRef.current?.reset()}
+                    />
                   </form>
+                  <div
+                    className="fl-error-slot"
+                    style={{
+                      minHeight: 24,
+                      fontFamily: 'var(--font-mono)',
+                      color: 'rgba(255, 255, 255, 0.7)',
+                      fontSize: 12,
+                      opacity: emailError ? 1 : 0,
+                      transition: 'opacity 200ms ease',
+                      textAlign: 'center',
+                      paddingTop: 8,
+                    }}
+                    aria-live="polite"
+                  >
+                    {emailError ? MESSAGES[emailError] : ' '}
+                  </div>
                 </div>
               </div>
             </div>
