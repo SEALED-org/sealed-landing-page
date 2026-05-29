@@ -22,9 +22,12 @@ export default function WaitlistForm({ onSubmit, isSubmitting, isSubmitted, erro
     e.preventDefault();
     if (!email || isSubmitting || turnstileBlocked) return;
     try {
-      await turnstileRef.current?.execute();
-      const token = turnstileRef.current?.getResponse();
-      await onSubmit(email, token ?? '');
+      turnstileRef.current?.execute();
+      const token = (await turnstileRef.current?.getResponsePromise(10_000)) ?? '';
+      await onSubmit(email, token);
+    } catch (err) {
+      console.warn('Turnstile token not produced in time:', err);
+      await onSubmit(email, '');
     } finally {
       turnstileRef.current?.reset();
     }

@@ -111,9 +111,9 @@ export default function FirstLetter({
     e.preventDefault();
     if (!email || turnstileBlocked) return;
     try {
-      await firstLetterTurnstileRef.current?.execute();
-      const token = firstLetterTurnstileRef.current?.getResponse();
-      const state = await onEmailSubmit(email, token ?? '');
+      firstLetterTurnstileRef.current?.execute();
+      const token = (await firstLetterTurnstileRef.current?.getResponsePromise(10_000)) ?? '';
+      const state = await onEmailSubmit(email, token);
       if (state === 'success') {
         setEmailError(null);
         transitionTo('success');
