@@ -92,7 +92,7 @@ export default function App() {
           />
 
           <div className="live-row" style={{ color: 'var(--color-ink-70)' }}>
-            <Counter target={waitlistCount ?? 115} />
+            <Counter target={waitlistCount ?? 0} />
           </div>
         </div>
       </header>

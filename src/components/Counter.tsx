@@ -4,61 +4,52 @@ interface CounterProps {
   target: number;
 }
 
-const DIGITS = 5;
-const STAGGER_MS = 40;
-const FLIP_MS = 500;
+const DIGITS = 4;
+const SWEEP_MS = 1400; // full 0 -> N count-up duration; short hops finish quicker
 
 export default function Counter({ target }: CounterProps) {
-  const digitRefs = useRef<(HTMLDivElement | null)[]>([]);
   const curRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const nextRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const prevCharsRef = useRef<string[]>(['0', '0', '0', '0', '0']);
-  const timersRef = useRef<number[]>([]);
+  const valueRef = useRef(0); // last value actually painted
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    timersRef.current.forEach((t) => clearTimeout(t));
-    timersRef.current = [];
+    const from = valueRef.current;
+    const to = target;
+    if (from === to) return;
 
-    const newChars = String(target).padStart(DIGITS, '0').slice(-DIGITS).split('');
+    // Count UP through every value between from and to (not a per-digit flip).
+    // Ease-out decelerates onto the final number. The initial 0 -> N sweep gets
+    // the full duration; a +1 on signup is a quick hop. App holds target at 0
+    // until the fetch resolves, so the sweep lands directly on the real count.
+    const distance = Math.abs(to - from);
+    const duration = Math.min(SWEEP_MS, Math.max(280, distance * 11));
+    const start = performance.now();
+    const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
-    newChars.forEach((ch, i) => {
-      if (prevCharsRef.current[i] === ch) return;
+    const paint = (v: number) => {
+      const chars = String(v).padStart(DIGITS, '0').slice(-DIGITS).split('');
+      for (let i = 0; i < DIGITS; i++) {
+        const el = curRefs.current[i];
+        if (el && el.textContent !== chars[i]) el.textContent = chars[i];
+      }
+    };
 
-      const stagger = i * STAGGER_MS;
-      const t1 = window.setTimeout(() => {
-        const d = digitRefs.current[i];
-        const cur = curRefs.current[i];
-        const next = nextRefs.current[i];
-        if (!d || !cur || !next) return;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const v = Math.round(from + (to - from) * easeOut(t));
+      paint(v);
+      valueRef.current = v;
+      if (t < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        valueRef.current = to;
+        paint(to);
+      }
+    };
 
-        next.textContent = ch;
-        d.classList.remove('flip');
-        void d.offsetWidth;
-        d.classList.add('flip');
-
-        const t2 = window.setTimeout(() => {
-          cur.textContent = ch;
-          d.classList.remove('flip');
-        }, FLIP_MS);
-        timersRef.current.push(t2);
-      }, stagger);
-      timersRef.current.push(t1);
-    });
-
-    prevCharsRef.current = newChars;
-
+    rafRef.current = requestAnimationFrame(tick);
     return () => {
-      timersRef.current.forEach((t) => clearTimeout(t));
-      timersRef.current = [];
-      newChars.forEach((ch, i) => {
-        const d = digitRefs.current[i];
-        const cur = curRefs.current[i];
-        const next = nextRefs.current[i];
-        if (!d || !cur || !next) return;
-        cur.textContent = ch;
-        next.textContent = ch;
-        d.classList.remove('flip');
-      });
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, [target]);
 
@@ -66,25 +57,11 @@ export default function Counter({ target }: CounterProps) {
     <div className="counter">
       <div className="digit-row" id="count" aria-label="Sign ups so far">
         {Array.from({ length: DIGITS }, (_, i) => (
-          <div
-            key={i}
-            className="digit"
-            ref={(el) => {
-              digitRefs.current[i] = el;
-            }}
-          >
+          <div key={i} className="digit">
             <span
               className="d-cur"
               ref={(el) => {
                 curRefs.current[i] = el;
-              }}
-            >
-              0
-            </span>
-            <span
-              className="d-next"
-              ref={(el) => {
-                nextRefs.current[i] = el;
               }}
             >
               0
