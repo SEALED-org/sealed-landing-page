@@ -695,7 +695,7 @@ export default function WaitlistForm({ onSubmit, isSubmitting, isSubmitted, erro
         }}
         aria-live="polite"
       >
-        {error ? MESSAGES[error] : ' ' /* nbsp keeps height */}
+        {error ? MESSAGES[error] : ' ' /* nbsp keeps height */}
       </div>
     </>
   );
@@ -1075,32 +1075,34 @@ comment on table app_private.signup_attempts is
 
 **If this table is non-empty (it is, 8 entries):** These claims are derived from cross-referenced research but should be verified by the planner / executor during Wave 1. Each is marked with concrete fallback action so research uncertainty does not block execution.
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+> All five open questions have been resolved by the plans in this phase. Each question below is prefixed with **RESOLVED:** summarizing the chosen path. Wave-1 execution may still need to validate specific assumptions (noted inline), but no question remains open at planning time.
 
 1. **Direct query against `auth.users` from service-role client — is it allowed by default?**
+   - **RESOLVED:** Plan 03 uses a graceful `try/catch` fallback inside the `lookupExistingState` helper. The function attempts `supabase.schema('auth').from('users').select(...)` first; on any error (PostgREST policy denial, schema restriction, etc.) it falls back to `supabase.auth.admin.listUsers({ filter: \`email.eq.${email}\` })`. If both paths fail, the function surfaces `state: 'server_error'` rather than crashing. The 1-line probe (`supabase.schema('auth').from('users').select('id').limit(1)`) is deferred to Wave 1 execution where it is safe to run against the deployed function — no need to block planning on the probe outcome.
    - What we know: The `auth` schema is owned by GoTrue. Service-role clients have full database access by default (it bypasses RLS).
    - What's unclear: Whether Supabase's hosted project applies an extra restriction layer that would require `auth.admin.listUsers` instead.
-   - Recommendation: Wave-1 task — write a 1-line probe inside the function (`supabase.schema('auth').from('users').select('id').limit(1)`) and run `supabase functions invoke` locally with the service-role token. If it works, Pattern 3's direct query approach is fine. If not, fall back to `admin.listUsers` (slightly more code but always available).
 
 2. **`corsHeaders` import path — `@supabase/supabase-js/cors` vs `jsr:@supabase/functions-js/cors` vs hand-coded**
+   - **RESOLVED:** Plan 03 ships a hand-coded 5-line CORS headers object (no external import). This avoids the Deno runtime ambiguity between `npm:` and `jsr:` specifiers entirely and matches the shape sibling functions use. The exact constant is documented in `02-PATTERNS.md` §3 (Edge Function CORS pattern); the headers are: `Access-Control-Allow-Origin: *`, `Access-Control-Allow-Methods: POST, OPTIONS`, `Access-Control-Allow-Headers: authorization, x-client-info, apikey, content-type`.
    - What we know: The official docs reference `corsHeaders` from `@supabase/supabase-js/cors` for v2.95+ (sibling functions don't currently use it — they hand-code).
    - What's unclear: Whether Deno's `npm:@supabase/supabase-js@2.103.2` import exposes the `/cors` subpath, or whether the canonical Deno specifier is `jsr:@supabase/functions-js/cors`.
-   - Recommendation: Wave-1 task — try the npm subpath first. If Deno errors on the import, hand-code the headers (5 lines per Pitfall 6 example). Either is acceptable.
 
 3. **`app_private.letters` table existence and schema as of Phase 2 start**
+   - **RESOLVED:** Plan 03 Task 2's `read_first` block instructs the executor to confirm the actual `user_id` column name against the sibling `app_private.letters` migration in `/Users/nourismaiel/SEALED ORG (FINAL)/SEALED-org/supabase/migrations/` BEFORE writing the lookup helper. If the column name differs from the expected `user_id`, the executor updates the query string. If the migration doesn't exist yet (Phase 4 not run), Plan 03 falls back to a NULL-safe LEFT JOIN that resolves the user state to `verified_no_letter` — matching Pitfall 8's defensive recommendation.
    - What we know: Research SUMMARY claims it exists ("use existing tables"). Main repo's `notify` function reads delivery_letter_emails, implying letters exist.
    - What's unclear: Exact schema. Pattern 3's query uses `user_id` as the join key — this matches Phase 1's `waitlist_signups.user_id` convention but planner should verify.
-   - Recommendation: Wave-0 task — `ls /Users/nourismaiel/SEALED\ ORG\ \(FINAL\)/SEALED-org/supabase/migrations/` to find the letters migration, read its DDL, confirm `user_id` column name. If the column is named differently (e.g., `auth_user_id`), update Pattern 3 query.
 
 4. **Vercel preview URL format for CORS allowlist**
+   - **RESOLVED:** Phase 2 ships with `Access-Control-Allow-Origin: *` in the join-waitlist function (Plan 03). This is a public endpoint with no credentials, no PII in URL params, and Turnstile + rate-limit as the authoritative security layers — wildcard origin is the documented acceptable choice (Pitfall 6 reasoning). Phase 5 (deployment) will tighten the allowlist to specific origins (`http://localhost:3000`, `https://*.vercel.app`, `https://sealedapp.io`) as part of the production hardening pass. NOT a Phase 2 blocker.
    - What we know: Vercel previews follow `<branch-hash>-<project>.vercel.app`.
    - What's unclear: Whether the CORS allowlist needs an exact match or accepts the wildcard.
-   - Recommendation: Phase 2 ships with `Access-Control-Allow-Origin: *` (acceptable for public endpoint per Pitfall 6 reasoning). Phase 5 may tighten to specific origins if desired. This is NOT a Phase 2 blocker.
 
 5. **Behavior of `auth.admin.createUser` when called twice with the same email in close succession**
+   - **RESOLVED:** The 4-state lookup in Plan 03 runs BEFORE `createUser`, which serializes the normal flow — the function never hits the duplicate-createUser path for legitimate sequential signups. For concurrent admin.createUser race conditions (two requests in the same millisecond both seeing `state: 'new'`), the second createUser will fail with a 422 from GoTrue; this lands in the outer `try/catch` and returns `state: 'server_error'`. This is acceptable degraded behavior at v1 scale (sub-1000 signups/day expected) — the user retries and the now-existing auth row routes them to `state: 'unverified'` instead.
    - What we know: First call creates a row; second call returns 422 "User already registered."
    - What's unclear: Whether the 422 error from a parallel/duplicate call is distinguishable from other validation errors.
-   - Recommendation: The 4-state lookup runs BEFORE createUser, so the function should never hit the duplicate path for legitimate flow. If it does (race), the catch block returns `server_error` which is acceptable degraded behavior.
 
 ## Environment Availability
 
@@ -1179,17 +1181,17 @@ The following directives from `./CLAUDE.md` apply to Phase 2 work:
 - [Supabase auth.admin.generateLink response shape](https://github.com/supabase/auth/issues/1357) — `properties.action_link`, `email_otp`, `hashed_token`, `redirect_to`, `verification_type`. Used for Phase 3 stub comment.
 
 ### Tertiary (LOW confidence — verify during Wave 1 if planner has time)
-- Exact `corsHeaders` import path for Deno-runtime imports (npm: vs jsr:). Open Question 2.
-- Whether `.schema('auth').from('users')` is permitted by default RLS bypass for service-role on hosted Supabase. Open Question 1.
+- Exact `corsHeaders` import path for Deno-runtime imports (npm: vs jsr:). Resolved at planning time — hand-coded headers (see Open Question 2 resolution).
+- Whether `.schema('auth').from('users')` is permitted by default RLS bypass for service-role on hosted Supabase. Resolved at planning time — try/catch fallback to `auth.admin.listUsers` (see Open Question 1 resolution).
 
 ## Metadata
 
 **Confidence breakdown:**
 - Standard stack: HIGH — main repo's `_shared/` patterns read directly; `@marsidev/react-turnstile@1.5.2` verified via npm; Supabase + Turnstile API contracts verified via official docs.
 - Architecture (Edge Function pipeline): HIGH — pattern matches sibling functions verbatim; each step has a verified source.
-- 4-state lookup logic: MEDIUM-HIGH — pattern documented in CONTEXT research SUMMARY and PITFALLS; one open question on direct `auth.users` query.
+- 4-state lookup logic: MEDIUM-HIGH — pattern documented in CONTEXT research SUMMARY and PITFALLS; the open question on direct `auth.users` query is resolved by Plan 03's try/catch fallback to `auth.admin.listUsers`.
 - Turnstile lazy execute pattern: HIGH — `@marsidev/react-turnstile` docs explicitly show the `options.execution: 'execute'` + `ref.execute()` pattern.
-- CORS handling: MEDIUM — Supabase docs reference both `@supabase/supabase-js/cors` and hand-coded; either works. Open Question 2.
+- CORS handling: HIGH — Phase 2 ships hand-coded headers (5 lines), avoiding the npm:/jsr: import ambiguity entirely.
 - IP rate limit query: HIGH — straightforward `count` query; race-condition tradeoff accepted per D-05 rationale.
 - Pitfalls: HIGH for top 5 (service role key leak, token reuse, CORS preflight, double-render, queryng non-existent table) — these are well-documented in research SUMMARY + CONTEXT PITFALLS.md.
 

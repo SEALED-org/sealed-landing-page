@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 2 context gathered
-last_updated: "2026-05-29T13:27:04.464Z"
-last_activity: 2026-05-28 -- Phase 02 planning complete
+stopped_at: Phase 2 complete — signup pipeline live
+last_updated: "2026-06-03T00:00:00.000Z"
+last_activity: 2026-06-03 -- Phase 02 complete: signup 500 fixed (sibling migration 0033), counter count-up
 progress:
   total_phases: 7
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 18
-  completed_plans: 17
-  percent: 94
+  completed_plans: 18
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** A frictionless one-screen moment: enter your email, write a letter to your future self, and forget about it until 2027.
-**Current focus:** Phase 01.5 — ui-redesign-inserted
+**Current focus:** Phase 3 — Email Infrastructure (ready to plan)
 
 ## Current Position
 
-Phase: 2
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-05-28 -- Phase 02 planning complete
+Phase: 2 — Signup Flow (COMPLETE)
+Plan: 05 of 05 — done (all tasks verified end-to-end)
+Status: Phase 2 delivered; Phase 3 next
+Last activity: 2026-06-03 -- signup pipeline live end-to-end
 
-Progress: [█████████░] 94%
+Progress: [██████████] 100% (of planned work; Phases 3–7 not yet planned)
 
 ## Performance Metrics
 
@@ -76,11 +76,11 @@ None yet.
 
 ### Blockers/Concerns
 
-- **`.env.local` has two config issues discovered during Phase 1 verification.** Must be fixed before Phase 2 wires real Edge Function writes (the Phase 1 fallback masks them today):
-  1. `VITE_SUPABASE_ANON_KEY=` has a leading space — bearer header is malformed.
-  2. URL subdomain `tiaeiioiyelhekgrllnjn` doesn't match the JWT's `ref` claim `tiaeioiylephekgrllnj`. One has typos; Nour to cross-check against the main SEALED-org app's `.env.local` to confirm which is canonical.
+- ✅ **RESOLVED — `.env.local` config issues.** Both fixed in Plan 02-01 (all three `VITE_` vars correct: canonical URL `tiaeioiylephekgrllnj.supabase.co`, clean ANON_KEY, real Turnstile site key). Pipeline verified live 2026-06-03.
+- ✅ **RESOLVED — join-waitlist 500.** `auth` + `app_private` both blocked by hosted Data API; fixed via sibling migration 0033 (public SECURITY DEFINER RPC wrappers) + function `.rpc()` rewrite (commit 05885f7).
+- ✅ **RESOLVED — counter `00000` symptom.** Reworked to an eased count-up; target held at 0 until fetch resolves (commit ccf46dd).
 - **PNG assets required for Phase 1.5** — `assets/separator-ink.png`, `assets/step-write.png`, `assets/step-seal.png`, `assets/step-open.png` are referenced in `Landing.html` but don't exist in this repo. Nour to export from Claude Design, OR Phase 1.5 will use placeholder treatments tracked as TODOs.
-- **DNS propagation is on the critical path for Phase 3.** SPF/DKIM/DMARC for sealedapp.io should be initiated as early as possible (ideally in parallel with Phase 1–2) since propagation can take hours and blocks all real email tests.
+- **DNS propagation is on the critical path for Phase 3.** SPF/DKIM/DMARC for sealedapp.io should be initiated as early as possible (propagation can take hours and blocks all real email tests). ← next critical item.
 - **Service role key bundle leak risk.** Add a CI grep on `dist/` for the service role key prefix before any Vercel deploy.
 - **Open questions in research/SUMMARY.md** (timezone for `deliver_at`, resignup-with-pending-letter behaviour, letter length cap, DNS ownership) should be resolved during Phase 2 / Phase 3 planning.
 
@@ -97,7 +97,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-05-28T14:14:33.565Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-signup-flow/02-CONTEXT.md
-Next command: `/gsd-plan-phase 1.5` — produce atomic plan files from the UI-SPEC contract
+Last session: 2026-06-03
+Stopped at: Phase 2 complete — signup pipeline verified live end-to-end; HANDOFF.json + .continue-here.md cleared
+Resume file: (none — Phase 2 closed)
+Next command: `/gsd-plan-phase 3` — Email Infrastructure (Resend Template 1A; TODO hooks already in join-waitlist). Initiate sealedapp.io DNS/SPF/DKIM/DMARC in parallel.
