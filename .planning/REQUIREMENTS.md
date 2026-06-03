@@ -24,7 +24,7 @@ The two paths are distinct — no cross-contamination:
 
 **Path A — Waitlist only (user signs up, skips the letter):**
 - [ ] **EMAIL-A1**: User is added to waitlist immediately on submission
-- [ ] **EMAIL-A2**: Template 1A sent: simple waitlist confirmation ("You're on the SEALED waitlist") — no verification link, no further action required
+- [x] **EMAIL-A2**: Template 1A sent: simple waitlist confirmation ("You're on the SEALED waitlist") — no verification link, no further action required
 
 **Path B — Waitlist + letter (user signs up and writes a letter):**
 - [x] **EMAIL-B1**: Template 1B sent: "Your letter is waiting — verify your email to seal it" with verification link
@@ -133,7 +133,7 @@ Each v1 requirement maps to exactly one phase. Coverage: 51/51 v1 requirements m
 | SEC-04 | Phase 2 — Signup Flow | Pending |
 | SEC-05 | Phase 4 — Letter + Verify Flow | Pending |
 | EMAIL-A1 | Phase 2 — Signup Flow | Pending |
-| EMAIL-A2 | Phase 3 — Email Infrastructure | Pending |
+| EMAIL-A2 | Phase 3 — Email Infrastructure | Complete |
 | EMAIL-B1 | Phase 3 — Email Infrastructure | Complete |
 | EMAIL-B2 | Phase 4 — Letter + Verify Flow | Pending |
 | EMAIL-B3 | Phase 4 — Letter + Verify Flow | Pending |
