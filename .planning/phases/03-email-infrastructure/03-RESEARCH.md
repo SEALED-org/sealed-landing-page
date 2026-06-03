@@ -638,22 +638,22 @@ comment on table app_private.verification_tokens is
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **`generate_verification_token` wrapper: return single row or scalar?**
    - What we know: `create` wrappers in 0033 return `void`; a token insert needs to return the new row.
    - What's unclear: Whether `RETURNING` in a SECURITY DEFINER `language sql` function that returns a TABLE is the cleanest pattern for Supabase RPC.
-   - Recommendation: Return `table (id uuid, token text)` — confirmed by Postgres `RETURNING` with `TABLE` return type. Edge Function calls `.rpc('create_verification_token', { p_user_id })` and reads `data[0].token`.
+   - Recommendation: Return `table (id uuid, token text)` — confirmed by Postgres `RETURNING` with `TABLE` return type. Edge Function calls `.rpc('create_verification_token', { p_user_id })` and reads `data[0].token`. (BINDING)
 
 2. **1B test trigger: standalone script vs guarded endpoint?**
    - What we know: Context D-09 says "a temporary script, a guarded debug endpoint, or a manual generateLink + sendResendEmail invocation."
    - What's unclear: Which is least intrusive and cleanest to remove in Phase 4.
-   - Recommendation: A guarded debug endpoint in `join-waitlist/index.ts` behind a `?test_1b=1` query param + an `Authorization: Bearer <test_key>` header check against a `TEST_TRIGGER_KEY` secret. This sends 1B to a provided email without needing a real letter. Remove in Phase 4 when production wiring lands.
+   - Recommendation: A guarded debug endpoint in `join-waitlist/index.ts` behind a `?test_1b=1` query param + an `Authorization: Bearer <test_key>` header check against a `TEST_TRIGGER_KEY` secret. This sends 1B to a provided email without needing a real letter. Remove in Phase 4 when production wiring lands. (BINDING)
 
 3. **Resend `send.sealedapp.io` subdomain — SPF record host conflict?**
    - What we know: Resend requires an SPF TXT record on `send.sealedapp.io`, not on the root. The root domain does not need an SPF TXT record from Resend.
    - What's unclear: Whether sealedapp.io currently has an existing SPF TXT record on the root domain that might conflict.
-   - Recommendation: Nour should check existing root-domain TXT records at the registrar before adding Resend's records. If an existing `v=spf1` record exists on the root, it may need to be merged.
+   - Recommendation: Nour should check existing root-domain TXT records at the registrar before adding Resend's records. If an existing `v=spf1` record exists on the root, it may need to be merged. (BINDING)
 
 ---
 
