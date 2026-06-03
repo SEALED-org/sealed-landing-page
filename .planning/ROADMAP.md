@@ -100,7 +100,12 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   3. A Path B signup (letter written) receives Template 1B with a working magic verification link whose TTL is set to 7 days.
   4. A mail-tester.com run on both templates scores 9/10 or higher with no blacklist or auth failures.
   5. `RESEND_API_KEY` and `SEALED_FROM_ADDRESS` are stored via `supabase secrets set` and not present in any committed file or `VITE_*` variable.
-**Plans**: TBD
+**Plans**: 5 plans
+  - [ ] 03-01-PLAN.md — Migration 0034: app_private.verification_tokens + SECURITY DEFINER wrappers (Wave 1)
+  - [ ] 03-02-PLAN.md — WaitlistConfirmationEmail.tsx + SealLetterEmail.tsx + join-waitlist/deno.json extension (Wave 1)
+  - [ ] 03-03-PLAN.md — join-waitlist/index.ts: 1A wiring at both TODO stubs + guarded 1B test trigger (Wave 2)
+  - [ ] 03-04-PLAN.md — HALT handoff: DNS records, supabase db push, secrets set, function deploy (Wave 3, autonomous: false)
+  - [ ] 03-05-PLAN.md — Post-deploy verification: dig, real inbox, mail-tester >= 9/10 on both templates (Wave 4, autonomous: false)
 
 ### Phase 4: Letter + Verify Flow
 **Goal**: A letter writer composes their letter inline, submits, sees the 2.5s sealing animation, receives Template 1B, clicks the verification link, and watches their letter transition to `sealed` in Supabase — landing in the same `schedules` + `notification_outbox` rows the existing delivery cron is already watching for Jan 1, 2027.
@@ -151,7 +156,7 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 | 1. Foundation | 4/4 | ✅ Complete | 2026-05-28 |
 | 1.5. UI Redesign (INSERTED) | 0/9 | Not started | - |
 | 2. Signup Flow | 0/5 | Not started | - |
-| 3. Email Infrastructure | 0/TBD | Not started | - |
+| 3. Email Infrastructure | 0/5 | Not started | - |
 | 4. Letter + Verify Flow | 0/TBD | Not started | - |
 | 5. Deploy & Polish | 0/TBD | Not started | - |
 | 6. Pre-launch QA | 0/TBD | Not started | - |
