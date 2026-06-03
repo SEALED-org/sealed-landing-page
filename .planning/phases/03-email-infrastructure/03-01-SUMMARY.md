@@ -70,7 +70,19 @@ See frontmatter `key-decisions`. The migration follows the repo's "app_private n
 
 ## Deviations from Plan
 
-None - plan executed exactly as written. (`lookup_user_id_by_email` was specified by the plan's Task 1 action, beyond the RESEARCH SQL block — included as required.)
+### Auto-fixed Issues
+
+**1. [Rule 3 - Blocking] pgcrypto not enabled / gen_random_bytes unqualified**
+- **Found during:** Plan 04 handoff — `supabase db push` failed: `function gen_random_bytes(integer) does not exist (SQLSTATE 42883)`.
+- **Issue:** The RESEARCH/plan SQL used `encode(gen_random_bytes(32), 'hex')` assuming pgcrypto was available on the default search_path. On hosted Supabase, pgcrypto lives in the `extensions` schema (not searched during `db push`), so the CREATE TABLE failed on its first statement. It would also have failed at INSERT time, since `create_verification_token` runs with `search_path = ''`.
+- **Fix:** Added `create extension if not exists pgcrypto with schema extensions;` and changed the token default to `encode(extensions.gen_random_bytes(32), 'hex')` (schema-qualified so it resolves under empty search_path without weakening the function's T-03-05 hardening). `gen_random_uuid()` and `encode()` are pg_catalog built-ins and need no change.
+- **Files modified:** `(sibling) supabase/migrations/0034_verification_tokens.sql`
+- **Verification:** all 03-01 grep gates still pass; `gen_random_bytes(32)` still present; awaiting clean `supabase db push` re-run.
+- **Committed in:** `cae5317` (sibling SEALED-org repo)
+
+---
+
+**Total deviations:** 1 auto-fixed (1 blocking). **Impact:** Required for the migration to apply on hosted Supabase; preserves 256-bit token entropy and the empty-search_path security posture. (`lookup_user_id_by_email` was specified by the plan's Task 1 action beyond the RESEARCH SQL block — included as required, not a deviation.)
 
 ## Issues Encountered
 None. All 7 automated grep checks + every acceptance string assertion passed.
