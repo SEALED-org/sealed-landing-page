@@ -101,8 +101,8 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   4. A mail-tester.com run on both templates scores 9/10 or higher with no blacklist or auth failures.
   5. `RESEND_API_KEY` and `SEALED_FROM_ADDRESS` are stored via `supabase secrets set` and not present in any committed file or `VITE_*` variable.
 **Plans**: 5 plans
-  - [ ] 03-01-PLAN.md — Migration 0034: app_private.verification_tokens + SECURITY DEFINER wrappers (Wave 1)
-  - [ ] 03-02-PLAN.md — WaitlistConfirmationEmail.tsx + SealLetterEmail.tsx + join-waitlist/deno.json extension (Wave 1)
+  - [x] 03-01-PLAN.md — Migration 0034: app_private.verification_tokens + SECURITY DEFINER wrappers (Wave 1)
+  - [x] 03-02-PLAN.md — WaitlistConfirmationEmail.tsx + SealLetterEmail.tsx + join-waitlist/deno.json extension (Wave 1)
   - [ ] 03-03-PLAN.md — join-waitlist/index.ts: 1A wiring at both TODO stubs + guarded 1B test trigger (Wave 2)
   - [ ] 03-04-PLAN.md — HALT handoff: DNS records, supabase db push, secrets set, function deploy (Wave 3, autonomous: false)
   - [ ] 03-05-PLAN.md — Post-deploy verification: dig, real inbox, mail-tester >= 9/10 on both templates (Wave 4, autonomous: false)
