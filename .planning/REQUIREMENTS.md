@@ -27,7 +27,7 @@ The two paths are distinct — no cross-contamination:
 - [ ] **EMAIL-A2**: Template 1A sent: simple waitlist confirmation ("You're on the SEALED waitlist") — no verification link, no further action required
 
 **Path B — Waitlist + letter (user signs up and writes a letter):**
-- [ ] **EMAIL-B1**: Template 1B sent: "Your letter is waiting — verify your email to seal it" with verification link
+- [x] **EMAIL-B1**: Template 1B sent: "Your letter is waiting — verify your email to seal it" with verification link
 - [ ] **EMAIL-B2**: User clicks verification link → letter is sealed (`sealed_at` + `deliver_at` set) → success shown in the UI. **No further email sent after verification.**
 - [ ] **EMAIL-B3**: Email verification is required before the letter is scheduled for delivery (anti-spam gate)
 
@@ -35,7 +35,7 @@ The two paths are distinct — no cross-contamination:
 - [ ] **EMAIL-01**: Template 3 (letter delivery on Jan 1, 2027) is already built in the main app (`notify/emails/DeliveryLetterEmail.tsx`) — handled by existing dispatch/notify cron; no new code needed
 - [ ] **EMAIL-02**: Template 4 — app launch invitation — deferred until launch date is set; schema supports it
 - [ ] **EMAIL-03**: All outbound email sent from a verified Resend domain with SPF/DKIM/DMARC on sealedapp.io
-- [ ] **EMAIL-04**: Magic link TTL set to 7 days (Supabase Auth default of 1 hour is too short for a "seal your letter" gesture)
+- [x] **EMAIL-04**: Magic link TTL set to 7 days (Supabase Auth default of 1 hour is too short for a "seal your letter" gesture)
 
 ### Letter Writing
 
@@ -134,13 +134,13 @@ Each v1 requirement maps to exactly one phase. Coverage: 51/51 v1 requirements m
 | SEC-05 | Phase 4 — Letter + Verify Flow | Pending |
 | EMAIL-A1 | Phase 2 — Signup Flow | Pending |
 | EMAIL-A2 | Phase 3 — Email Infrastructure | Pending |
-| EMAIL-B1 | Phase 3 — Email Infrastructure | Pending |
+| EMAIL-B1 | Phase 3 — Email Infrastructure | Complete |
 | EMAIL-B2 | Phase 4 — Letter + Verify Flow | Pending |
 | EMAIL-B3 | Phase 4 — Letter + Verify Flow | Pending |
 | EMAIL-01 | Phase 4 — Letter + Verify Flow | Already built in main app (no new work) |
 | EMAIL-02 | Deferred (v2) | Deferred |
 | EMAIL-03 | Phase 3 — Email Infrastructure | Pending |
-| EMAIL-04 | Phase 3 — Email Infrastructure | Pending |
+| EMAIL-04 | Phase 3 — Email Infrastructure | Complete |
 | LETTER-01 | Phase 4 — Letter + Verify Flow | Pending |
 | LETTER-02 | Phase 4 — Letter + Verify Flow | Pending |
 | LETTER-03 | Phase 4 — Letter + Verify Flow | Pending |
