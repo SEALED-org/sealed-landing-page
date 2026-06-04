@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 Phase: 03 (email-infrastructure) — EXECUTING
 Plan: 1 of 5
 Status: Executing Phase 03
-Last activity: 2026-06-04 -- Completed quick task 260604-lxl: Fix waitlist Turnstile empty-token submit bug
+Last activity: 2026-06-04 -- Completed quick task 260604-o2f: Improve email deliverability (List-Unsubscribe, plain-text, footers)
 
 Progress: [██████████] 100% (of planned work; Phases 3–7 not yet planned)
 
@@ -89,6 +89,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260604-lxl | Fix waitlist Turnstile empty-token submit bug | 2026-06-04 | ede282f | [260604-lxl-fix-waitlist-turnstile-empty-token-submi](./quick/260604-lxl-fix-waitlist-turnstile-empty-token-submi/) |
+| 260604-o2f | Improve email deliverability (List-Unsubscribe, plain-text, footers) | 2026-06-04 | a0b8ce0 (SEALED-org) | [260604-o2f-add-email-deliverability-headers-and-foo](./quick/260604-o2f-add-email-deliverability-headers-and-foo/) |
 
 ## Deferred Items
 
