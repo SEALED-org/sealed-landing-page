@@ -18,17 +18,52 @@ export default function WaitlistForm({ onSubmit, isSubmitting, isSubmitted, erro
   const turnstileRef = useRef<TurnstileInstance | null>(null);
   const [turnstileBlocked, setTurnstileBlocked] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState('');
+  // True while we wait for the invisible Turnstile challenge to produce a token
+  // on submit. Drives the existing spinner so the click feels instant and blocks
+  // double-submits. Separate from isSubmitting (the parent), which only covers
+  // the network call that follows.
+  const [resolving, setResolving] = useState(false);
+  // Local-only failure: the human-check could not produce a token. Shown as the
+  // friendly turnstile_failed message instead of sending an empty token, which
+  // the server rejects as a generic server_error ("Something went wrong").
+  const [turnstileFailed, setTurnstileFailed] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || isSubmitting || turnstileBlocked) return;
+    if (!email || isSubmitting || resolving) return;
+    setTurnstileFailed(false);
+    if (turnstileBlocked) {
+      setTurnstileFailed(true);
+      return;
+    }
+    setResolving(true);
     try {
-      await onSubmit(email, turnstileToken);
+      // The invisible challenge resolves asynchronously via onSuccess. If the
+      // token is not ready yet (fresh load, fast resubmit, or right after a
+      // reset), wait for it here instead of submitting an empty token.
+      let token = turnstileToken;
+      if (!token) {
+        try {
+          token = (await turnstileRef.current?.getResponsePromise(15000)) ?? '';
+        } catch {
+          token = '';
+        }
+      }
+      if (!token) {
+        setTurnstileFailed(true);
+        turnstileRef.current?.reset();
+        return;
+      }
+      await onSubmit(email, token);
     } finally {
       setTurnstileToken('');
       turnstileRef.current?.reset();
+      setResolving(false);
     }
   };
+
+  const busy = isSubmitting || resolving;
+  const shownError: WaitlistState | null = turnstileFailed ? 'turnstile_failed' : error;
 
   return (
     <>
@@ -45,8 +80,8 @@ export default function WaitlistForm({ onSubmit, isSubmitting, isSubmitted, erro
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"
         />
-        <button type="submit" className="btn-primary" disabled={isSubmitting}>
-          {isSubmitting ? (
+        <button type="submit" className="btn-primary" disabled={busy}>
+          {busy ? (
             <Loader2 className="w-4 h-4 animate-spin" />
           ) : (
             <>
@@ -84,13 +119,13 @@ export default function WaitlistForm({ onSubmit, isSubmitting, isSubmitted, erro
           fontFamily: 'var(--font-mono)',
           color: 'var(--color-ink-50)',
           fontSize: 12,
-          opacity: error ? 1 : 0,
+          opacity: shownError ? 1 : 0,
           transition: 'opacity 200ms ease',
           textAlign: 'center',
         }}
         aria-live="polite"
       >
-        {error ? MESSAGES[error] : ' '}
+        {shownError ? MESSAGES[shownError] : ' '}
       </div>
     </>
   );

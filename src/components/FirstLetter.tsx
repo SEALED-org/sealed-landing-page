@@ -46,6 +46,10 @@ export default function FirstLetter({
   const firstLetterTurnstileRef = useRef<TurnstileInstance | null>(null);
   const [turnstileBlocked, setTurnstileBlocked] = useState(false);
   const [firstLetterTurnstileToken, setFirstLetterTurnstileToken] = useState('');
+  // True while we wait for the invisible Turnstile challenge to produce a token
+  // on submit — blocks double-submits and disables the arrow button during the
+  // wait.
+  const [resolving, setResolving] = useState(false);
   const [emailError, setEmailError] = useState<WaitlistState | null>(null);
 
   useEffect(() => {
@@ -110,9 +114,32 @@ export default function FirstLetter({
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || turnstileBlocked) return;
+    if (!email || resolving) return;
+    setEmailError(null);
+    if (turnstileBlocked) {
+      setEmailError('turnstile_failed');
+      return;
+    }
+    setResolving(true);
     try {
-      const state = await onEmailSubmit(email, firstLetterTurnstileToken);
+      // The invisible challenge resolves asynchronously via onSuccess. If the
+      // token is not ready yet (fresh load, fast resubmit, or right after a
+      // reset), wait for it here instead of submitting an empty token (which the
+      // server rejects as a generic server_error).
+      let token = firstLetterTurnstileToken;
+      if (!token) {
+        try {
+          token = (await firstLetterTurnstileRef.current?.getResponsePromise(15000)) ?? '';
+        } catch {
+          token = '';
+        }
+      }
+      if (!token) {
+        setEmailError('turnstile_failed');
+        firstLetterTurnstileRef.current?.reset();
+        return;
+      }
+      const state = await onEmailSubmit(email, token);
       if (state === 'success') {
         setEmailError(null);
         transitionTo('success');
@@ -125,6 +152,7 @@ export default function FirstLetter({
     } finally {
       setFirstLetterTurnstileToken('');
       firstLetterTurnstileRef.current?.reset();
+      setResolving(false);
     }
   };
 
@@ -465,7 +493,7 @@ export default function FirstLetter({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       />
-                      <button type="submit" className="fl-arrow-btn" aria-label="Seal it">
+                      <button type="submit" className="fl-arrow-btn" aria-label="Seal it" disabled={resolving}>
                         →
                       </button>
                     </div>
