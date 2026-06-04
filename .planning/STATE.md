@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 Phase: 03 (email-infrastructure) — EXECUTING
 Plan: 1 of 5
 Status: Executing Phase 03
-Last activity: 2026-06-03 -- Phase 03 execution started
+Last activity: 2026-06-04 -- Completed quick task 260604-lxl: Fix waitlist Turnstile empty-token submit bug
 
 Progress: [██████████] 100% (of planned work; Phases 3–7 not yet planned)
 
@@ -83,6 +83,12 @@ None yet.
 - **DNS propagation is on the critical path for Phase 3.** SPF/DKIM/DMARC for sealedapp.io should be initiated as early as possible (propagation can take hours and blocks all real email tests). ← next critical item.
 - **Service role key bundle leak risk.** Add a CI grep on `dist/` for the service role key prefix before any Vercel deploy.
 - **Open questions in research/SUMMARY.md** (timezone for `deliver_at`, resignup-with-pending-letter behaviour, letter length cap, DNS ownership) should be resolved during Phase 2 / Phase 3 planning.
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260604-lxl | Fix waitlist Turnstile empty-token submit bug | 2026-06-04 | ede282f | [260604-lxl-fix-waitlist-turnstile-empty-token-submi](./quick/260604-lxl-fix-waitlist-turnstile-empty-token-submi/) |
 
 ## Deferred Items
 
