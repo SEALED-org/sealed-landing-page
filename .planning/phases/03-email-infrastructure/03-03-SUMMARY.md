@@ -84,9 +84,17 @@ See frontmatter `key-decisions`.
 - **Verification:** both greps now return 1; returns unchanged.
 - **Committed in:** `93bab4b`
 
+**2. [Rule 3 - Blocking] 1B trigger uninvokable under gateway verify_jwt=true**
+- **Found during:** Plan 05 verification (Wave 4) — live curl probes.
+- **Issue:** The trigger authenticates via `Authorization: Bearer <TEST_TRIGGER_KEY>`, but `join-waitlist` defaulted to `verify_jwt = true`. Supabase's gateway then requires that header to be a valid JWT and rejects the trigger key with `UNAUTHORIZED_INVALID_JWT_FORMAT` before the function runs — no single Authorization value can satisfy both the gateway (JWT) and the function (trigger key). Plan 03-03 did not account for the gateway layer.
+- **Fix:** Added `[functions.join-waitlist] verify_jwt = false` to `supabase/config.toml`, matching the repo's documented pattern (dispatch/notify/receipts/canary/reconcile). The endpoint's own Turnstile + rate-limit + TEST_TRIGGER_KEY checks remain the auth truth; the removed anon-key requirement is public anyway. (Chosen by Nour over the custom-header alternative.)
+- **Files modified:** `(sibling) supabase/config.toml`
+- **Verification:** requires `supabase functions deploy join-waitlist` to apply, then the 1B trigger curl with `Authorization: Bearer <TEST_TRIGGER_KEY>` reaches the function. Normal browser signup unaffected (anon key ignored by gateway; function path never reads Authorization).
+- **Committed in:** `95192e5` (sibling SEALED-org repo)
+
 ---
 
-**Total deviations:** 1 auto-fixed (1 bug). **Impact:** Comment wording only; no behavior change.
+**Total deviations:** 2 auto-fixed (1 bug, 1 blocking). **Impact:** Deviation 1 was comment wording only. Deviation 2 is a config-layer fix required for the 1B deliverability test; no behavior change to the signup path, and it aligns the public endpoint with the repo's established gateway-auth convention.
 
 ## Issues Encountered
 - **Local `deno check` reports TS2875** (`react/jsx-runtime` not found) on the JSX templates. Verified the **existing production `notify` function fails identically** under local `deno check` while running fine in production — this is a local-tooling artifact (Deno's local typecheck doesn't resolve `react/jsx-runtime` from the `npm:` react the way Supabase's deploy bundler does), not a code defect. Mirrors Phase 2's "typechecks on deploy" note. All grep acceptance criteria pass; braces balanced (108/108, 151/151).
