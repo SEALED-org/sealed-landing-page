@@ -444,7 +444,7 @@ This is a feature phase, but it removes a runtime trigger (`?test_1b=1`) and its
 | A2 | Vercel serves `dist/verify.html` at the clean URL `/verify` with no rewrite (Vite multi-page output) | Standard Stack / Pattern 4 | If Vercel needs `cleanUrls: true` or a rewrite, Phase 5's `vercel.json` adds one line. The 1B link is `/verify` (no `.html`), so confirm clean-URL serving in Phase 5 deploy. MEDIUM. |
 | A3 | One fixed `deliver_at='2027-01-01T13:00:00Z'` for all letters is compatible with the cron (it compares `deliver_at <= now()` only) | Pattern 2 | Verified by reading `claim_due_letters`; no per-letter timezone logic in the cron. LOW. |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **F1 — LETTER-07/DB-04 say "insert schedules + notification_outbox"; the cron design says schedules ONLY.**
    - What we know: `claim_due_letters` (`0011`) creates BOTH `notification_outbox` rows itself at delivery time with `on conflict (letter_id, channel) do nothing`. Pre-inserting them in verify-email is at best redundant and at worst breaks the `0020` status-shape CHECK / push-row creation.
