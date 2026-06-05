@@ -40,10 +40,10 @@ The two paths are distinct — no cross-contamination:
 ### Letter Writing
 
 - [ ] **LETTER-01**: User can write a letter to their future self in the inline textarea (available after email submission)
-- [ ] **LETTER-02**: User can choose to skip writing a letter entirely
+- [x] **LETTER-02**: User can choose to skip writing a letter entirely
 - [ ] **LETTER-03**: Letter shows live word count
 - [ ] **LETTER-04**: Letter shows typewriter-cycling placeholder prompts to reduce blank-page paralysis
-- [ ] **LETTER-05**: Submitting the letter triggers the 2.5s sealing animation, then shows the sealed confirmation state
+- [x] **LETTER-05**: Submitting the letter triggers the 2.5s sealing animation, then shows the sealed confirmation state
 - [x] **LETTER-06**: Letter body stored in `app_private.letters` with `is_canary=false`; draft state (no `sealed_at`/`deliver_at`) until email verified
 - [x] **LETTER-07**: On email verification, letter transitions to sealed (`sealed_at=now()`, `deliver_at='2027-01-01T...'`); row inserted into `app_private.schedules`; the dispatch cron (`claim_due_letters`) creates `notification_outbox` rows at delivery time (RESEARCH F1) — existing delivery cron handles Jan 1 send automatically
 
@@ -142,10 +142,10 @@ Each v1 requirement maps to exactly one phase. Coverage: 51/51 v1 requirements m
 | EMAIL-03 | Phase 3 — Email Infrastructure | Pending |
 | EMAIL-04 | Phase 3 — Email Infrastructure | Complete |
 | LETTER-01 | Phase 4 — Letter + Verify Flow | Pending |
-| LETTER-02 | Phase 4 — Letter + Verify Flow | Pending |
+| LETTER-02 | Phase 4 — Letter + Verify Flow | Complete |
 | LETTER-03 | Phase 4 — Letter + Verify Flow | Pending |
 | LETTER-04 | Phase 4 — Letter + Verify Flow | Pending |
-| LETTER-05 | Phase 4 — Letter + Verify Flow | Pending |
+| LETTER-05 | Phase 4 — Letter + Verify Flow | Complete |
 | LETTER-06 | Phase 4 — Letter + Verify Flow | Complete |
 | LETTER-07 | Phase 4 — Letter + Verify Flow | Complete |
 | COUNTER-01 | Phase 1 — Foundation | Pending |
