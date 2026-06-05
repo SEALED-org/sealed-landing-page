@@ -122,7 +122,7 @@ Plans:
 - [x] 04-01-PLAN.md — Migration 0035: body CHECK + upsert_pending_letter + seal_letter_with_token RPCs (Wave 1)
 - [x] 04-02-PLAN.md — verify.html standalone page + Vite multi-page input (Wave 1)
 - [x] 04-03-PLAN.md — join-waitlist: letter param + Path B branch + remove test trigger (Wave 2)
-- [ ] 04-04-PLAN.md — verify-email Edge Function + config.toml registration (Wave 2)
+- [x] 04-04-PLAN.md — verify-email Edge Function + config.toml registration (Wave 2)
 - [ ] 04-05-PLAN.md — Client wiring: supabase.ts + App.tsx + FirstLetter.tsx letter threading (Wave 3)
 - [ ] 04-06-PLAN.md — HALT: supabase db push + functions deploy + smoke tests (Wave 4, autonomous: false)
 **UI hint**: yes

@@ -4,14 +4,14 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Phase 3 CLOSED. Verified live during resume — 1A mail-tester 9/10 (auth pass, no verify link, −1 SPAMCOP shared-IP accepted), 1B delivered to real inbox (correct copy + CTA → sealedapp.io/verify?token=…, "7 days"), token TTL DB-confirmed at exactly 7 days / used_at null, secrets grep-clean + proven by working sends. Wrote 03-04-SUMMARY.md + 03-05-SUMMARY.md.
-last_updated: "2026-06-05T12:56:43.757Z"
+last_updated: "2026-06-05T13:02:39.259Z"
 last_activity: 2026-06-05
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 29
-  completed_plans: 26
-  percent: 90
+  completed_plans: 27
+  percent: 93
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 ## Current Position
 
 Phase: 04 (letter-verify-flow) — EXECUTING
-Plan: 4 of 6
+Plan: 5 of 6
 Status: Ready to execute
 Last activity: 2026-06-05
 
-Progress: [█████████░] 90%
+Progress: [█████████░] 93%
 
 ## Performance Metrics
 
@@ -107,7 +107,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T12:56:43.748Z
+Last session: 2026-06-05T13:02:39.239Z
 Stopped at: Phase 3 CLOSED. Verified live during resume — 1A mail-tester 9/10 (auth pass, no verify link, −1 SPAMCOP shared-IP accepted), 1B delivered to real inbox (correct copy + CTA → sealedapp.io/verify?token=…, "7 days"), token TTL DB-confirmed at exactly 7 days / used_at null, secrets grep-clean + proven by working sends. Wrote 03-04-SUMMARY.md + 03-05-SUMMARY.md.
 Open (deferred to Phase 6): 1B mail-tester ≥9 on live production send; SPAMCOP recheck.
 Project ref: tiaeioiylephekgrllnj.supabase.co
