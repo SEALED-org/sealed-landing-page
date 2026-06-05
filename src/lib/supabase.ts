@@ -72,15 +72,17 @@ export async function getSignupCount(): Promise<number> {
  *
  * @param email          The email address. HTML5 validates client-side; the server validates on receive.
  * @param turnstileToken The Turnstile token from `ref.current.getResponse()`. Pass `''` if the widget failed — the server returns `turnstile_failed`.
+ * @param letter         Optional letter body for Path B signups. Omit or pass empty string for Path A (no letter).
  * @returns A `WaitlistState`. Never throws.
  */
 export async function joinWaitlist(
   email: string,
   turnstileToken: string,
+  letter?: string,
 ): Promise<WaitlistState> {
   const { data, error } = await supabase.functions.invoke<JoinWaitlistResponse>(
     'join-waitlist',
-    { body: { email, turnstileToken } },
+    { body: { email, turnstileToken, ...(letter && letter.trim() ? { letter: letter.trim() } : {}) } },
   );
   if (error) {
     if (error instanceof FunctionsHttpError) {
