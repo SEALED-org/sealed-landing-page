@@ -120,7 +120,7 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
 **Plans**: 6 plans
 Plans:
 - [x] 04-01-PLAN.md — Migration 0035: body CHECK + upsert_pending_letter + seal_letter_with_token RPCs (Wave 1)
-- [ ] 04-02-PLAN.md — verify.html standalone page + Vite multi-page input (Wave 1)
+- [x] 04-02-PLAN.md — verify.html standalone page + Vite multi-page input (Wave 1)
 - [ ] 04-03-PLAN.md — join-waitlist: letter param + Path B branch + remove test trigger (Wave 2)
 - [ ] 04-04-PLAN.md — verify-email Edge Function + config.toml registration (Wave 2)
 - [ ] 04-05-PLAN.md — Client wiring: supabase.ts + App.tsx + FirstLetter.tsx letter threading (Wave 3)

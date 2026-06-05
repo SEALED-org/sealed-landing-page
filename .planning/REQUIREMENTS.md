@@ -28,7 +28,7 @@ The two paths are distinct — no cross-contamination:
 
 **Path B — Waitlist + letter (user signs up and writes a letter):**
 - [x] **EMAIL-B1**: Template 1B sent: "Your letter is waiting — verify your email to seal it" with verification link
-- [ ] **EMAIL-B2**: User clicks verification link → letter is sealed (`sealed_at` + `deliver_at` set) → success shown in the UI. **No further email sent after verification.**
+- [x] **EMAIL-B2**: User clicks verification link → letter is sealed (`sealed_at` + `deliver_at` set) → success shown in the UI. **No further email sent after verification.**
 - [x] **EMAIL-B3**: Email verification is required before the letter is scheduled for delivery (anti-spam gate)
 
 **Shared email requirements:**
@@ -135,7 +135,7 @@ Each v1 requirement maps to exactly one phase. Coverage: 51/51 v1 requirements m
 | EMAIL-A1 | Phase 2 — Signup Flow | Pending |
 | EMAIL-A2 | Phase 3 — Email Infrastructure | Complete |
 | EMAIL-B1 | Phase 3 — Email Infrastructure | Complete |
-| EMAIL-B2 | Phase 4 — Letter + Verify Flow | Pending |
+| EMAIL-B2 | Phase 4 — Letter + Verify Flow | Complete |
 | EMAIL-B3 | Phase 4 — Letter + Verify Flow | Complete |
 | EMAIL-01 | Phase 4 — Letter + Verify Flow | Already built in main app (no new work) |
 | EMAIL-02 | Deferred (v2) | Deferred |
