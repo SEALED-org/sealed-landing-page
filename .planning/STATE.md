@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: "Phase 3 COMPLETE — all 5 success criteria verified (1A mail-tester 9/10, 1B delivered with DB-confirmed 7-day token, domain authenticated SPF/DKIM/DMARC, secrets clean). 1B mail-tester score deferred to Phase 6 (verify link target not live until Phase 5). Phase 4 planned + ready to execute."
-last_updated: "2026-06-05"
-last_activity: 2026-06-05 -- Phase 03 verification closed (03-04 + 03-05 SUMMARYs written)
+stopped_at: Phase 3 CLOSED. Verified live during resume — 1A mail-tester 9/10 (auth pass, no verify link, −1 SPAMCOP shared-IP accepted), 1B delivered to real inbox (correct copy + CTA → sealedapp.io/verify?token=…, "7 days"), token TTL DB-confirmed at exactly 7 days / used_at null, secrets grep-clean + proven by working sends. Wrote 03-04-SUMMARY.md + 03-05-SUMMARY.md.
+last_updated: "2026-06-05T12:45:17.380Z"
+last_activity: 2026-06-05
 progress:
   total_phases: 7
   completed_phases: 4
   total_plans: 29
-  completed_plans: 23
-  percent: 79
+  completed_plans: 24
+  percent: 83
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-25)
 
 **Core value:** A frictionless one-screen moment: enter your email, write a letter to your future self, and forget about it until 2027.
-**Current focus:** Phase 03 — email-infrastructure
+**Current focus:** Phase 04 — letter-verify-flow
 
 ## Current Position
 
-Phase: 04 (letter-verify-flow) — PLANNED (ready to execute)
-Plan: 0 of 6 executed
-Status: Phase 03 CLOSED ✅ (5/5 criteria verified; 1B mail-tester deferred to Phase 6). Phase 04 planned (6 plans, 4 waves, checker-passed) — next to execute.
-Last activity: 2026-06-05 -- Closed Phase 03 verification: 1A 9/10, 1B real-inbox + 7-day token, DKIM/DMARC pass, secrets clean
+Phase: 04 (letter-verify-flow) — EXECUTING
+Plan: 2 of 6
+Status: Ready to execute
+Last activity: 2026-06-05
 
-Progress: [██████░░░░] Phases 1, 1.5, 2, 3 complete; Phase 4 planned; Phases 5–6 not yet planned
+Progress: [████████░░] 83%
 
 ## Performance Metrics
 
@@ -106,7 +106,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05 (resumed)
+Last session: 2026-06-05T12:45:17.366Z
 Stopped at: Phase 3 CLOSED. Verified live during resume — 1A mail-tester 9/10 (auth pass, no verify link, −1 SPAMCOP shared-IP accepted), 1B delivered to real inbox (correct copy + CTA → sealedapp.io/verify?token=…, "7 days"), token TTL DB-confirmed at exactly 7 days / used_at null, secrets grep-clean + proven by working sends. Wrote 03-04-SUMMARY.md + 03-05-SUMMARY.md.
 Open (deferred to Phase 6): 1B mail-tester ≥9 on live production send; SPAMCOP recheck.
 Project ref: tiaeioiylephekgrllnj.supabase.co

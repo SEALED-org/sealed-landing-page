@@ -119,7 +119,7 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   5. Unverified letters never appear in `app_private.schedules` (confirmed by query); skipping the letter entirely takes Path A with no verification link in the confirmation email.
 **Plans**: 6 plans
 Plans:
-- [ ] 04-01-PLAN.md — Migration 0035: body CHECK + upsert_pending_letter + seal_letter_with_token RPCs (Wave 1)
+- [x] 04-01-PLAN.md — Migration 0035: body CHECK + upsert_pending_letter + seal_letter_with_token RPCs (Wave 1)
 - [ ] 04-02-PLAN.md — verify.html standalone page + Vite multi-page input (Wave 1)
 - [ ] 04-03-PLAN.md — join-waitlist: letter param + Path B branch + remove test trigger (Wave 2)
 - [ ] 04-04-PLAN.md — verify-email Edge Function + config.toml registration (Wave 2)

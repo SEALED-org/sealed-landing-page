@@ -16,7 +16,7 @@
 - [ ] **SEC-02**: Server-side IP rate limit of 3 signup attempts per rolling 24h per IP enforced in the Edge Function *(Amended Phase 2 per 02-CONTEXT.md D-05 — rationale: NAT/shared-IP false positives; Turnstile remains the primary bot defense.)*
 - [ ] **SEC-03**: Signup endpoint only creates DB records if Turnstile verification passes
 - [ ] **SEC-04**: Supabase service role key is never exposed to the client (Edge Function only)
-- [ ] **SEC-05**: Email verification gate — letters are only scheduled for delivery after the user clicks the verification link (prevents letter-bombing arbitrary emails). Waitlist-only signups do NOT require verification.
+- [x] **SEC-05**: Email verification gate — letters are only scheduled for delivery after the user clicks the verification link (prevents letter-bombing arbitrary emails). Waitlist-only signups do NOT require verification.
 
 ### Email Flow
 
@@ -29,10 +29,10 @@ The two paths are distinct — no cross-contamination:
 **Path B — Waitlist + letter (user signs up and writes a letter):**
 - [x] **EMAIL-B1**: Template 1B sent: "Your letter is waiting — verify your email to seal it" with verification link
 - [ ] **EMAIL-B2**: User clicks verification link → letter is sealed (`sealed_at` + `deliver_at` set) → success shown in the UI. **No further email sent after verification.**
-- [ ] **EMAIL-B3**: Email verification is required before the letter is scheduled for delivery (anti-spam gate)
+- [x] **EMAIL-B3**: Email verification is required before the letter is scheduled for delivery (anti-spam gate)
 
 **Shared email requirements:**
-- [ ] **EMAIL-01**: Template 3 (letter delivery on Jan 1, 2027) is already built in the main app (`notify/emails/DeliveryLetterEmail.tsx`) — handled by existing dispatch/notify cron; no new code needed
+- [x] **EMAIL-01**: Template 3 (letter delivery on Jan 1, 2027) is already built in the main app (`notify/emails/DeliveryLetterEmail.tsx`) — handled by existing dispatch/notify cron; no new code needed
 - [ ] **EMAIL-02**: Template 4 — app launch invitation — deferred until launch date is set; schema supports it
 - [ ] **EMAIL-03**: All outbound email sent from a verified Resend domain with SPF/DKIM/DMARC on sealedapp.io
 - [x] **EMAIL-04**: Magic link TTL set to 7 days (Supabase Auth default of 1 hour is too short for a "seal your letter" gesture)
@@ -44,8 +44,8 @@ The two paths are distinct — no cross-contamination:
 - [ ] **LETTER-03**: Letter shows live word count
 - [ ] **LETTER-04**: Letter shows typewriter-cycling placeholder prompts to reduce blank-page paralysis
 - [ ] **LETTER-05**: Submitting the letter triggers the 2.5s sealing animation, then shows the sealed confirmation state
-- [ ] **LETTER-06**: Letter body stored in `app_private.letters` with `is_canary=false`; draft state (no `sealed_at`/`deliver_at`) until email verified
-- [ ] **LETTER-07**: On email verification, letter transitions to sealed (`sealed_at=now()`, `deliver_at='2027-01-01T...'`); row inserted into `app_private.schedules`; the dispatch cron (`claim_due_letters`) creates `notification_outbox` rows at delivery time (RESEARCH F1) — existing delivery cron handles Jan 1 send automatically
+- [x] **LETTER-06**: Letter body stored in `app_private.letters` with `is_canary=false`; draft state (no `sealed_at`/`deliver_at`) until email verified
+- [x] **LETTER-07**: On email verification, letter transitions to sealed (`sealed_at=now()`, `deliver_at='2027-01-01T...'`); row inserted into `app_private.schedules`; the dispatch cron (`claim_due_letters`) creates `notification_outbox` rows at delivery time (RESEARCH F1) — existing delivery cron handles Jan 1 send automatically
 
 ### Waitlist Counter
 
@@ -59,7 +59,7 @@ The two paths are distinct — no cross-contamination:
 - [ ] **DB-01**: `app_private.waitlist_signups` table created (user_id PK, status: active|unsubscribed, has_letter boolean, created_at) — simpler than before since verification state is tracked on `app_private.letters` separately
 - [ ] **DB-02**: `public.signup_counter` view created and granted to anon role
 - [ ] **DB-03**: `join-waitlist` Edge Function handles: Turnstile verify → IP rate limit → admin.createUser → DB inserts → send appropriate Template 1A or 1B based on whether a letter was written
-- [ ] **DB-04**: `verify-email` Edge Function handles: seal letter → insert an `app_private.schedules` row; the dispatch cron creates `notification_outbox` rows at delivery time (RESEARCH F1). No email sent back to user.
+- [x] **DB-04**: `verify-email` Edge Function handles: seal letter → insert an `app_private.schedules` row; the dispatch cron creates `notification_outbox` rows at delivery time (RESEARCH F1). No email sent back to user.
 - [ ] **DB-05**: Firebase imports completely removed from the codebase; `@supabase/supabase-js@2.103.2` installed
 - [ ] **DB-06**: Edge Functions follow main app's `_shared/` patterns (admin-client, resend, auth guard)
 - [ ] **DB-07**: Re-signup with the same email handled gracefully: if no letter → confirm already on list; if letter already sealed → confirm already sealed; if pending verification → resend verification link
@@ -131,12 +131,12 @@ Each v1 requirement maps to exactly one phase. Coverage: 51/51 v1 requirements m
 | SEC-02 | Phase 2 — Signup Flow | Pending |
 | SEC-03 | Phase 2 — Signup Flow | Pending |
 | SEC-04 | Phase 2 — Signup Flow | Pending |
-| SEC-05 | Phase 4 — Letter + Verify Flow | Pending |
+| SEC-05 | Phase 4 — Letter + Verify Flow | Complete |
 | EMAIL-A1 | Phase 2 — Signup Flow | Pending |
 | EMAIL-A2 | Phase 3 — Email Infrastructure | Complete |
 | EMAIL-B1 | Phase 3 — Email Infrastructure | Complete |
 | EMAIL-B2 | Phase 4 — Letter + Verify Flow | Pending |
-| EMAIL-B3 | Phase 4 — Letter + Verify Flow | Pending |
+| EMAIL-B3 | Phase 4 — Letter + Verify Flow | Complete |
 | EMAIL-01 | Phase 4 — Letter + Verify Flow | Already built in main app (no new work) |
 | EMAIL-02 | Deferred (v2) | Deferred |
 | EMAIL-03 | Phase 3 — Email Infrastructure | Pending |
@@ -146,8 +146,8 @@ Each v1 requirement maps to exactly one phase. Coverage: 51/51 v1 requirements m
 | LETTER-03 | Phase 4 — Letter + Verify Flow | Pending |
 | LETTER-04 | Phase 4 — Letter + Verify Flow | Pending |
 | LETTER-05 | Phase 4 — Letter + Verify Flow | Pending |
-| LETTER-06 | Phase 4 — Letter + Verify Flow | Pending |
-| LETTER-07 | Phase 4 — Letter + Verify Flow | Pending |
+| LETTER-06 | Phase 4 — Letter + Verify Flow | Complete |
+| LETTER-07 | Phase 4 — Letter + Verify Flow | Complete |
 | COUNTER-01 | Phase 1 — Foundation | Pending |
 | COUNTER-02 | Phase 1 — Foundation | Pending |
 | COUNTER-03 | Phase 1 — Foundation | Pending |
@@ -155,7 +155,7 @@ Each v1 requirement maps to exactly one phase. Coverage: 51/51 v1 requirements m
 | DB-01 | Phase 1 — Foundation | Pending |
 | DB-02 | Phase 1 — Foundation | Pending |
 | DB-03 | Phase 2 — Signup Flow | Pending |
-| DB-04 | Phase 4 — Letter + Verify Flow | Pending |
+| DB-04 | Phase 4 — Letter + Verify Flow | Complete |
 | DB-05 | Phase 1 — Foundation | Pending |
 | DB-06 | Phase 2 — Signup Flow | Pending |
 | DB-07 | Phase 2 — Signup Flow | Pending |
