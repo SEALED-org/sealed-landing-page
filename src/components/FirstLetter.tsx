@@ -11,7 +11,7 @@ type Step = 'write' | 'email' | 'success';
 
 interface FirstLetterProps {
   initialEmail?: string;
-  onEmailSubmit: (email: string, turnstileToken: string) => Promise<WaitlistState>;
+  onEmailSubmit: (email: string, turnstileToken: string, letter: string) => Promise<WaitlistState>;
   waitlistCount: number;
 }
 
@@ -139,7 +139,7 @@ export default function FirstLetter({
         firstLetterTurnstileRef.current?.reset();
         return;
       }
-      const state = await onEmailSubmit(email, token);
+      const state = await onEmailSubmit(email, token, letter);
       if (state === 'success') {
         setEmailError(null);
         transitionTo('success');
@@ -220,6 +220,7 @@ export default function FirstLetter({
                     spellCheck={false}
                     value={letter}
                     onChange={handleLetterChange}
+                    maxLength={2000}
                   />
                 </div>
                 <div
@@ -227,6 +228,7 @@ export default function FirstLetter({
                   style={{ justifyContent: 'flex-start' }}
                 >
                   <span id="fl-words">{wordCount} words</span>
+                  <span id="fl-chars" style={{ marginLeft: 12, opacity: 0.55 }}>{letter.length} / 2000</span>
                 </div>
               </div>
             </div>

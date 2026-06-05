@@ -109,9 +109,9 @@ export default function App() {
 
       <FirstLetter
         initialEmail={isSubscribed ? email : undefined}
-        onEmailSubmit={async (newEmail, turnstileToken) => {
+        onEmailSubmit={async (newEmail, turnstileToken, letter) => {
           try {
-            const state = await joinWaitlist(newEmail, turnstileToken);
+            const state = await joinWaitlist(newEmail, turnstileToken, letter);
             if (state === 'success') {
               setEmail(newEmail);
               setIsSubscribed(true);
