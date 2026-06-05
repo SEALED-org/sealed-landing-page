@@ -15,9 +15,9 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
 - Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
 - [x] **Phase 1: Foundation** - Firebase out, Supabase in, build green, counter live
-- [ ] **Phase 1.5: UI Redesign (INSERTED)** - Rebuild landing UI to match `Landing.html` Claude Design prototype (hero, counter, FirstLetter, Research, FAQ, Footer)
-- [ ] **Phase 2: Signup Flow** - `join-waitlist` Edge Function end-to-end with Turnstile + rate limit + Path A confirmation
-- [ ] **Phase 3: Email Infrastructure** - DNS verified, Resend connected, Templates 1A and 1B deliverable
+- [x] **Phase 1.5: UI Redesign (INSERTED)** - Rebuild landing UI to match `Landing.html` Claude Design prototype (hero, counter, FirstLetter, Research, FAQ, Footer)
+- [x] **Phase 2: Signup Flow** - `join-waitlist` Edge Function end-to-end with Turnstile + rate limit + Path A confirmation
+- [x] **Phase 3: Email Infrastructure** - DNS verified, Resend connected, Templates 1A and 1B deliverable
 - [ ] **Phase 4: Letter + Verify Flow** - Letter writing wired to Supabase, `verify-email` Edge Function seals letters, Path B complete
 - [ ] **Phase 5: Deploy & Polish** - GitHub push, Vercel, sealedapp.io, social links, copy, accessibility
 - [ ] **Phase 6: Pre-launch QA** - Smoke test, mail-tester, mobile QA, stakeholder sign-off
@@ -104,8 +104,8 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   - [x] 03-01-PLAN.md — Migration 0034: app_private.verification_tokens + SECURITY DEFINER wrappers (Wave 1)
   - [x] 03-02-PLAN.md — WaitlistConfirmationEmail.tsx + SealLetterEmail.tsx + join-waitlist/deno.json extension (Wave 1)
   - [x] 03-03-PLAN.md — join-waitlist/index.ts: 1A wiring at both TODO stubs + guarded 1B test trigger (Wave 2)
-  - [ ] 03-04-PLAN.md — HALT handoff: DNS records, supabase db push, secrets set, function deploy (Wave 3, autonomous: false)
-  - [ ] 03-05-PLAN.md — Post-deploy verification: dig, real inbox, mail-tester >= 9/10 on both templates (Wave 4, autonomous: false)
+  - [x] 03-04-PLAN.md — HALT handoff: DNS records, supabase db push, secrets set, function deploy (Wave 3, autonomous: false)
+  - [x] 03-05-PLAN.md — Post-deploy verification: dig, real inbox, 1A mail-tester 9/10 (1B mail-tester deferred to Phase 6) (Wave 4, autonomous: false)
 
 ### Phase 4: Letter + Verify Flow
 **Goal**: A letter writer composes their letter inline, submits, sees the 2.5s sealing animation, receives Template 1B, clicks the verification link, and watches their letter transition to `sealed` in Supabase — landing in the same `schedules` + `notification_outbox` rows the existing delivery cron is already watching for Jan 1, 2027.
@@ -161,9 +161,9 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 4/4 | ✅ Complete | 2026-05-28 |
-| 1.5. UI Redesign (INSERTED) | 0/9 | Not started | - |
-| 2. Signup Flow | 0/5 | Not started | - |
-| 3. Email Infrastructure | 0/5 | Not started | - |
-| 4. Letter + Verify Flow | 0/6 | Not started | - |
+| 1.5. UI Redesign (INSERTED) | 9/9 | ✅ Complete | 2026-05-28 |
+| 2. Signup Flow | 5/5 | ✅ Complete | 2026-06-03 |
+| 3. Email Infrastructure | 5/5 | ✅ Complete | 2026-06-05 |
+| 4. Letter + Verify Flow | 0/6 | Planned (ready to execute) | - |
 | 5. Deploy & Polish | 0/TBD | Not started | - |
 | 6. Pre-launch QA | 0/TBD | Not started | - |
