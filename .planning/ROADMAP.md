@@ -108,13 +108,13 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   - [x] 03-05-PLAN.md — Post-deploy verification: dig, real inbox, 1A mail-tester 9/10 (1B mail-tester deferred to Phase 6) (Wave 4, autonomous: false)
 
 ### Phase 4: Letter + Verify Flow
-**Goal**: A letter writer composes their letter inline, submits, sees the 2.5s sealing animation, receives Template 1B, clicks the verification link, and watches their letter transition to `sealed` in Supabase — landing in the same `schedules` + `notification_outbox` rows the existing delivery cron is already watching for Jan 1, 2027.
+**Goal**: A letter writer composes their letter inline, submits, sees the 2.5s sealing animation, receives Template 1B, clicks the verification link, and watches their letter transition to `sealed` in Supabase — landing in the `schedules` row the existing delivery cron is already watching — the cron creates `notification_outbox` rows itself at delivery time (RESEARCH F1) for Jan 1, 2027.
 **Depends on**: Phase 3
 **Requirements**: LETTER-01, LETTER-02, LETTER-03, LETTER-04, LETTER-05, LETTER-06, LETTER-07, SEC-05, EMAIL-B2, EMAIL-B3, DB-04, EMAIL-01
 **Success Criteria** (what must be TRUE):
   1. Writing and submitting a letter inserts a row in `app_private.letters` with `is_canary=false` and no `sealed_at`/`deliver_at` set (draft state).
   2. The letter UI shows a live word count while typing and cycles typewriter placeholder prompts when empty.
-  3. A letter writer who clicks the Template 1B verification link sees their letter's status flip to `sealed` in `app_private.letters` (`sealed_at=now()`, `deliver_at='2027-01-01T13:00:00Z'` or the agreed timezone), with matching rows inserted into `app_private.schedules` and `app_private.notification_outbox`.
+  3. A letter writer who clicks the Template 1B verification link sees their letter's status flip to `sealed` in `app_private.letters` (`sealed_at=now()`, `deliver_at='2027-01-01T13:00:00Z'` or the agreed timezone), with a matching row inserted into `app_private.schedules` (the dispatch cron creates `notification_outbox` rows at delivery time — RESEARCH F1).
   4. After verification, the user sees an in-page success state — no Template 2 is sent — and the existing dispatch/notify cron picks up the outbox row on its next run.
   5. Unverified letters never appear in `app_private.schedules` (confirmed by query); skipping the letter entirely takes Path A with no verification link in the confirmation email.
 **Plans**: 6 plans

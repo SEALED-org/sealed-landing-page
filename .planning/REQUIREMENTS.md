@@ -45,7 +45,7 @@ The two paths are distinct — no cross-contamination:
 - [ ] **LETTER-04**: Letter shows typewriter-cycling placeholder prompts to reduce blank-page paralysis
 - [ ] **LETTER-05**: Submitting the letter triggers the 2.5s sealing animation, then shows the sealed confirmation state
 - [ ] **LETTER-06**: Letter body stored in `app_private.letters` with `is_canary=false`; draft state (no `sealed_at`/`deliver_at`) until email verified
-- [ ] **LETTER-07**: On email verification, letter transitions to sealed (`sealed_at=now()`, `deliver_at='2027-01-01T...'`); row inserted into `app_private.schedules` and `app_private.notification_outbox` — existing delivery cron handles Jan 1 send automatically
+- [ ] **LETTER-07**: On email verification, letter transitions to sealed (`sealed_at=now()`, `deliver_at='2027-01-01T...'`); row inserted into `app_private.schedules`; the dispatch cron (`claim_due_letters`) creates `notification_outbox` rows at delivery time (RESEARCH F1) — existing delivery cron handles Jan 1 send automatically
 
 ### Waitlist Counter
 
@@ -59,7 +59,7 @@ The two paths are distinct — no cross-contamination:
 - [ ] **DB-01**: `app_private.waitlist_signups` table created (user_id PK, status: active|unsubscribed, has_letter boolean, created_at) — simpler than before since verification state is tracked on `app_private.letters` separately
 - [ ] **DB-02**: `public.signup_counter` view created and granted to anon role
 - [ ] **DB-03**: `join-waitlist` Edge Function handles: Turnstile verify → IP rate limit → admin.createUser → DB inserts → send appropriate Template 1A or 1B based on whether a letter was written
-- [ ] **DB-04**: `verify-email` Edge Function handles: seal letter → insert schedules + notification_outbox (no email sent back to user)
+- [ ] **DB-04**: `verify-email` Edge Function handles: seal letter → insert an `app_private.schedules` row; the dispatch cron creates `notification_outbox` rows at delivery time (RESEARCH F1). No email sent back to user.
 - [ ] **DB-05**: Firebase imports completely removed from the codebase; `@supabase/supabase-js@2.103.2` installed
 - [ ] **DB-06**: Edge Functions follow main app's `_shared/` patterns (admin-client, resend, auth guard)
 - [ ] **DB-07**: Re-signup with the same email handled gracefully: if no letter → confirm already on list; if letter already sealed → confirm already sealed; if pending verification → resend verification link
