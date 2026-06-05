@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 
 ## Current Position
 
-Phase: 03 (email-infrastructure) — EXECUTING
-Plan: 1 of 5
-Status: Executing Phase 03
-Last activity: 2026-06-04 -- Completed quick task 260604-o2f: Improve email deliverability (List-Unsubscribe, plain-text, footers)
+Phase: 04 (letter-verify-flow) — PLANNED (ready to execute)
+Plan: 0 of 6 executed
+Status: Phase 03 final verification pending (real-inbox + 1B test tomorrow, rate-limit blocked); Phase 04 planned (6 plans, 4 waves, checker-passed)
+Last activity: 2026-06-05 -- Planned Phase 04 (Letter + Verify Flow): discussion (D-01..D-04) + research + 6 plans + checker revision
 
 Progress: [██████████] 100% (of planned work; Phases 3–7 not yet planned)
 
