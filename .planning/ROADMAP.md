@@ -123,7 +123,7 @@ Plans:
 - [x] 04-02-PLAN.md — verify.html standalone page + Vite multi-page input (Wave 1)
 - [x] 04-03-PLAN.md — join-waitlist: letter param + Path B branch + remove test trigger (Wave 2)
 - [x] 04-04-PLAN.md — verify-email Edge Function + config.toml registration (Wave 2)
-- [ ] 04-05-PLAN.md — Client wiring: supabase.ts + App.tsx + FirstLetter.tsx letter threading (Wave 3)
+- [x] 04-05-PLAN.md — Client wiring: supabase.ts + App.tsx + FirstLetter.tsx letter threading (Wave 3)
 - [ ] 04-06-PLAN.md — HALT: supabase db push + functions deploy + smoke tests (Wave 4, autonomous: false)
 **UI hint**: yes
 
@@ -164,6 +164,6 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 | 1.5. UI Redesign (INSERTED) | 9/9 | ✅ Complete | 2026-05-28 |
 | 2. Signup Flow | 5/5 | ✅ Complete | 2026-06-03 |
 | 3. Email Infrastructure | 5/5 | ✅ Complete | 2026-06-05 |
-| 4. Letter + Verify Flow | 0/6 | Planned (ready to execute) | - |
+| 4. Letter + Verify Flow | 5/6 | In Progress|  |
 | 5. Deploy & Polish | 0/TBD | Not started | - |
 | 6. Pre-launch QA | 0/TBD | Not started | - |
