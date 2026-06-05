@@ -117,7 +117,14 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
   3. A letter writer who clicks the Template 1B verification link sees their letter's status flip to `sealed` in `app_private.letters` (`sealed_at=now()`, `deliver_at='2027-01-01T13:00:00Z'` or the agreed timezone), with matching rows inserted into `app_private.schedules` and `app_private.notification_outbox`.
   4. After verification, the user sees an in-page success state — no Template 2 is sent — and the existing dispatch/notify cron picks up the outbox row on its next run.
   5. Unverified letters never appear in `app_private.schedules` (confirmed by query); skipping the letter entirely takes Path A with no verification link in the confirmation email.
-**Plans**: TBD
+**Plans**: 6 plans
+Plans:
+- [ ] 04-01-PLAN.md — Migration 0035: body CHECK + upsert_pending_letter + seal_letter_with_token RPCs (Wave 1)
+- [ ] 04-02-PLAN.md — verify.html standalone page + Vite multi-page input (Wave 1)
+- [ ] 04-03-PLAN.md — join-waitlist: letter param + Path B branch + remove test trigger (Wave 2)
+- [ ] 04-04-PLAN.md — verify-email Edge Function + config.toml registration (Wave 2)
+- [ ] 04-05-PLAN.md — Client wiring: supabase.ts + App.tsx + FirstLetter.tsx letter threading (Wave 3)
+- [ ] 04-06-PLAN.md — HALT: supabase db push + functions deploy + smoke tests (Wave 4, autonomous: false)
 **UI hint**: yes
 
 ### Phase 5: Deploy & Polish
@@ -157,6 +164,6 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 | 1.5. UI Redesign (INSERTED) | 0/9 | Not started | - |
 | 2. Signup Flow | 0/5 | Not started | - |
 | 3. Email Infrastructure | 0/5 | Not started | - |
-| 4. Letter + Verify Flow | 0/TBD | Not started | - |
+| 4. Letter + Verify Flow | 0/6 | Not started | - |
 | 5. Deploy & Polish | 0/TBD | Not started | - |
 | 6. Pre-launch QA | 0/TBD | Not started | - |
