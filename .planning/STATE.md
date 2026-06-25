@@ -87,6 +87,8 @@ None yet.
 - **WATCH — SPAMCOP listing on shared SES IP 54.240.9.38.** Cost Template 1A −1 (9/10). Transient shared-infra reputation, not owned by us; auto-expires. Recheck at Phase 6 production send; escalate to Resend if persistent.
 - **Service role key bundle leak risk.** Add a CI grep on `dist/` for the service role key prefix before any Vercel deploy (Phase 5).
 - **Open questions in research/SUMMARY.md** (timezone for `deliver_at`, resignup-with-pending-letter behaviour, letter length cap, DNS ownership) should be resolved during Phase 2 / Phase 3 planning.
+- **ACCEPTED — Supabase Advisor "CRITICAL: Security Definer View" on `public.sealed_letters`, `public.arrived_letters`, `public.signup_counter`.** Reviewed 2026-06-26. False positive: the advisor flags all `security_invoker=false` views without inspecting predicates. All three views embed `WHERE user_id = auth.uid()` (or expose only an aggregate count) and are granted to `authenticated` only (`signup_counter` to `anon` — safe, returns a number). Design is intentional and correct per Supabase SECURITY DEFINER pattern for `app_private` access. No action needed.
+- **WATCH — Supabase free tier "EXCEEDING USAGE LIMITS" banner** observed 2026-06-26 (likely spike from smoke testing). Monitor after traffic settles; if it persists with real-user traffic post-launch, upgrade the Supabase plan. Check again at Phase 6 QA.
 
 ### Quick Tasks Completed
 
