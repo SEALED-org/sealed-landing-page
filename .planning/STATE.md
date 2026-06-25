@@ -107,8 +107,8 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-05T13:07:44.222Z
-Stopped at: Phase 3 CLOSED. Verified live during resume — 1A mail-tester 9/10 (auth pass, no verify link, −1 SPAMCOP shared-IP accepted), 1B delivered to real inbox (correct copy + CTA → sealedapp.io/verify?token=…, "7 days"), token TTL DB-confirmed at exactly 7 days / used_at null, secrets grep-clean + proven by working sends. Wrote 03-04-SUMMARY.md + 03-05-SUMMARY.md.
+Last session: 2026-06-25
+Stopped at: Mid-smoke-test debugging. 04-06 deploy done (supabase db push + functions deploy both completed before this session). Fixed 3 bugs in FirstLetter email step during smoke test: (1) Turnstile was inside display:none step div → moved outside, now initialises on page load; (2) error text was white-on-cream (invisible) → now white-on-black pill; (3) arrow button shows spinner after 1.5s wait. Committed: 3158c08. Smoke test NOT yet complete — stopped mid-attempt. Next action: hard-reload localhost:3001, retry Path B with nourismaieel+sealed1@gmail.com, complete all 8 checks from 04-06-PLAN.md, then write 04-06-SUMMARY.md.
 Open (deferred to Phase 6): 1B mail-tester ≥9 on live production send; SPAMCOP recheck.
 Project ref: tiaeioiylephekgrllnj.supabase.co
-Next command: `/gsd-execute-phase 4` — Phase 4 (Letter + Verify Flow) already planned, checker-passed, 6 plans / 4 waves. Note: 1B verify link only becomes reachable after Phase 5 Vercel deploy.
+Next command: Resume 04-06 smoke test — retry Path B flow on localhost:3001 with a fresh email (nourismaieel+sealed1@gmail.com or similar), complete 8 checks, write SUMMARY.
