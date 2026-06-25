@@ -50,6 +50,7 @@ export default function FirstLetter({
   // on submit — blocks double-submits and disables the arrow button during the
   // wait.
   const [resolving, setResolving] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const [emailError, setEmailError] = useState<WaitlistState | null>(null);
 
   useEffect(() => {
@@ -58,6 +59,12 @@ export default function FirstLetter({
       timersRef.current = [];
     };
   }, []);
+
+  useEffect(() => {
+    if (!resolving) { setShowSpinner(false); return; }
+    const id = window.setTimeout(() => setShowSpinner(true), 1500);
+    return () => clearTimeout(id);
+  }, [resolving]);
 
   useEffect(() => {
     if (step !== 'success') return;
@@ -82,6 +89,13 @@ export default function FirstLetter({
       setStep(next);
       setLeavingStep(null);
       setEnteringStep(next);
+      // Reset Turnstile when entering the email step so it re-challenges
+      // in a visible DOM context. Also clear any prior blocked/token state.
+      if (next === 'email') {
+        setTurnstileBlocked(false);
+        setFirstLetterTurnstileToken('');
+        firstLetterTurnstileRef.current?.reset();
+      }
 
       const t2 = window.setTimeout(() => {
         setEnteringStep((curr) => (curr === next ? null : curr));
@@ -496,7 +510,7 @@ export default function FirstLetter({
                         onChange={(e) => setEmail(e.target.value)}
                       />
                       <button type="submit" className="fl-arrow-btn" aria-label="Seal it" disabled={resolving}>
-                        →
+                        {showSpinner ? <span className="fl-spin" aria-hidden="true" /> : '→'}
                       </button>
                     </div>
                     <div className="fl-env-actions">
@@ -508,31 +522,33 @@ export default function FirstLetter({
                         ← Back
                       </button>
                     </div>
-                    <Turnstile
-                      ref={firstLetterTurnstileRef}
-                      siteKey={TURNSTILE_SITE_KEY}
-                      options={{ size: 'invisible' }}
-                      onSuccess={(token) => setFirstLetterTurnstileToken(token)}
-                      onError={() => { setTurnstileBlocked(true); setFirstLetterTurnstileToken(''); }}
-                      onUnsupported={() => { setTurnstileBlocked(true); setFirstLetterTurnstileToken(''); }}
-                      onExpire={() => { setFirstLetterTurnstileToken(''); firstLetterTurnstileRef.current?.reset(); }}
-                    />
                   </form>
                   <div
                     className="fl-error-slot"
                     style={{
-                      minHeight: 24,
-                      fontFamily: 'var(--font-mono)',
-                      color: 'rgba(255, 255, 255, 0.7)',
-                      fontSize: 12,
+                      minHeight: 32,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
                       opacity: emailError ? 1 : 0,
                       transition: 'opacity 200ms ease',
-                      textAlign: 'center',
                       paddingTop: 8,
                     }}
                     aria-live="polite"
                   >
-                    {emailError ? MESSAGES[emailError] : ' '}
+                    {emailError ? (
+                      <span style={{
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: 12,
+                        color: '#fff',
+                        background: '#000',
+                        padding: '3px 10px',
+                        borderRadius: 2,
+                        letterSpacing: '0.04em',
+                      }}>
+                        {MESSAGES[emailError]}
+                      </span>
+                    ) : null}
                   </div>
                 </div>
               </div>
@@ -568,6 +584,19 @@ export default function FirstLetter({
             </div>
           </div>
         </motion.div>
+
+        {/* Turnstile lives here — always in DOM, never inside a display:none step */}
+        <div style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden', opacity: 0, pointerEvents: 'none' }} aria-hidden="true">
+          <Turnstile
+            ref={firstLetterTurnstileRef}
+            siteKey={TURNSTILE_SITE_KEY}
+            options={{ size: 'invisible' }}
+            onSuccess={(token) => setFirstLetterTurnstileToken(token)}
+            onError={() => { setTurnstileBlocked(true); setFirstLetterTurnstileToken(''); }}
+            onUnsupported={() => { setTurnstileBlocked(true); setFirstLetterTurnstileToken(''); }}
+            onExpire={() => { setFirstLetterTurnstileToken(''); firstLetterTurnstileRef.current?.reset(); }}
+          />
+        </div>
 
         <motion.div
           className="fl-promise"
