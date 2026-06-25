@@ -18,7 +18,7 @@ The SEALED landing page is a brownfield React 19 + Vite 6 + Tailwind v4 project 
 - [x] **Phase 1.5: UI Redesign (INSERTED)** - Rebuild landing UI to match `Landing.html` Claude Design prototype (hero, counter, FirstLetter, Research, FAQ, Footer)
 - [x] **Phase 2: Signup Flow** - `join-waitlist` Edge Function end-to-end with Turnstile + rate limit + Path A confirmation
 - [x] **Phase 3: Email Infrastructure** - DNS verified, Resend connected, Templates 1A and 1B deliverable
-- [ ] **Phase 4: Letter + Verify Flow** - Letter writing wired to Supabase, `verify-email` Edge Function seals letters, Path B complete
+- [x] **Phase 4: Letter + Verify Flow** - Letter writing wired to Supabase, `verify-email` Edge Function seals letters, Path B complete
 - [ ] **Phase 5: Deploy & Polish** - GitHub push, Vercel, sealedapp.io, social links, copy, accessibility
 - [ ] **Phase 6: Pre-launch QA** - Smoke test, mail-tester, mobile QA, stakeholder sign-off
 
@@ -124,7 +124,7 @@ Plans:
 - [x] 04-03-PLAN.md — join-waitlist: letter param + Path B branch + remove test trigger (Wave 2)
 - [x] 04-04-PLAN.md — verify-email Edge Function + config.toml registration (Wave 2)
 - [x] 04-05-PLAN.md — Client wiring: supabase.ts + App.tsx + FirstLetter.tsx letter threading (Wave 3)
-- [ ] 04-06-PLAN.md — HALT: supabase db push + functions deploy + smoke tests (Wave 4, autonomous: false)
+- [x] 04-06-PLAN.md — HALT: supabase db push + functions deploy + smoke tests (Wave 4, autonomous: false)
 **UI hint**: yes
 
 ### Phase 5: Deploy & Polish
@@ -164,6 +164,6 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 | 1.5. UI Redesign (INSERTED) | 9/9 | ✅ Complete | 2026-05-28 |
 | 2. Signup Flow | 5/5 | ✅ Complete | 2026-06-03 |
 | 3. Email Infrastructure | 5/5 | ✅ Complete | 2026-06-05 |
-| 4. Letter + Verify Flow | 5/6 | In Progress|  |
+| 4. Letter + Verify Flow | 6/6 | ✅ Complete | 2026-06-26 |
 | 5. Deploy & Polish | 0/TBD | Not started | - |
 | 6. Pre-launch QA | 0/TBD | Not started | - |

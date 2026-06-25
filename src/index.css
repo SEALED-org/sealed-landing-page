@@ -1043,6 +1043,13 @@ textarea.fl-textarea {
   color: rgba(0,0,0,0.5);
 }
 .fl-env-caption strong { font-style: normal; color: rgba(0,0,0,0.82); font-weight: 600; }
+.fl-env-success-label {
+  position: absolute; top: 24px; left: 0; right: 0;
+  text-align: center; z-index: 2;
+  font-family: var(--font-serif); font-size: 17px;
+  color: rgba(0,0,0,0.6); letter-spacing: 0.02em;
+}
+.fl-env-success-label strong { font-weight: 700; font-style: normal; color: rgba(0,0,0,0.82); }
 .fl-success-seal { animation: sealDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) both; }
 .fl-success-h {
   font-family: var(--font-serif); font-weight: 400;

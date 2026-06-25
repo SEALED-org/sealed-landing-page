@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 3 CLOSED. Verified live during resume — 1A mail-tester 9/10 (auth pass, no verify link, −1 SPAMCOP shared-IP accepted), 1B delivered to real inbox (correct copy + CTA → sealedapp.io/verify?token=…, "7 days"), token TTL DB-confirmed at exactly 7 days / used_at null, secrets grep-clean + proven by working sends. Wrote 03-04-SUMMARY.md + 03-05-SUMMARY.md.
-last_updated: "2026-06-05T13:07:44.242Z"
-last_activity: 2026-06-05
+stopped_at: Phase 4 CLOSED. All 6 plans complete. Path B end-to-end confirmed live — letter sealed in DB (sealed_at NOT NULL, deliver_at 2027-01-01 13:00:00+00), schedules row pending, notification_outbox empty, Template 1B delivered, double-seal returns already_sealed, test_1b trigger absent (405), npm run build exits 0. Success! label added to sealed envelope card. Rate limit rows cleared during smoke test (table+RPC intact). Phase 5 (Deploy & Polish) starts next session.
+last_updated: "2026-06-26T00:00:00.000Z"
+last_activity: 2026-06-26
 progress:
   total_phases: 7
   completed_phases: 4
@@ -25,12 +25,13 @@ See: .planning/PROJECT.md (updated 2026-05-25)
 
 ## Current Position
 
-Phase: 04 (letter-verify-flow) — EXECUTING
-Plan: 6 of 6
-Status: Ready to execute
-Last activity: 2026-06-05
+Phase: 04 (letter-verify-flow) — ✅ COMPLETE
+Phase: 05 (deploy-and-polish) — NEXT
+Plan: —
+Status: Ready to plan Phase 05
+Last activity: 2026-06-26
 
-Progress: [██████████] 97%
+Progress: [██████████] 100% Phase 04 | Overall: ~83%
 
 ## Performance Metrics
 
@@ -107,8 +108,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-06-25
-Stopped at: Mid-smoke-test debugging. 04-06 deploy done (supabase db push + functions deploy both completed before this session). Fixed 3 bugs in FirstLetter email step during smoke test: (1) Turnstile was inside display:none step div → moved outside, now initialises on page load; (2) error text was white-on-cream (invisible) → now white-on-black pill; (3) arrow button shows spinner after 1.5s wait. Committed: 3158c08. Smoke test NOT yet complete — stopped mid-attempt. Next action: hard-reload localhost:3001, retry Path B with nourismaieel+sealed1@gmail.com, complete all 8 checks from 04-06-PLAN.md, then write 04-06-SUMMARY.md.
-Open (deferred to Phase 6): 1B mail-tester ≥9 on live production send; SPAMCOP recheck.
-Project ref: tiaeioiylephekgrllnj.supabase.co
-Next command: Resume 04-06 smoke test — retry Path B flow on localhost:3001 with a fresh email (nourismaieel+sealed1@gmail.com or similar), complete 8 checks, write SUMMARY.
+Last session: 2026-06-26
+Stopped at: Phase 4 fully closed. 04-06-SUMMARY.md written, ROADMAP.md and STATE.md updated. Success! label added to sealed envelope card (FirstLetter.tsx + index.css). Phase 5 (Deploy & Polish) begins next session.
+Next command: /gsd-plan-phase 5 (or /gsd-discuss-phase 5 to gather context first)

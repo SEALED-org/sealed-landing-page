@@ -559,6 +559,11 @@ export default function FirstLetter({
           <div className={stepClass('success')} id="fl-step-success">
             <div className="fl-pad fl-pad-success">
               <div className="fl-env-back">
+                {/* Success label */}
+                <div className="fl-env-success-label" aria-label="Success">
+                  <strong>Success!</strong>
+                </div>
+
                 {/* Envelope flap (triangle from top corners meeting at center) */}
                 <svg
                   className="fl-env-flap"
