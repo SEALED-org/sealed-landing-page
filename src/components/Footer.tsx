@@ -44,7 +44,7 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="mailto:hello@sealed.io" aria-label="Email" title="hello@sealed.io">
+              <a href="mailto:info@sealedapp.io" aria-label="Email" title="info@sealedapp.io">
                 <svg
                   width="22"
                   height="22"
