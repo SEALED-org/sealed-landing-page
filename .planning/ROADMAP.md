@@ -170,9 +170,9 @@ Plans:
 Plans:
 **Wave 1**
 
-- [ ] 05-01-PLAN.md — terms/privacy → dist + email ×7 → info@sealedapp.io + footer social hrefs + twitter:site (Wave 1)
-- [ ] 05-02-PLAN.md — ShareRow.tsx (X-share + copy-link) mounted in both success states (Wave 1)
-- [ ] 05-04-PLAN.md — service-role-key bundle-leak npm gate (build:check) (Wave 1)
+- [x] 05-01-PLAN.md — terms/privacy → dist + email ×7 → info@sealedapp.io + footer social hrefs + twitter:site (Wave 1)
+- [x] 05-02-PLAN.md — ShareRow.tsx (X-share + copy-link) mounted in both success states (Wave 1)
+- [x] 05-04-PLAN.md — service-role-key bundle-leak npm gate (build:check) (Wave 1)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -212,5 +212,5 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 | 2. Signup Flow | 5/5 | ✅ Complete | 2026-06-03 |
 | 3. Email Infrastructure | 5/5 | ✅ Complete | 2026-06-05 |
 | 4. Letter + Verify Flow | 6/6 | ✅ Complete | 2026-06-26 |
-| 5. Deploy & Polish | 0/5 | In progress (planned) | - |
+| 5. Deploy & Polish | 3/5 | In Progress|  |
 | 6. Pre-launch QA | 0/TBD | Not started | - |
