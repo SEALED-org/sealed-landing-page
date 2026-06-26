@@ -72,8 +72,10 @@ export default function WaitlistForm({ onSubmit, isSubmitting, isSubmitted, erro
         className={`waitlist${isSubmitted ? ' is-submitted' : ''}`}
         onSubmit={handleSubmit}
       >
+        <label htmlFor="waitlist-email" className="sr-only">Email address</label>
         <input
           type="email"
+          id="waitlist-email"
           placeholder="Your email address"
           required
           value={email}

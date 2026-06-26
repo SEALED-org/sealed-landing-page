@@ -232,6 +232,7 @@ export default function FirstLetter({
                     ref={textareaRef}
                     className="fl-textarea"
                     id="fl-textarea"
+                    aria-label="Write your letter"
                     spellCheck={false}
                     value={letter}
                     onChange={handleLetterChange}
@@ -503,6 +504,7 @@ export default function FirstLetter({
                       <input
                         type="email"
                         id="fl-email-input"
+                        aria-label="Email address"
                         placeholder="your@email.com"
                         required
                         autoComplete="email"
