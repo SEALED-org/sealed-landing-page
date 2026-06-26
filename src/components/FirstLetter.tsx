@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'motion/react';
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
+import ShareRow from './ShareRow';
 import Typewriter, { typewriterPhrases } from './Typewriter';
 import type { WaitlistState } from '../lib/supabase';
 import { MESSAGES } from '../lib/messages';
@@ -585,6 +586,7 @@ export default function FirstLetter({
                     <span id="fl-countdown-days">{daysToDelivery}</span> days
                   </strong>
                 </div>
+                <ShareRow variant="dark" />
               </div>
             </div>
           </div>

@@ -1,3 +1,5 @@
+import ShareRow from './ShareRow';
+
 interface WaitlistSuccessCardProps {
   onWriteLetter: () => void;
   isVisible: boolean;
@@ -34,6 +36,7 @@ export default function WaitlistSuccessCard({ onWriteLetter, isVisible }: Waitli
           Write your first letter now
           <span className="arrow" aria-hidden="true">↓</span>
         </button>
+        <ShareRow />
       </div>
     </div>
   );
