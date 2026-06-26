@@ -137,7 +137,13 @@ Plans:
   3. All copy on the page (headline, tagline, CTA, FAQ, email subjects) matches the final proofed version with the Dr. Gail Matthews citation verified.
   4. The paper texture loads from a sealedapp.io / Vercel-hosted asset (no `i.postimg.cc` references).
   5. Every form input has an associated `<label>`, focus rings are visible on all interactive elements via keyboard tab, and error states display inline messages (not just `console.error`).
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 05-01-PLAN.md — terms/privacy → dist + email ×7 → info@sealedapp.io + footer social hrefs + twitter:site (Wave 1)
+- [ ] 05-02-PLAN.md — ShareRow.tsx (X-share + copy-link) mounted in both success states (Wave 1)
+- [ ] 05-03-PLAN.md — a11y labels + :focus-visible rings; confirm CONTENT-02/03/06 (Wave 2)
+- [ ] 05-04-PLAN.md — service-role-key bundle-leak npm gate (build:check) (Wave 1)
+- [ ] 05-05-PLAN.md — deploy HALT: push → Vercel → env vars → domain/DNS → verify (Wave 3, autonomous: false)
 **UI hint**: yes
 
 ### Phase 6: Pre-launch QA
@@ -165,5 +171,5 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 | 2. Signup Flow | 5/5 | ✅ Complete | 2026-06-03 |
 | 3. Email Infrastructure | 5/5 | ✅ Complete | 2026-06-05 |
 | 4. Letter + Verify Flow | 6/6 | ✅ Complete | 2026-06-26 |
-| 5. Deploy & Polish | 0/TBD | Not started | - |
+| 5. Deploy & Polish | 0/5 | In progress (planned) | - |
 | 6. Pre-launch QA | 0/TBD | Not started | - |
