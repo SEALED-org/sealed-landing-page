@@ -26,13 +26,13 @@ Ship the working landing page to production: push to SEALED-org GitHub, deploy t
 
 ### Error Display UX
 - **D-08 (Hard rule):** Errors must NEVER fail silently — every form error must be presented to the user with a visible message.
-- **D-09:** WaitlistForm error display is already complete — `src/components/WaitlistForm.tsx` has a `waitlist-error-slot` div with `aria-live="polite"` and 6 mapped error states. No new UI work needed.
-- **D-10:** FirstLetter (write a letter tab) errors stay in existing format — white text on black highlight. No change.
+- **D-09 [informational]:** WaitlistForm error display is already complete — `src/components/WaitlistForm.tsx` has a `waitlist-error-slot` div with `aria-live="polite"` and 6 mapped error states. No new UI work needed (no plan delta; CONTENT-06 confirmed by Plan 05-03).
+- **D-10 [informational]:** FirstLetter (write a letter tab) errors stay in existing format — white text on black highlight. No change (no plan delta).
 
 ### Copy
-- **D-11:** All page copy is locked and ships as-is: headline ("Some letters are *worth waiting for.*"), tagline, FAQ answers, Research section.
+- **D-11 [informational]:** All page copy is locked and ships as-is: headline ("Some letters are *worth waiting for.*"), tagline, FAQ answers, Research section (no plan delta; copy untouched).
 - **D-12:** Dr. Gail Matthews citation confirmed accurate by Nour — `+42%, n=267, Dominican University of California, 2015`. No verification task needed.
-- **D-13:** All 6 WaitlistForm error message strings are locked as-is (see `src/lib/messages.ts`).
+- **D-13 [informational]:** All 6 WaitlistForm error message strings are locked as-is (see `src/lib/messages.ts`) — no plan delta.
 
 ### Already-Met Requirements (Confirmed in Discussion)
 - **CONTENT-03:** Paper texture at `public/assets/paper-light.jpg` is already self-hosted in Vite's public dir — no PostImg CDN references exist anywhere. No action needed.
