@@ -1077,6 +1077,33 @@ textarea.fl-textarea {
   background: rgba(255,255,255,0.25);
 }
 
+/* ─── Share row (ShareRow.tsx — light + dark variants) ──────── */
+.share-row {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-top: 18px; flex-wrap: wrap;
+}
+.share-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 16px;
+  border: 1px solid var(--color-ink-20); border-radius: 999px;
+  background: transparent; color: var(--color-ink-70);
+  font-family: var(--font-mono); font-weight: 700;
+  font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em;
+  cursor: pointer; transition: border-color 0.18s, opacity 0.18s;
+  white-space: nowrap;
+}
+.share-btn:hover { border-color: var(--color-ink-50); opacity: 0.8; }
+
+/* Dark variant — for FirstLetter's black success background */
+.share-row--dark .share-btn {
+  border-color: rgba(255,255,255,0.22);
+  color: rgba(255,255,255,0.7);
+}
+.share-row--dark .share-btn:hover {
+  border-color: rgba(255,255,255,0.5);
+  opacity: 0.9;
+}
+
 /* ─── FAQ ─────────────────────────────────────────────────── */
 section.faq {
   padding: 96px 24px 112px;
