@@ -176,7 +176,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 05-03-PLAN.md — a11y labels + :focus-visible rings; confirm CONTENT-02/03/06 (Wave 2)
+- [x] 05-03-PLAN.md — a11y labels + :focus-visible rings; confirm CONTENT-02/03/06 (Wave 2)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -212,5 +212,5 @@ Phases execute in numeric order: 1 → 1.5 → 2 → 3 → 4 → 5 → 6
 | 2. Signup Flow | 5/5 | ✅ Complete | 2026-06-03 |
 | 3. Email Infrastructure | 5/5 | ✅ Complete | 2026-06-05 |
 | 4. Letter + Verify Flow | 6/6 | ✅ Complete | 2026-06-26 |
-| 5. Deploy & Polish | 3/5 | In Progress|  |
+| 5. Deploy & Polish | 4/5 | In Progress|  |
 | 6. Pre-launch QA | 0/TBD | Not started | - |
