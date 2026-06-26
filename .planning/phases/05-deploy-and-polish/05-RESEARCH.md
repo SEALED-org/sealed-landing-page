@@ -402,19 +402,20 @@ exit $LEAK
 | A4 | Vercel auto-detects this repo as the Vite framework preset | Deploy Sequence | Low — standard Vite project layout; if not, set preset = Vite manually. |
 | A5 | slopcheck unavailable means no new-package risk (because Phase 5 adds none) | Package Legitimacy Audit | None — no installs planned. |
 
-## Open Questions
+## Open Questions (RESOLVED)
+
+All three open questions were resolved by user decisions captured in `05-CONTEXT.md` (post-research decisions, 2026-06-26) and are implemented by the Phase 5 plans.
 
 1. **D-07 conflict: terms.html / privacy.html are NOT in dist/ (launch blocker).**
    - What we know: Build verified — `dist/` contains only `index.html`, `verify.html`, `assets/`. The two legal pages are repo-root files, absent from `public/` and from `vite.config.ts` inputs. Footer links to them.
-   - What's unclear: which fix the user prefers — move to `public/` (Option A, recommended) vs add as Vite inputs (Option B).
-   - Recommendation: Option A (move both to `public/`). Add a post-build assertion that `dist/terms.html` + `dist/privacy.html` exist. The planner should NOT treat D-07's "outputs … to dist/" clause as already-satisfied.
+   - **RESOLVED (D-14, Option A):** Move both `terms.html` and `privacy.html` into `public/` so Vite copies them to `dist/` verbatim. Implemented by Plan 05-01 Task 1 with a post-build `ls dist/terms.html dist/privacy.html` assertion. No `vercel.json` needed.
 
 2. **Where should the share/copy UI live, and is a new component acceptable under `--skip-ui`?**
    - What we know: SOCIAL-02/03 are unimplemented; this is net-new UI; `--skip-ui` is in effect.
-   - Recommendation: place in the success states (post-signup card / sealed-letter success); keep minimal and consistent with existing button styles; surface the two new buttons to Nour for a quick visual OK.
+   - **RESOLVED (D-15):** User confirmed building the share/copy UI under `--skip-ui`. Implemented by Plan 05-02 as a net-new `ShareRow.tsx` (X intent URL + `navigator.clipboard`) mounted in both success states, styled to existing design-system patterns; Nour reviews visually at smoke test.
 
 3. **Twitter card attribution:** `index.html` has `twitter:card/title/description` but no `twitter:site`/`twitter:creator`.
-   - Recommendation: optionally add `twitter:site = @sealedapp_io` for card attribution. Low priority; confirm with user.
+   - **RESOLVED (D-16):** Add `twitter:site = @sealedapp_io`. Implemented by Plan 05-01 Task 3.
 
 ## Environment Availability
 
