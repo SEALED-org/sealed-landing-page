@@ -39,6 +39,13 @@ Ship the working landing page to production: push to SEALED-org GitHub, deploy t
 - **CONTENT-06:** WaitlistForm inline error display already implemented in Phase 2 — covers all 6 error states. No new UI work needed.
 - All 4 step PNGs (`separator-ink.png`, `step-write.png`, `step-seal.png`, `step-open.png`) are in `public/assets/`. Phase 1.5 concern resolved.
 
+### Post-Research Decisions (2026-06-26, after 05-RESEARCH.md)
+- **D-14 (Launch blocker fix):** `terms.html` and `privacy.html` currently live in the repo root — they are NOT in `public/` and NOT in `vite.config.ts` inputs, so they never reach `dist/` and will 404 in production. Fix: move both into `public/` so Vite copies them to `dist/` verbatim. No `vercel.json` needed. (Corrects D-07's assumption that these already output to dist/.)
+- **D-15 (Share/copy UI — net-new, built under `--skip-ui`):** SOCIAL-02 (X/Twitter share) and SOCIAL-03 (copy-link) do NOT exist in the codebase (old `ShareButtons.tsx` did not survive the Phase 1.5 redesign). Build two small buttons — X intent URL + `navigator.clipboard.writeText` — styled to match the existing Landing.html / design-system patterns. No UI-SPEC; Nour reviews visually at smoke test. Share text references `@sealedapp_io` and `sealedapp.io`.
+- **D-16 (Twitter card attribution):** Add `<meta name="twitter:site" content="@sealedapp_io">` to `index.html` for card attribution.
+- **D-17 (Email replacement is broader than D-03):** `hello@sealed.io` appears 7× — `src/components/Footer.tsx` (×1), `privacy.html` (×3), `terms.html` (×2), and `verify.html` uses `hello@sealedapp.io` (×1). ALL occurrences become `info@sealedapp.io`.
+- **D-18 (Secret-leak gate pattern):** A naive `grep eyJ dist/` false-positives on the legitimate anon key (also a JWT). The pre-deploy gate must grep for service-role-specific patterns: `sb_secret_`, `"role":"service_role"`, and `SERVICE_ROLE_KEY`. Ship as an npm script; `dist/` is currently clean (0 hits). Recommended to chain into the Vercel build command.
+
 </decisions>
 
 <canonical_refs>
