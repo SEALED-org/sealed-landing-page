@@ -19,7 +19,7 @@ export default function Footer() {
           <h4>Connect</h4>
           <ul className="social-list">
             <li>
-              <a href="#" aria-label="Instagram" title="Instagram">
+              <a href="https://www.instagram.com/sealed.io" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
                 <svg
                   width="22"
                   height="22"
@@ -37,14 +37,14 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" aria-label="X" title="X">
+              <a href="https://x.com/sealedapp_io" target="_blank" rel="noopener noreferrer" aria-label="X" title="X">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2H21l-6.52 7.452L22 22h-6.828l-4.77-6.231L4.8 22H2l7.02-8.024L2 2h6.914l4.32 5.713L18.244 2zm-1.197 18h1.84L7.06 4H5.117l11.93 16z" />
                 </svg>
               </a>
             </li>
             <li>
-              <a href="mailto:hello@sealed.io" aria-label="Email" title="hello@sealed.io">
+              <a href="mailto:info@sealedapp.io" aria-label="Email" title="info@sealedapp.io">
                 <svg
                   width="22"
                   height="22"
