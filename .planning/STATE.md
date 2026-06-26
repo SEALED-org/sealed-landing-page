@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 4 CLOSED. All 6 plans complete. Path B end-to-end confirmed live — letter sealed in DB (sealed_at NOT NULL, deliver_at 2027-01-01 13:00:00+00), schedules row pending, notification_outbox empty, Template 1B delivered, double-seal returns already_sealed, test_1b trigger absent (405), npm run build exits 0. Success! label added to sealed envelope card. Rate limit rows cleared during smoke test (table+RPC intact). Phase 5 (Deploy & Polish) starts next session.
+stopped_at: Phase 5 context gathered. Social handles locked (Instagram @sealed.io, X @sealedapp_io, email info@sealedapp.io). Vercel strategy: GitHub→Vercel auto-deploy, no vercel.json, repo already exists in SEALED-org. Error display already complete from Phase 2. All copy locked. Ready to plan Phase 5.
 last_updated: "2026-06-26T00:00:00.000Z"
 last_activity: 2026-06-26
 progress:
@@ -111,5 +111,6 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-06-26
-Stopped at: Phase 4 fully closed. 04-06-SUMMARY.md written, ROADMAP.md and STATE.md updated. Success! label added to sealed envelope card (FirstLetter.tsx + index.css). Phase 5 (Deploy & Polish) begins next session.
-Next command: /gsd-plan-phase 5 (or /gsd-discuss-phase 5 to gather context first)
+Stopped at: Phase 5 context gathered. 05-CONTEXT.md written. Social handles, Vercel strategy, error UX, and copy all decided.
+Resume file: .planning/phases/05-deploy-and-polish/05-CONTEXT.md
+Next command: /gsd-plan-phase 5
