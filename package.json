@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --port=3000",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:no-secrets": "node scripts/check-bundle.mjs",
+    "build:check": "vite build && npm run verify:no-secrets"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "1.5.2",
