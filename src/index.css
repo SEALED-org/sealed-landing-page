@@ -45,6 +45,18 @@
   .text-balance {
     text-wrap: balance;
   }
+  /* Visually-hidden but available to screen readers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 }
 
 /* ─── Layout constants (NOT in @theme — consumed as raw var(), no Tailwind utility generation) ── */
@@ -290,6 +302,18 @@ form.waitlist input[type=email]:focus {
   border-color: #000;
   box-shadow: 0 0 0 4px rgba(0,0,0,0.04);
 }
+
+/* ─── Keyboard-only focus ring (does not affect pointer/mouse clicks) ──── */
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+/* Light ring on dark FirstLetter backgrounds */
+.fl-textarea:focus-visible,
+.fl-email-field:focus-visible {
+  outline-color: rgba(255, 255, 255, 0.8);
+}
+
 .btn-primary {
   background: #000; color: #fff;
   border: 0; border-radius: 999px;
