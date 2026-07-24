@@ -124,9 +124,9 @@
 }
 
 @keyframes waxDrop {
-  0%   { transform: translateY(-60px) scale(0.6) rotate(-18deg); opacity: 0; }
-  55%  { transform: translateY(50px) scale(1.1) rotate(-3deg); opacity: 1; }
-  100% { transform: translateY(40px) scale(1) rotate(0deg); opacity: 1; }
+  0%   { transform: translateY(-100px) scale(0.6) rotate(-18deg); opacity: 0; }
+  55%  { transform: translateY(10px) scale(1.1) rotate(-3deg); opacity: 1; }
+  100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
 }
 
 /* ─── Global CSS rules ───────────────────────────────────────────────────── */
@@ -1046,7 +1046,6 @@ textarea.fl-textarea {
 .fl-pad-success .fl-pad-bg { display: none; }
 .fl-env-back {
   position: relative; width: 100%; height: 440px;
-  display: flex; align-items: center; justify-content: center;
 }
 .fl-env-flap {
   position: absolute; inset: 0;
@@ -1054,11 +1053,27 @@ textarea.fl-textarea {
   pointer-events: none;
 }
 .fl-wax-seal {
-  position: relative; z-index: 2;
-  transform: translateY(40px);
+  position: absolute; z-index: 2;
+  left: 50%; top: 270px;
+  transform: translate(-50%, -50%);
+}
+.fl-wax-seal img {
+  display: block;
   animation: waxDrop 0.95s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
-.fl-wax-seal img { display: block; }
+.fl-env-back > .share-row {
+  position: absolute;
+  top: 66px; left: 0; right: 0;
+  z-index: 2;
+  margin-top: 0;
+}
+.fl-env-back > .share-row--dark .share-btn {
+  border-color: rgba(0,0,0,0.18);
+  color: rgba(0,0,0,0.65);
+}
+.fl-env-back > .share-row--dark .share-btn:hover {
+  border-color: rgba(0,0,0,0.48);
+}
 .fl-env-caption {
   position: absolute; left: 0; right: 0; bottom: 28px;
   text-align: center; z-index: 2;
