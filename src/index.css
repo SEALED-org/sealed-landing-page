@@ -80,6 +80,11 @@
   100% { transform: scale(1);   opacity: 1; }
 }
 
+@keyframes wls-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes wls-bob {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(3px); }
@@ -218,7 +223,7 @@ nav.top .join .arrow { font-family: var(--font-serif); font-style: italic; opaci
 
 /* ─── Hero ─────────────────────────────────────────────────── */
 header.hero {
-  padding: 132px 24px 48px;
+  padding: 132px 24px 32px;
   text-align: center;
   position: relative; overflow: hidden;
 }
@@ -330,15 +335,7 @@ form.waitlist.is-submitted { display: none; }
 .waitlist-success {
   max-width: 580px; margin: 0 auto;
   position: relative; z-index: 2;
-  opacity: 0; transform: translateY(10px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
-  pointer-events: none;
-  display: none;
-}
-.waitlist-success.is-mounted { display: block; }
-.waitlist-success.is-visible {
-  opacity: 1; transform: translateY(0);
-  pointer-events: auto;
+  animation: wls-enter 0.55s ease both;
 }
 .wls-card {
   background: #fff;
@@ -365,7 +362,7 @@ form.waitlist.is-submitted { display: none; }
   display: inline-flex; align-items: center; justify-content: center;
   box-shadow: 0 1px 3px rgba(0,0,0,0.18);
 }
-.waitlist-success.is-visible .wls-mark {
+.waitlist-success .wls-mark {
   animation: wls-stamp 0.5s cubic-bezier(0.34, 1.46, 0.64, 1) 0.15s both;
 }
 .wls-title {
@@ -426,13 +423,13 @@ form.waitlist.is-submitted { display: none; }
 
 /* ─── Section divider ─────────────────────────────────────── */
 .section-divider {
-  padding: 8px 24px 0;
+  padding: 0 24px;
   display: flex; justify-content: center;
 }
 .section-divider .inner {
   width: 100%; max-width: var(--shell);
   display: flex; align-items: center; justify-content: center;
-  gap: 18px; padding: 48px 0;
+  gap: 18px; padding: 24px 0;
 }
 .section-divider .rule { flex: 1; height: 1px; background: var(--color-ink-20); }
 .section-divider .sym {
@@ -443,9 +440,9 @@ form.waitlist.is-submitted { display: none; }
 
 /* ─── How it Works ────────────────────────────────────────── */
 section.how {
-  padding: 32px 24px 96px;
+  padding: 32px 24px 72px;
 }
-@media (min-width: 768px) { section.how { padding: 96px 24px 128px; } }
+@media (min-width: 768px) { section.how { padding: 64px 24px 80px; } }
 .how-inner { max-width: var(--shell); margin: 0 auto; text-align: center; }
 
 .how-eyebrow, .research-eyebrow {
@@ -525,7 +522,7 @@ section.how {
 
 /* ─── The Research ─────────────────────────────────────────── */
 section.research {
-  padding: 88px 24px 96px;
+  padding: 64px 24px 96px;
   background: var(--color-off-white);
   border-top: 1px solid var(--color-ink-06);
   border-bottom: 1px solid var(--color-ink-06);
@@ -752,7 +749,7 @@ section.research .research-eyebrow { margin-bottom: 28px; }
 }
 
 @media (max-width: 760px) {
-  section.research { padding: 56px 20px 64px; }
+  section.research { padding: 48px 20px 64px; }
   .rs-stamp { width: 78px; height: 78px; top: -2px; right: 4px; }
   .rs-stats {
     grid-template-columns: 1fr;

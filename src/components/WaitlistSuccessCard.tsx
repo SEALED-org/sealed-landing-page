@@ -6,11 +6,12 @@ interface WaitlistSuccessCardProps {
 }
 
 export default function WaitlistSuccessCard({ onWriteLetter, isVisible }: WaitlistSuccessCardProps) {
+  if (!isVisible) {
+    return null;
+  }
+
   return (
-    <div
-      className={`waitlist-success is-mounted${isVisible ? ' is-visible' : ''}`}
-      aria-live="polite"
-    >
+    <div className="waitlist-success" aria-live="polite">
       <div className="wls-card">
         <div className="wls-head">
           <div className="wls-mark" aria-hidden="true">
